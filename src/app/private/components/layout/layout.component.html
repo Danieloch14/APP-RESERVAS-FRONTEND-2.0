@@ -1,0 +1,65 @@
+<mat-drawer-container class="main-container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side" [opened]="true">
+    <p class="text-center">{{ 'Menu' | uppercase}}</p>
+    <hr class="hr">
+    <div class="d-flex gap-2 flex-column">
+      <a
+        routerLink="home"
+        routerLinkActive="active"
+        [style.width.px]="150"
+      >
+        <div class="d-flex justify-content-start align-items-center py-1 ps-2">
+          <i class="fas fa-home pe-2 text-white"></i>
+          <span>Inicio</span>
+        </div>
+      </a>
+      <a
+        routerLink="bookings"
+        routerLinkActive="active"
+        [style.width.px]="150"
+      >
+        <div class="d-flex justify-content-start align-items-center py-1 ps-2">
+          <i class="fas fa-book pe-2 text-white"></i>
+          <span>Reservas</span>
+        </div>
+      </a>
+      <a
+        routerLink="calendar"
+        routerLinkActive="active"
+        [style.width.px]="150"
+      >
+        <div class="d-flex justify-content-start align-items-center py-1 ps-2">
+          <i class="fas fa-calendar pe-2 text-white"></i>
+          <span>Calendario</span>
+        </div>
+      </a>
+    </div>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <mat-toolbar color="primary">
+      <button
+        (click)="drawer.toggle()"
+        class="btn btn-floating shadow-0" aria-label=" menu icon">
+        <i class="fas fa-xl fa-bars"></i>
+      </button>
+      <img src="assets/icons/icon-logo.png" [style.width.px]="150" [style.height.px]="30" fill=""/>
+      <span class="spacer"></span>
+      <div class="d-flex gap-4 align-items-center">
+        <a>
+          <i class="fas fa-xl fa-bell"></i>
+          <span class="badge bg-warning badge-dot"></span>
+        </a>
+        <div>
+          <img src="assets/img/images.jpg" [style.width.px]="30" class="rounded-circle"/>
+        </div>
+
+      </div>
+
+    </mat-toolbar>
+    <div class="p-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</mat-drawer-container>
