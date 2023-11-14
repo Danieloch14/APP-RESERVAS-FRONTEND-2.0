@@ -1,0 +1,27 @@
+::ng-deep .modal {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .modal-dialog {
+    max-width: 450px;
+}
+::ng-deep .modal-content{
+    --mdb-modal-box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 1px rgba(0, 0, 0, 0);
+}
+
+.logo{
+    width: 35vh;
+}
+.request{
+    margin-top: 30px;
+    font-size: small;
+}
+
+a{
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+.request a:hover{
+    color: #F1A714;
+}
