@@ -4,6 +4,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,18 +14,18 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
     ReactiveFormsModule,
     MdbFormsModule,
     MdbValidationModule,
-    
+
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   userForm: FormGroup;
-  
+
   constructor(
-    public modalRef: MdbModalRef<LoginComponent>,
     private builder: FormBuilder,
+    private router: Router
   ) {
     this.userForm = new FormGroup({});
   }
@@ -47,10 +48,10 @@ export class LoginComponent implements OnInit{
     return this.userForm.get('userType');
   }
 
-   get mailField() {
+  get mailField() {
     return this.userForm.get('mail');
   }
-  
+
 
   get passwordField() {
     return this.userForm.get('password');
@@ -61,6 +62,6 @@ export class LoginComponent implements OnInit{
   }
 
   login() {
-
+    this.router.navigate(['/user/home']);
   }
 }

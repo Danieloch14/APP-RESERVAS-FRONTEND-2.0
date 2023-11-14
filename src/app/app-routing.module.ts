@@ -4,7 +4,7 @@ import { LoginComponent } from "./public/pages/login/login.component";
 import { NotFoundPageComponent } from "./components/not-found-page/not-found-page.component";
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: 'auth', component: LoginComponent },
   {
     path: 'admin',

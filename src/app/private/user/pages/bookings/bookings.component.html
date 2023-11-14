@@ -1,1 +1,270 @@
-<p>bookings works!</p>
+<div class="rounded-1 py-2">
+  <div class="d-flex justify-content-around px-4 py-4 bg-grey rounded-1">
+    <mdb-form-control>
+      <input
+        mdbInput
+        mdbValidate
+        id="date"
+        class="form-control bg-white"
+      />
+      <label mdbLabel class="form-label border-0" for="date">
+        <i class="fas fa-calendar pe-2"></i>
+        <span>Fecha</span>
+      </label>
+    </mdb-form-control>
+    <mdb-form-control>
+      <input
+        mdbInput
+        mdbValidate
+        id="time"
+        class="form-control bg-white"
+      />
+      <label mdbLabel class="form-label" for="time">
+        <i class="fas fa-clock pe-2"></i>
+        <span>Hora</span>
+      </label>
+    </mdb-form-control>
+    <div class="d-flex gap-2">
+      <mdb-form-control>
+        <input
+          [style.width.px]="70"
+          mdbInput
+          mdbValidate
+          type="number"
+          id="hours"
+          class="form-control bg-white"
+        />
+        <label mdbLabel class="form-label" for="hours">
+          <span>hh</span>
+        </label>
+      </mdb-form-control>
+      <mdb-form-control>
+        <input
+          [style.width.px]="70"
+          type="number"
+          mdbInput
+          mdbValidate
+          id="minutes"
+          class="form-control bg-white"
+        />
+        <label mdbLabel class="form-label" for="minutes">
+          <span>mm</span>
+        </label>
+      </mdb-form-control>
+    </div>
+    <mdb-form-control>
+      <input
+        mdbInput
+        mdbValidate
+        id="capacidad"
+        class="form-control bg-white"
+        type="number"
+
+      />
+      <label mdbLabel class="form-label" for="capacidad">
+        <i class="fas fa-people-group pe-2"></i>
+        <span>Capacidad</span>
+      </label>
+    </mdb-form-control>
+
+
+  </div>
+
+</div>
+
+<div class="d-flex justify-content-between py-5">
+  <div class="d-flex gap-4 text-muted">
+    <div>
+      <i class="fas fa-lg fa-filter pe-2"></i>
+      <span>Filtrar por:</span>
+    </div>
+    <div>
+
+      <div class="form-check form-check-inline pe-2">
+        <input
+          mdbCheckbox
+          class="form-check-input"
+          type="checkbox"
+          id="inlineCheckbox1"
+          value="option1"
+        />
+        <label class="form-check-label" for="inlineCheckbox1">
+          <i class="fas fa-building pe-2"></i>
+          <span>Oficinas</span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline pe-2">
+        <input
+          mdbCheckbox
+          class="form-check-input"
+          type="checkbox"
+          id="inlineCheckbox2"
+          value="option2"
+        />
+        <label class="form-check-label" for="inlineCheckbox2">
+          <i class="fas fa-people-carry pe-2"></i>
+          <span>Salas</span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline pe-2">
+        <input
+          mdbCheckbox
+          class="form-check-input"
+          type="checkbox"
+          id="inlineCheckbox2"
+          value="option2"
+        />
+        <label class="form-check-label" for="inlineCheckbox2">
+          <i class="fas fa-car pe-2"></i>
+          <span>Parqueaderos</span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline pe-2">
+        <input
+          mdbCheckbox
+          class="form-check-input"
+          type="checkbox"
+          id="inlineCheckbox2"
+          value="option2"
+        />
+        <label class="form-check-label" for="inlineCheckbox2">
+          <i class="fas fa-question-circle pe-2"></i>
+          <span>Sin categoría</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button
+      class="btn btn-floating shadow-0 me-3"
+    >
+      <i class="fas fa-2xl fa-list"></i>
+    </button>
+    <button
+      class="btn btn-floating shadow-0"
+    >
+      <i class="fas fa-2xl fa-grip-vertical"></i>
+    </button>
+  </div>
+
+
+</div>
+
+<div class="rounded-1 bg-grey rounded-1 p-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-img-top px-3 pt-3">
+            <img
+              [style.border-radius.px]="5"
+              [style.height.px]="150"
+              [style.width.%]="100"
+              src="https://colineal.com/cdn/shop/articles/8-tips-tener-sala-mas-ordenada-colineal.jpg?v=1653063563&width=1000"
+              alt="Card image cap"
+            />
+          </div>
+          <div class="card-body">
+            <h5 class="text-muted mb-4"><b>Sala de reuniones</b></h5>
+            <div class="badge rounded-pill badge-success py-2 px-3">
+              <i class="fas fa-people-group pe-2"></i>
+              <span>Capacidad: 10</span>
+            </div>
+            <p class="my-3">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+              voluptatum, quibusdam, quia, quod voluptatem voluptas quos
+              voluptates quae doloribus quas natus. Quisquam voluptatum,
+              quibusdam, quia, quod voluptatem voluptas quos voluptates quae
+              doloribus quas natus.
+            </p>
+            <p class="text-muted">
+              <i class="fas fa-map-marker-alt pe-2"></i>
+              <span>Edificio 1, piso 2</span>
+            </p>
+            <button
+              class="btn btn-warning"
+            >
+              Ver más
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-img-top px-3 pt-3">
+            <img
+              [style.border-radius.px]="5"
+              [style.height.px]="150"
+              [style.width.%]="100"
+              src="https://colineal.com/cdn/shop/articles/8-tips-tener-sala-mas-ordenada-colineal.jpg?v=1653063563&width=1000"
+              alt="Card image cap"
+            />
+          </div>
+          <div class="card-body">
+            <h5 class="text-muted mb-4"><b>Sala de reuniones</b></h5>
+            <div class="badge rounded-pill badge-success py-2 px-3">
+              <i class="fas fa-people-group pe-2"></i>
+              <span>Capacidad: 10</span>
+            </div>
+            <p class="my-3">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+              voluptatum, quibusdam, quia, quod voluptatem voluptas quos
+              voluptates quae doloribus quas natus. Quisquam voluptatum,
+              quibusdam, quia, quod voluptatem voluptas quos voluptates quae
+              doloribus quas natus.
+            </p>
+            <p class="text-muted">
+              <i class="fas fa-map-marker-alt pe-2"></i>
+              <span>Edificio 1, piso 2</span>
+            </p>
+            <button
+              class="btn btn-warning"
+            >
+              Ver más
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-img-top px-3 pt-3">
+            <img
+              [style.border-radius.px]="5"
+              [style.height.px]="150"
+              [style.width.%]="100"
+              src="https://colineal.com/cdn/shop/articles/8-tips-tener-sala-mas-ordenada-colineal.jpg?v=1653063563&width=1000"
+              alt="Card image cap"
+            />
+          </div>
+          <div class="card-body">
+            <h5 class="text-muted mb-4"><b>Sala de reuniones</b></h5>
+            <div class="badge rounded-pill badge-success py-2 px-3">
+              <i class="fas fa-people-group pe-2"></i>
+              <span>Capacidad: 10</span>
+            </div>
+            <p class="my-3">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+              voluptatum, quibusdam, quia, quod voluptatem voluptas quos
+              voluptates quae doloribus quas natus. Quisquam voluptatum,
+              quibusdam, quia, quod voluptatem voluptas quos voluptates quae
+              doloribus quas natus.
+            </p>
+            <p class="text-muted">
+              <i class="fas fa-map-marker-alt pe-2"></i>
+              <span>Edificio 1, piso 2</span>
+            </p>
+            <button
+              class="btn btn-warning"
+            >
+              Ver más
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>

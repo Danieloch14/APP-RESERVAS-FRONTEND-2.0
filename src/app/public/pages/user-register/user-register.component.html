@@ -1,216 +1,219 @@
 <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-        <div class="d-flex justify-content-center">
-            <img src="assets/img/logo.jpg" alt="registro" class="img-fluid logo">
-        </div>
+  <div class="modal-content">
+    <div class="d-flex justify-content-center">
+      <img src="assets/img/logo.jpg" alt="registro" class="img-fluid logo">
+    </div>
 
-        <div class="modal-header justify-content-center">
-            <h5 class="modal-title" id="exampleModalLabel">REGISTRO DE USUARIO</h5>
-        </div>
+    <div class="modal-header justify-content-center">
+      <h5 class="modal-title" id="exampleModalLabel">REGISTRO DE USUARIO</h5>
+    </div>
 
-        
-        <div class="modal-body px-5">
-            <form [formGroup]="userForm">
-                
-                <!-- <h5 class="mb-4">Datos Personales </h5> -->
-                <!--Names and Lastnames-->
-                <div class="row" [ngClass]="{'mb-4': 
+
+    <div class="modal-body px-5">
+      <form [formGroup]="userForm">
+
+        <!-- <h5 class="mb-4">Datos Personales </h5> -->
+        <!--Names and Lastnames-->
+        <div class="row" [ngClass]="{'mb-4':
                     (nameField?.invalid  && (nameField?.dirty || nameField?.touched)) ||
                     (lastnameField?.invalid  && (lastnameField?.dirty || lastnameField?.touched))}">
 
-                    <div class="col-sm-6">
-                        
-                        <mdb-form-control>
-                
-                            <input mdbInput mdbValidate type="text" id="name" 
-                                class="form-control mb-4" formControlName="name"/>
-                            <label mdbLabel class="form-label" for="name">
-                                Nombres <span class="text-danger">*</span>
-                            </label>
+          <div class="col-sm-6">
 
-                            <mdb-error *ngIf="nameField?.invalid  && (nameField?.dirty || nameField?.touched)">
+            <mdb-form-control>
+
+              <input mdbInput mdbValidate type="text" id="name"
+                     class="form-control mb-4" formControlName="name"/>
+              <label mdbLabel class="form-label" for="name">
+                Nombres <span class="text-danger">*</span>
+              </label>
+
+              <mdb-error *ngIf="nameField?.invalid  && (nameField?.dirty || nameField?.touched)">
                                 <span *ngIf="nameField?.hasError('required')">
                                 <i class="fas fa-exclamation-circle mb-1"></i>
                                 Este campo es requerido
                                 </span>
-                            </mdb-error>
-        
-                        </mdb-form-control>
-                    </div>
+              </mdb-error>
 
-                    <div class="col-sm-6">
-                        <mdb-form-control>
-                
-                            <input mdbInput mdbValidate type="text" id="lastname" 
-                                class="form-control mb-4" formControlName="lastname"/>
-                            <label mdbLabel class="form-label" for="lastname">
-                                Apellidos <span class="text-danger">*</span>
-                            </label>
+            </mdb-form-control>
+          </div>
 
-                            <mdb-error *ngIf="lastnameField?.invalid  && (lastnameField?.dirty || lastnameField?.touched)">
+          <div class="col-sm-6">
+            <mdb-form-control>
+
+              <input mdbInput mdbValidate type="text" id="lastname"
+                     class="form-control mb-4" formControlName="lastname"/>
+              <label mdbLabel class="form-label" for="lastname">
+                Apellidos <span class="text-danger">*</span>
+              </label>
+
+              <mdb-error *ngIf="lastnameField?.invalid  && (lastnameField?.dirty || lastnameField?.touched)">
                                 <span *ngIf="lastnameField?.hasError('required')">
                                 <i class="fas fa-exclamation-circle mb-1"></i>
                                 Este campo es requerido
                                 </span>
-                            </mdb-error>
-        
-                        </mdb-form-control>
-                    </div>
-                </div>
+              </mdb-error>
 
-                <!--Professional mail-->
-                <div class="row" [ngClass]="{'mb-5': mailField?.invalid && (mailField?.dirty || mailField?.touched)}">
-                    <div class="col-sm-12">
-                        <mdb-form-control>
-                
-                            <input mdbInput mdbValidate type="email" id="mail" 
-                                class="form-control mb-4" formControlName="mail"/>
-                            <label mdbLabel class="form-label" for="mail">
-                                Correo Electr&oacute;nico <span class="text-danger">*</span>
-                            </label>
+            </mdb-form-control>
+          </div>
+        </div>
 
-                            <mdb-error *ngIf="mailField?.invalid && (mailField?.dirty || mailField?.touched)">
+        <!--Professional mail-->
+        <div class="row" [ngClass]="{'mb-5': mailField?.invalid && (mailField?.dirty || mailField?.touched)}">
+          <div class="col-sm-12">
+            <mdb-form-control>
+
+              <input mdbInput mdbValidate type="email" id="mail"
+                     class="form-control mb-4" formControlName="mail"/>
+              <label mdbLabel class="form-label" for="mail">
+                Correo Electr&oacute;nico <span class="text-danger">*</span>
+              </label>
+
+              <mdb-error *ngIf="mailField?.invalid && (mailField?.dirty || mailField?.touched)">
                                 <span *ngIf="mailField?.hasError('required')">
                                     <i class="fas fa-exclamation-circle mb-1"></i>
                                     Este campo es requerido
                                 </span>
-                                <span *ngIf="mailField?.hasError('pattern')">
+                <span *ngIf="mailField?.hasError('pattern')">
                                     <i class="fas fa-exclamation-circle mb-1"></i>
                                     El correo electr&oacute;nico no es v&aacute;lido, debe tener el formato <strong>usuario&#x40;netlife.net.ec</strong>
                                 </span>
-                            </mdb-error>
-        
-                        </mdb-form-control>
-                    </div>
-                </div>
+              </mdb-error>
 
-                <!--cellphone-->
-                <div class="row" [ngClass]="{'mb-4': cellphoneField?.invalid && (cellphoneField?.dirty || cellphoneField?.touched)}">
-                    <div class="col-sm-12">
-                        <mdb-form-control>
-                
-                            <input mdbInput mdbValidate type="tel" id="cellphone" 
-                                class="form-control mb-4" formControlName="cellphone"/>
-                            <label mdbLabel class="form-label" for="cellphone">
-                                Teléfono <span class="text-danger">*</span>
-                            </label>
+            </mdb-form-control>
+          </div>
+        </div>
 
-                            <mdb-error *ngIf="cellphoneField?.invalid && (cellphoneField?.dirty || cellphoneField?.touched)">
+        <!--cellphone-->
+        <div class="row"
+             [ngClass]="{'mb-4': cellphoneField?.invalid && (cellphoneField?.dirty || cellphoneField?.touched)}">
+          <div class="col-sm-12">
+            <mdb-form-control>
+
+              <input mdbInput mdbValidate type="tel" id="cellphone"
+                     class="form-control mb-4" formControlName="cellphone"/>
+              <label mdbLabel class="form-label" for="cellphone">
+                Teléfono <span class="text-danger">*</span>
+              </label>
+
+              <mdb-error *ngIf="cellphoneField?.invalid && (cellphoneField?.dirty || cellphoneField?.touched)">
                                 <span *ngIf="cellphoneField?.hasError('required')">
                                     <i class="fas fa-exclamation-circle mb-1"></i>
                                     Este campo es requerido
                                 </span>
-                                <span *ngIf="cellphoneField?.hasError('minlength')">
+                <span *ngIf="cellphoneField?.hasError('minlength')">
                                     <i class="fas fa-exclamation-circle mb-1"></i>
                                     El telefono debe tener 10 dígitos
                                 </span>
-                                <span *ngIf="cellphoneField?.hasError('maxlength')">
+                <span *ngIf="cellphoneField?.hasError('maxlength')">
                                     <i class="fas fa-exclamation-circle mb-1"></i>
                                     El telefono debe tener 10 dígitos
                                 </span>
-                            </mdb-error>
-        
-                        </mdb-form-control>
-                    </div>
-                </div>
-        
-                <!--Enterprise and role-->
-                <div class="row" [ngClass]="{'mb-4': 
+              </mdb-error>
+
+            </mdb-form-control>
+          </div>
+        </div>
+
+        <!--Enterprise and role-->
+        <div class="row" [ngClass]="{'mb-4':
                     (enterpriseField?.invalid  && (enterpriseField?.dirty || enterpriseField?.touched)) ||
                     (roleField?.invalid  && (roleField?.dirty || roleField?.touched))}">
 
-                    <div class="col-sm-6">
-                        
-                        <mdb-form-control>
-                
-                            <input mdbInput mdbValidate type="text" id="enterprise" 
-                                class="form-control mb-3" formControlName="enterprise"/>
-                            <label mdbLabel class="form-label" for="enterprise">
-                                Empresa <span class="text-danger">*</span>
-                            </label>
+          <div class="col-sm-6">
 
-                            <mdb-error *ngIf="enterpriseField?.invalid  && (enterpriseField?.dirty || enterpriseField?.touched)">
+            <mdb-form-control>
+
+              <input mdbInput mdbValidate type="text" id="enterprise"
+                     class="form-control mb-3" formControlName="enterprise"/>
+              <label mdbLabel class="form-label" for="enterprise">
+                Empresa <span class="text-danger">*</span>
+              </label>
+
+              <mdb-error *ngIf="enterpriseField?.invalid  && (enterpriseField?.dirty || enterpriseField?.touched)">
                                 <span *ngIf="enterpriseField?.hasError('required')">
                                 <i class="fas fa-exclamation-circle mb-1"></i>
                                 Este campo es requerido
                                 </span>
-                            </mdb-error>
-        
-                        </mdb-form-control>
-                          
-                    </div>
+              </mdb-error>
 
-                    <div class="col-sm-6">
-                        <mdb-form-control>
-                
-                            <input mdbInput mdbValidate type="text" id="role" 
-                                class="form-control mb-3" formControlName="role"/>
-                            <label mdbLabel class="form-label" for="role">
-                                Cargo <span class="text-danger">*</span>
-                            </label>
+            </mdb-form-control>
 
-                            <mdb-error *ngIf="roleField?.invalid  && (roleField?.dirty || roleField?.touched)">
+          </div>
+
+          <div class="col-sm-6">
+            <mdb-form-control>
+
+              <input mdbInput mdbValidate type="text" id="role"
+                     class="form-control mb-3" formControlName="role"/>
+              <label mdbLabel class="form-label" for="role">
+                Cargo <span class="text-danger">*</span>
+              </label>
+
+              <mdb-error *ngIf="roleField?.invalid  && (roleField?.dirty || roleField?.touched)">
                                 <span *ngIf="roleField?.hasError('required')">
                                 <i class="fas fa-exclamation-circle mb-1"></i>
                                 Este campo es requerido
                                 </span>
-                            </mdb-error>
-        
-                        </mdb-form-control>
-                    </div>
-                </div> 
-                
-            </form>
+              </mdb-error>
+
+            </mdb-form-control>
+          </div>
         </div>
 
-        <!--Continue button-->
-        <div class="modal-footer" *ngIf="!videoEnded">
-            <div class="row px-4 w-100">
-                <button type="button" class="btn btn-warning"
-                    [disabled]="userForm.invalid" (click)="openVideoDialog()">
-                    CONTINUAR
-                </button>
-            </div>           
-        </div>
-
-        <!--Terms & conditions section and register button-->
-        <div class="modal-footer" *ngIf="videoEnded">
-
-            <h6 class="w-100 text-center">Acepte los términos y condiciones</h6>
-
-            <div class="row  px-4">
-                <div class="col-sm-12">
-                    <div class="form-check mb-3">
-                        <input mdbCheckbox class="form-check-input"
-                            type="checkbox" value="true" id="CheckTerm" [checked]="checkTerms"
-                            (change)="onCheckTermsChange($event)" />
-                        <label mdbLabel class="form-check-label fs-6 terms" for="CheckTerm">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam architecto asperiores similique impedit. Hic laudantium recusandae reprehenderit nobis quae, iure est sit nemo ducimus consectetur delectus, odit rerum, modi tempora.
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row px-4 w-100">
-                <button type="button" class="btn btn-warning"
-                    [disabled]="!enableRegister">
-                    REGISTRAR CUENTA
-                </button>
-            </div>           
-        </div>
+      </form>
     </div>
+
+    <!--Continue button-->
+    <div class="modal-footer" *ngIf="!videoEnded">
+      <div class="row px-4 w-100">
+        <button type="button" class="btn btn-warning"
+                [disabled]="userForm.invalid" (click)="openVideoDialog()">
+          CONTINUAR
+        </button>
+      </div>
+    </div>
+
+    <!--Terms & conditions section and register button-->
+    <div class="modal-footer" *ngIf="videoEnded">
+
+      <h6 class="w-100 text-center">Acepte los términos y condiciones</h6>
+
+      <div class="row  px-4">
+        <div class="col-sm-12">
+          <div class="form-check mb-3">
+            <input mdbCheckbox class="form-check-input"
+                   type="checkbox" value="true" id="CheckTerm" [checked]="checkTerms"
+                   (change)="onCheckTermsChange($event)"/>
+            <label mdbLabel class="form-check-label fs-6 terms" for="CheckTerm">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam architecto asperiores similique impedit. Hic
+              laudantium recusandae reprehenderit nobis quae, iure est sit nemo ducimus consectetur delectus, odit
+              rerum, modi tempora.
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row px-4 w-100">
+        <button type="button" class="btn btn-warning"
+                [disabled]="!enableRegister">
+          REGISTRAR CUENTA
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- video's dialog box -->
 <div *ngIf="showVideoDialog" class="video-dialog">
-    <div class="modal-header">
-        <h5 class="modal-title">Mira el siguiente video para continuar</h5>
-        <button (click)="closeVideoDialog()">Cerrar</button>
-    </div>
+  <div class="modal-header">
+    <h5 class="modal-title">Mira el siguiente video para continuar</h5>
+    <button (click)="closeVideoDialog()">Cerrar</button>
+  </div>
 
-    <div class="modal-body">
-        <video id="localVideo" width="560" height="315" autoplay (ended)="endedVideo()">
-          <source src="../../../../assets/img/Y2meta.app - 10 Segundos.mp4" type="video/mp4">
-        </video>
-    </div>
+  <div class="modal-body">
+    <video id="localVideo" width="560" height="315" autoplay (ended)="endedVideo()">
+      <source src="../../../../assets/img/Y2meta.app - 10 Segundos.mp4" type="video/mp4">
+    </video>
+  </div>
 </div>
