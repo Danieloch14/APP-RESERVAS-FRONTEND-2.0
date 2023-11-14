@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
-import { NgIf, NgOptimizedImage, UpperCasePipe } from "@angular/common";
 import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
-import { ThemePalette } from "@angular/material/core";
+import {NavComponent} from "../nav/nav.component";
+import {CommonModule, UpperCasePipe} from "@angular/common";
 
 @Component({
   selector: 'app-layout',
@@ -14,14 +14,14 @@ import { ThemePalette } from "@angular/material/core";
   imports: [
     MatButtonModule,
     MatSidenavModule,
-    NgIf,
     RouterOutlet,
     MatToolbarModule,
     MatIconModule,
-    NgOptimizedImage,
-    UpperCasePipe,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    NavComponent,
+    UpperCasePipe,
+    CommonModule,
   ],
   styleUrls: ['./layout.component.scss']
 })

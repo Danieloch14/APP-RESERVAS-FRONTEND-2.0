@@ -37,26 +37,7 @@
   </mat-drawer>
 
   <div class="sidenav-content">
-    <mat-toolbar color="primary" class="shadow-3">
-      <button
-        (click)="drawer.toggle()"
-        class="btn btn-floating shadow-0" aria-label=" menu icon">
-        <i class="fas fa-xl fa-bars"></i>
-      </button>
-      <img src="assets/icons/icon-logo.png" [style.width.px]="150" [style.height.px]="30" fill=""/>
-      <span class="spacer"></span>
-      <div class="d-flex gap-4 align-items-center">
-        <a>
-          <i class="fas fa-xl fa-bell"></i>
-          <span class="badge bg-warning badge-dot"></span>
-        </a>
-        <div>
-          <img src="assets/img/images.jpg" [style.width.px]="30" class="rounded-circle"/>
-        </div>
-
-      </div>
-
-    </mat-toolbar>
+    <app-nav (toggleSideNav)="drawer.toggle()"></app-nav>
     <div class="py-4 px-5">
       <router-outlet></router-outlet>
     </div>

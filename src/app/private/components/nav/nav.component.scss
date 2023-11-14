@@ -1,0 +1,28 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  transition: all 200ms ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+
+  i {
+    transition: all 200ms ease;
+  }
+}
+
+.menu-item:hover {
+  i {
+    color: white;
+  }
+
+  background: rgba(228, 161, 27, 0.71);
+  color: white;
+}
