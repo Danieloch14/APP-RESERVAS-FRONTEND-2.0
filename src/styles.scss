@@ -104,3 +104,57 @@ i {
 
 
 @import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+/*Mat-form-field*/
+mat-form-field{
+  width: 100%;
+}
+
+// .mat-mdc-form-field {
+//   line-height: none;
+// }
+
+.mdc-text-field--outlined {
+  height: 30px !important;
+  border-radius: 4px !important;
+  padding-left: 7px !important;
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  padding: 3px;
+}
+
+.mat-mdc-form-field .mdc-notched-outline__notch {
+  margin-left: -7px !important;
+}
+
+.mat-mdc-select{
+  color: #000000de !important;
+}
+
+/*Float-label*/
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 14px;
+}
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  --mat-mdc-form-field-label-transform: translateY( -20px) scale(var(--mat-mdc-form-field-floating-label-scale, 0.75));
+  transform: var(--mat-mdc-form-field-label-transform);
+}
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label--float-above {
+  color: #5D8AD3 !important;
+}
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+    border-color: #5D8AD3 !important;
+}
+/*select-options*/
+.mat-mdc-option {
+  min-height: 4px !important;
+}
+.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+  color: #000000 !important;
+}
+
+
+

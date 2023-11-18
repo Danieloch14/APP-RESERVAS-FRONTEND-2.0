@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-register',
@@ -23,9 +24,11 @@ export class UserRegisterComponent implements OnInit{
   showVideoDialog: boolean = false;
   videoEnded: boolean = false;
   enableRegister: boolean = false;
+  success: boolean = false;
 
   constructor(
-    private builder: FormBuilder
+    private builder: FormBuilder,
+    private route: Router
   ){
     this.userForm = new FormGroup({});
   }
@@ -43,6 +46,7 @@ export class UserRegisterComponent implements OnInit{
       cellphone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       mail: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]],
       role: ['', [Validators.required]],
+      address: ['', [Validators.required]],
     });
   }
 
@@ -70,6 +74,10 @@ export class UserRegisterComponent implements OnInit{
     return this.userForm.get('role');
   }
 
+  get addressField() {
+    return this.userForm.get('address');
+  }
+
   openVideoDialog() {
     this.showVideoDialog = true;
   }
@@ -91,5 +99,14 @@ export class UserRegisterComponent implements OnInit{
     } else {
       this.enableRegister = false;
     }
+  }
+
+  register(path: string){
+    this.success = true;
+
+    setTimeout(() => {
+      this.success = false;
+      this.route.navigate([path]);
+    }, 3000);
   }
 }
