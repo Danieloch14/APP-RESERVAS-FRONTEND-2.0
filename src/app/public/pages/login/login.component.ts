@@ -11,6 +11,8 @@ import {MatCardModule} from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { RegionService } from 'src/app/private/user/services/region.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MainLayoutComponent } from 'src/app/components/main-layout/main-layout.component';
+import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.component';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
     MdbValidationModule,
     MatFormFieldModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    MainLayoutComponent,
+    MainFooterComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],

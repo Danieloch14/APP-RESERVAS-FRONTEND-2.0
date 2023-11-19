@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { Router } from '@angular/router';
+import { MainLayoutComponent } from 'src/app/components/main-layout/main-layout.component';
+import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.component';
 
 @Component({
   selector: 'app-user-register',
@@ -12,7 +14,9 @@ import { Router } from '@angular/router';
     CommonModule,
     ReactiveFormsModule,
     MdbFormsModule,
-    MdbValidationModule
+    MdbValidationModule,
+    MainLayoutComponent,
+    MainFooterComponent
   ],
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss']
