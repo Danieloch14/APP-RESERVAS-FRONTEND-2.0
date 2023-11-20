@@ -1,52 +1,81 @@
-::ng-deep .modal {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+.register-card{
+  height: 100vh;
+  font-family: "HelveticaLTStd";
 }
-::ng-deep .modal-content{
-    --mdb-modal-box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 1px rgba(0, 0, 0, 0);
+.card{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 420px;
+  border: 0.2px solid #00000040;
 }
 .logo{
-    width: 35vh;
+  width: 35vh;
+  padding: 24px 0px 10px 0px;
+}
+
+.card-header{
+  --mdb-card-header-border-color: none;
+  padding: 0px;
+}
+.card-title{
+  font-weight: bold;
 }
 
 .video-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    max-width: 80%;
-    max-height: 80%;
-    overflow: auto;
-  
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ccc;
-  
-      h5 {
-        margin: 0;
-      }
-  
-      button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-weight: 600;
-        color: #F1A714;
-      }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  // padding: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  max-width: 50%;
+  max-height: 60%;
+  overflow: auto;
+  font-family: "HelveticaLTStd";
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0px 0px 20px;
+    border-bottom: 1px solid #ccc;
+
+    h5 {
+      margin: 0;
+      font-weight: bold;
     }
-  
-    .modal-body {
-      padding-top: 10px;
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: #F1A714;
     }
   }
 
+  .modal-body {
+    padding-top: 10px;
+  }
+}
+
 .terms{
-    text-align: justify;
+  text-align: justify;
+}
+
+button{
+  font-weight: bold;
+}
+.card-footer {
+  --mdb-card-footer-border-color: none;
+}
+
+.success-register{
+  z-index: 1000; 
+  width: 25vw;
+  text-align: justify;
 }
