@@ -2,6 +2,10 @@
   flex: 1 1 auto;
 }
 
+.notification-bell {
+  cursor: pointer;
+}
+
 .menu-item {
   width: 100%;
   display: flex;
@@ -24,6 +28,7 @@
     color: white;
   }
 
-  background: rgba(228, 161, 27, 0.71);
+  background: rgba(228, 161, 27);
   color: white;
 }
+

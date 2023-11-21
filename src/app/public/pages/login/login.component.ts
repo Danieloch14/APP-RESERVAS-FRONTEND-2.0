@@ -9,7 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { RegionService } from 'src/app/private/user/services/region.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MainLayoutComponent } from 'src/app/components/main-layout/main-layout.component';
 import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.component';
@@ -30,7 +29,6 @@ import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [RegionService]
 })
 export class LoginComponent implements OnInit {
 
@@ -44,7 +42,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private regionService: RegionService
   ) {
     this.userForm = new FormGroup({});
     this.newUserForm = new FormGroup({});
@@ -93,16 +90,16 @@ export class LoginComponent implements OnInit {
     return this.newUserForm.get('recoverMail');
   }
 
-  getRegionData(){
-    this.regionService.getAllRegion().subscribe(
-      (regions) => {
-        console.log(regions);
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
+  // getRegionData(){
+  //   this.regionService.getAllRegion().subscribe(
+  //     (regions) => {
+  //       console.log(regions);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   )
+  // }
 
   login() {
     this.router.navigate(['/user/home']);

@@ -1,38 +1,21 @@
 <mat-drawer-container class="main-container" autosize>
   <mat-drawer #drawer class="sidenav" mode="side" [opened]="true">
-    <p class="text-center fs-5">{{ 'Menu' | uppercase}}</p>
+    <p class="text-center fs-5">{{ 'Menú' | uppercase}}</p>
     <hr class="hr">
-    <div class="d-flex gap-2 flex-column">
+    <div class="menu">
       <a
-        routerLink="home"
+        class="menu__item"
         routerLinkActive="active"
         [style.width.px]="150"
+        *ngFor="let item of items"
+        [routerLink]="item.route"
       >
         <div class="d-flex justify-content-start align-items-center py-1 ps-2">
-          <i class="fas fa-home pe-2 text-white"></i>
-          <span>Inicio</span>
+          <i class="fas pe-3" [ngClass]="item.icon"></i>
+          <span>{{item.name}}</span>
         </div>
       </a>
-      <a
-        routerLink="bookings"
-        routerLinkActive="active"
-        [style.width.px]="150"
-      >
-        <div class="d-flex justify-content-start align-items-center py-1 ps-2">
-          <i class="fas fa-book pe-2 text-white"></i>
-          <span>Reservas</span>
-        </div>
-      </a>
-      <a
-        routerLink="calendar"
-        routerLinkActive="active"
-        [style.width.px]="150"
-      >
-        <div class="d-flex justify-content-start align-items-center py-1 ps-2">
-          <i class="fas fa-calendar pe-2 text-white"></i>
-          <span>Calendario</span>
-        </div>
-      </a>
+
     </div>
   </mat-drawer>
 
