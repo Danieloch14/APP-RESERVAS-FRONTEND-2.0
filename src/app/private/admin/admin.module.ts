@@ -13,12 +13,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { ModalImageResourceComponent } from './pages/resources/modal-image-resource/modal-image-resource.component';
-
+import { TypeResourcesComponent } from './pages/type-resources/type-resources.component';
+import { ModalTypeResourceComponent } from './pages/type-resources/modal-type-resource/modal-type-resource.component';
 @NgModule({
   declarations: [
     ResourcesComponent,
     ModalResourceComponent,
-    ModalImageResourceComponent
+    ModalImageResourceComponent,
+    TypeResourcesComponent,
+    ModalTypeResourceComponent
   ],
   imports: [
     CommonModule,

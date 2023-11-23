@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { LayoutComponent } from '../components/layout/layout.component';
 import { HomeComponent } from '../components/home/home.component';
+import { TypeResourcesComponent } from './pages/type-resources/type-resources.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,9 @@ const routes: Routes = [
       },
       {
         path: 'resources', component: ResourcesComponent,
+      },
+      {
+        path: 'type-resources', component: TypeResourcesComponent
       }
 
     ]
