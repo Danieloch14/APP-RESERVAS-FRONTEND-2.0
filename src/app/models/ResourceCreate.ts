@@ -1,6 +1,8 @@
+import { Location } from "./Location";
+
 export class ResourceCreate {
     idResource!: number;
-    idLocation!: number;
+    idLocation!: Location;
     idTypeResource!: number;
     idDadResource!: number;
     capacity!: number;

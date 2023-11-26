@@ -12,6 +12,7 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
 import { MdbCheckboxModule } from "mdb-angular-ui-kit/checkbox";
+import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 
 
 @NgModule({
@@ -30,7 +31,9 @@ import { MdbCheckboxModule } from "mdb-angular-ui-kit/checkbox";
     MatChipsModule,
     MatAutocompleteModule,
     MatIconModule,
-    MdbCheckboxModule
+    MdbCheckboxModule,
+    MdbValidationModule,
+    MdbAccordionModule
   ]
 })
 export class UserModule { }
