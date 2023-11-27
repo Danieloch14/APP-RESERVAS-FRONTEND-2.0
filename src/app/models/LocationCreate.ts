@@ -2,7 +2,7 @@ import { Region } from "./Region";
 
 export class LocationCreate{
     idLocation!: number;
-    idRegion!: Region;
+    idRegion!: number;
     place!: string;
     floor!: number;
     address!: string;

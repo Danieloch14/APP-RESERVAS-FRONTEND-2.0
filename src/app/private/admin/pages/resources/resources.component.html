@@ -10,12 +10,12 @@
         </button>
     </div>
 
-    <div class="alert alert-info" role="alert" *ngIf="dataSource.data.length == 0" >
+    <div class="alert alert-info" role="alert" *ngIf="listResources?.length == 0" >
         <i class="fa-solid fa-circle-info me-2"></i>
         No existen recursos registrados
     </div>
 
-    <div class="data-table" *ngIf="dataSource.data.length != 0">
+    <div class="data-table" *ngIf="listResources?.length != 0">
 
       <mdb-form-control class="search-input">
         <input
@@ -74,24 +74,21 @@
               <!-- capacity -->
               <ng-container matColumnDef="capacity">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header > Capacidad </th>
-                <td mat-cell *matCellDef="let row"> {{row.capacity}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.capacity ? row.capacity : 'NO APLICA'}} </td>
               </ng-container>
 
               <!-- price -->
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header > Precio </th>
                 <td mat-cell *matCellDef="let row"> 
-                  {{row.price != 0 ? (row.price | currency: 'USD') : 'GRATIS'}} </td>
+                  {{row.price && row.price != 0 ? (row.price | currency: 'USD') : 'GRATIS'}} </td>
               </ng-container>
 
               <!-- image -->
               <ng-container matColumnDef="image">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header > Imagen </th>
-                <td mat-cell *matCellDef="let row;" > 
-                  <button type="button" class="btn btn-warning btn-md see_image" title="Editar recurso" (click)="seeImage(row.pathImages, row.idTypeResource.name)">
-                    <i class="far fa-eye"></i>
-                    Ver
-                  </button>
+                <td mat-cell *matCellDef="let row;" >
+                    <i class="far fa-eye fa-lg" title="Editar recurso" (click)="seeImage(row.pathImages, row.idTypeResource.name)"></i>
                 </td>
               </ng-container>
           
@@ -100,15 +97,10 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Opciones </th>
                 <td mat-cell *matCellDef="let row"> 
                     <div class="actions">
-                        <button type="button" class="btn btn-warning btn-md" title="Editar recurso" (click)="editResource(row)">
-                            <i class="far fa-edit"></i>
-                            Editar
-                        </button>
-                        <button type="button" class="btn btn-warning btn-md" title="Eliminar recurso">
-                            <i class="far fa-trash-alt"></i>
-                            Eliminar
-                        </button>
-                    </div> </td>
+                            <i class="far fa-edit fa-lg" title="Editar recurso" (click)="editResource(row)"></i>
+                            <i class="far fa-trash-alt fa-lg" title="Eliminar recurso" (click)="deleteResource(row)"></i>
+                    </div> 
+                  </td>
               </ng-container>
           
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -125,7 +117,11 @@
           
   </div>
 </div>
-
+<div class="position-fixed top-0 end-0 m-4 success">
+  <div class="alert alert-success" role="alert" *ngIf="successDelete">
+    Se ha eliminado el recurso exitosamente
+  </div>
+</div>
 
   
   

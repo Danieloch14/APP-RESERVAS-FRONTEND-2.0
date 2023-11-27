@@ -62,35 +62,34 @@
             <mat-form-field appearance="outline">
               <mat-label>Tipo de recurso</mat-label>
               <mat-select formControlName="idTypeResource">
-                <mat-option value="1">Video</mat-option>
-                <mat-option value="2">Audio</mat-option>
-                <mat-option value="3">Imagen</mat-option>
-                <mat-option value="4">Documento</mat-option>
-                <!-- <mat-option [value]="resource.id_resource" *ngFor="let resource of listResources">
-                                    {{resource.name}}
-                                </mat-option> -->
+                <mat-option
+                  [value]="typeResrc.idTypeResource"
+                  *ngFor="let typeResrc of listTypeResources"
+                >
+                  {{ typeResrc.name }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </div>
-
+        <!--Location-->
         <div class="row">
-          <!--Location-->
+          <!--Region-->
           <div class="col">
             <mat-form-field appearance="outline">
-              <mat-label>Ubicación</mat-label>
-              <mat-select formControlName="idLocation">
-                <mat-option value="1">Condado y prensa</mat-option>
-                <mat-option value="2">Iñaquito</mat-option>
-                <mat-option value="3">Carcelen</mat-option>
-                <!-- <mat-option [value]="location.idLocation" *ngFor="let location of listLocations">
-                                    {{location.address}}
-                                </mat-option> -->
+              <mat-label>Ciudad donde se ubica el recurso</mat-label>
+              <mat-select formControlName="idRegion">
+                <mat-option
+                  [value]="region.idRegion"
+                  *ngFor="let region of listRegions"
+                >
+                  {{ region.name }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </div>
-
+        <!--place-->
         <div class="row">
           <div class="col">
             <mdb-form-control>
@@ -98,12 +97,50 @@
                 mdbInput
                 mdbValidate
                 type="text"
-                id="content"
+                id="place"
                 class="form-control mb-4"
-                formControlName="content"
+                formControlName="place"
               />
-              <label mdbLabel class="form-label" for="content">
-                Contenido <span class="text-danger">*</span>
+              <label mdbLabel class="form-label" for="place">
+                Sector <span class="text-danger">*</span>
+              </label>
+            </mdb-form-control>
+          </div>
+        </div>
+
+        <div class="row">
+          <!--address-->
+          <div class="col">
+            <mdb-form-control>
+              <input
+                mdbInput
+                mdbValidate
+                type="text"
+                id="address"
+                class="form-control mb-4"
+                formControlName="address"
+              />
+              <label mdbLabel class="form-label" for="address">
+                Dirección <span class="text-danger">*</span>
+              </label>
+            </mdb-form-control>
+          </div>
+        </div>
+
+        <div class="row">
+          <!--floor-->
+          <div class="col">
+            <mdb-form-control>
+              <input
+                mdbInput
+                mdbValidate
+                type="number"
+                id="floor"
+                class="form-control mb-4"
+                formControlName="floor"
+              />
+              <label mdbLabel class="form-label" for="floor">
+                # Piso del edificio <span class="text-danger">*</span>
               </label>
             </mdb-form-control>
           </div>
@@ -111,15 +148,6 @@
 
         <div class="row">
           <div class="col">
-            <div *ngIf="selectedFile" class="change_image">
-              <img
-                [src]="getImageUrlPath(selectedFile)"
-                alt="Vista previa del archivo"
-              />
-              <button class="btn btn-warning mb-4" (click)="clearFile()">
-                Eliminar
-              </button>
-            </div>
             <div class="image-upload" *ngIf="!selectedFile">
               <label for="fileInput">Cargar imagen del recurso</label>
               <input
@@ -127,6 +155,12 @@
                 type="file"
                 (change)="onFileSelected($event)"
               />
+            </div>
+            <div *ngIf="selectedFile" class="change_image">
+              <img [src]="pathImage" alt="Vista previa del archivo" />
+              <button class="btn btn-warning mb-4" (click)="clearFile()">
+                Eliminar
+              </button>
             </div>
           </div>
         </div>
@@ -150,13 +184,13 @@
         class="alert alert-danger"
         role="alert"
         *ngIf="
-          idLocationField?.invalid &&
-          (idLocationField?.dirty || idLocationField?.touched)
+          idRegionField?.invalid &&
+          (idRegionField?.dirty || idRegionField?.touched)
         "
       >
-        <span *ngIf="idLocationField?.hasError('required')">
+        <span *ngIf="idRegionField?.hasError('required')">
           <i class="fas fa-exclamation-circle mb-1"></i>
-          Escoja una Ubicación
+          Escoja una ciudad
         </span>
       </div>
 
@@ -192,13 +226,39 @@
         class="alert alert-danger"
         role="alert"
         *ngIf="
-          contentField?.invalid &&
-          (contentField?.dirty || contentField?.touched)
+          placeField?.invalid && (placeField?.dirty || placeField?.touched)
         "
       >
-        <span *ngIf="contentField?.hasError('required')">
+        <span *ngIf="placeField?.hasError('required')">
           <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingrese el contenido del recurso
+          Ingrese el sector donde se encuentra el recurso
+        </span>
+      </div>
+
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="
+          addressField?.invalid &&
+          (addressField?.dirty || addressField?.touched)
+        "
+      >
+        <span *ngIf="addressField?.hasError('required')">
+          <i class="fas fa-exclamation-circle mb-1"></i>
+          Ingrese la dirección donde se encuentra el recurso
+        </span>
+      </div>
+
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="
+          floorField?.invalid && (floorField?.dirty || floorField?.touched)
+        "
+      >
+        <span *ngIf="floorField?.hasError('required')">
+          <i class="fas fa-exclamation-circle mb-1"></i>
+          Ingrese el número de piso donde se encuentra el recurso
         </span>
       </div>
 
@@ -228,6 +288,13 @@
           Suba la imagen del recurso
         </span>
       </div>
+
+      <div class="alert alert-danger" role="alert" *ngIf="!validExtension">
+        <span>
+          <i class="fas fa-exclamation-circle mb-1"></i>
+          La imagen debe ser de tipo .jpg, .jpeg, .webp o .png
+        </span>
+      </div>
       <!--ALERTS-->
     </div>
 
@@ -244,5 +311,14 @@
         GUARDAR
       </button>
     </div>
+  </div>
+</div>
+<!-- success register alert -->
+<div class="position-fixed top-0 end-0 m-4 success">
+  <div class="alert alert-success" role="alert" *ngIf="successCreate">
+    Se ha creado un nuevo recurso exitosamente
+  </div>
+  <div class="alert alert-success" role="alert" *ngIf="successEdit">
+    Se ha modificado el recurso exitosamente
   </div>
 </div>
