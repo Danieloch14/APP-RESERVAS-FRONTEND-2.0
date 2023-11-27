@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { Router } from "@angular/router";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
 import { MainLayoutComponent } from 'src/app/components/main-layout/main-layout.component';
 import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.component';
+import { AuthService } from "../../../auth/services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -23,9 +24,12 @@ import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.
     MdbValidationModule,
     MatFormFieldModule,
     MatSelectModule,
-    HttpClientModule,
     MainLayoutComponent,
-    MainFooterComponent
+    MainFooterComponent,
+    HttpClientModule
+  ],
+  providers: [
+    AuthService
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -42,6 +46,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private router: Router,
+    private authService: AuthService
   ) {
     this.userForm = new FormGroup({});
     this.newUserForm = new FormGroup({});
@@ -101,12 +106,16 @@ export class LoginComponent implements OnInit {
   //   )
   // }
 
-  login() {
-    this.router.navigate(['/user/home']);
+  onLogin() {
+    if (this.userForm.invalid) return
+
+    this.authService.performLogin(this.mailField?.value, this.passwordField?.value)
+    console.log(this.userForm.value)
+
   }
 
   /**Request access dialog */
-  requestAccess(){
+  requestAccess() {
     this.newUser = true;
   }
 

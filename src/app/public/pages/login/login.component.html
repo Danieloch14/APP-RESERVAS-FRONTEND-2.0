@@ -1,267 +1,209 @@
-<app-main-layout></app-main-layout>
-<div class="login-card">
-  <div class="card">
-    <!--Logo-->
-    <div class="d-flex justify-content-center">
+<div class="main-container">
+  <div class="main-container__assets">
+    <div class="logo-container">
       <img
-        src="assets/icons/icon-logo.png"
-        alt="Inicio de Sesión"
-        class="img-fluid logo"
-      />
+        class="logo"
+        src="assets/img/logo-netbookin.svg">
     </div>
-    <!--Title-->
-    <div class="card-header text-center">
-      <h4 class="card-title">BIENVENIDO</h4>
-    </div>
-    <!--Body-->
-    <div class="card-body px-5">
-      <form [formGroup]="userForm">
+    <img src="assets/img/paco.png">
+  </div>
+  <div class="main-container__form">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="text-center pb-3">¡Hola! Bienvenido</h2>
         <div
-          class="alert alert-info"
+          class="text-muted pb-3"
           role="alert"
           *ngIf="userTypeField?.value == ''"
         >
           <i class="fa-solid fa-circle-info me-2"></i>
           Seleccione el tipo de usuario para continuar
         </div>
+        <form [formGroup]="userForm">
+          <mat-form-field appearance="outline">
+            <mat-label>
+              Tipo de Usuario
+              <span class="text-danger">*</span>
+            </mat-label>
+            <mat-select formControlName="userType" id="userType">
+              <mat-option value="user">Usuario</mat-option>
+              <mat-option value="admin">Administrador</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <!--User type-->
-        <div class="row">
-          <div class="col-xs-12">
-            <mat-form-field appearance="outline">
-              <mat-label>Tipo de Usuario</mat-label>
-              <mat-select formControlName="userType" id="userType">
-                <mat-option value="user">Usuario</mat-option>
-                <mat-option value="admin">Administrador</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
+          <mat-form-field *ngIf="userTypeField?.value == 'user'" appearance="outline">
+            <mat-label>
+              Región
+              <span class="text-danger">*</span>
+            </mat-label>
+            <mat-select id="region" formControlName="region">
+              <mat-option value="quito">Quito</mat-option>
+              <mat-option value="guayaquil">Guayaquil</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <div class="row" *ngIf="userTypeField?.value == 'user'">
-          <!--region-->
-          <div class="col-xs-12">
-            <mat-form-field appearance="outline">
-              <mat-label>Región</mat-label>
-              <mat-select id="region" formControlName="region" required>
-                <mat-option value="quito">Quito</mat-option>
-                <mat-option value="guayaquil">Guayaquil</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
+          <div *ngIf="userTypeField?.value != ''">
+            <mdb-form-control>
+              <input
+                mdbInput
+                mdbValidate
+                type="email"
+                id="mail"
+                class="form-control mb-4"
+                formControlName="mail"
+              />
+              <label mdbLabel class="form-label" for="mail">
+                Correo Electr&oacute;nico
+                <span class="text-danger">*</span>
+              </label>
+            </mdb-form-control>
+            <mdb-form-control>
+              <input
+                mdbInput
+                mdbValidate
+                type="password"
+                id="password"
+                class="form-control mb-4"
+                formControlName="password"
+              />
+              <label mdbLabel class="form-label" for="password">
+                Contrase&ntilde;a
+                <span class="text-danger">*</span>
+              </label>
+            </mdb-form-control>
 
-        <div class="row" *ngIf="userTypeField?.value != ''">
-          <div class="col-sm-12">
-            <!--Email-->
-            <div class="row">
-              <div class="col-xs-12">
-                <mdb-form-control>
-                  <input
-                    mdbInput
-                    mdbValidate
-                    type="email"
-                    id="mail"
-                    class="form-control mb-4"
-                    formControlName="mail"
-                  />
-                  <label mdbLabel class="form-label" for="mail">
-                    Correo Electr&oacute;nico
-                  </label>
-                </mdb-form-control>
-              </div>
-            </div>
-            <!--password-->
-            <div class="row">
-              <div class="col-xs-12">
-                <mdb-form-control>
-                  <input
-                    mdbInput
-                    mdbValidate
-                    type="password"
-                    id="password"
-                    class="form-control mb-4"
-                    formControlName="password"
-                  />
-                  <label mdbLabel class="form-label" for="password">
-                    Contrase&ntilde;a
-                  </label>
-                </mdb-form-control>
-              </div>
-            </div>
-
-            <!--Region error alert-->
-            <div
-              class="alert alert-danger"
-              role="alert"
-              *ngIf="
-                regionField?.invalid &&
-                (regionField?.dirty || regionField?.touched)
-              "
-            >
-              <span *ngIf="regionField?.hasError('required')">
-                <i class="fas fa-exclamation-circle mb-1"></i>
-                Seleccione una región
-              </span>
-            </div>
-            <!--Email error alert-->
-            <div
-              class="alert alert-danger"
-              role="alert"
-              *ngIf="
-                mailField?.invalid && (mailField?.dirty || mailField?.touched)
-              "
-            >
-              <span *ngIf="mailField?.hasError('required')">
-                <i class="fas fa-exclamation-circle mb-1"></i>
-                El correo es requerido
-              </span>
-              <span *ngIf="mailField?.hasError('pattern')">
-                <i class="fas fa-exclamation-circle mb-1"></i>
-                El correo electr&oacute;nico no es v&aacute;lido, debe tener el
-                formato <strong>usuario&#x40;netlife.net.ec</strong>
-              </span>
-            </div>
-            <!--password error alert-->
-            <div
-              class="alert alert-danger"
-              role="alert"
-              *ngIf="
-                passwordField?.invalid &&
-                (passwordField?.dirty || passwordField?.touched)
-              "
-            >
-              <i class="fa-solid fa-circle-info me-2"></i>
-              Ingrese la contrase&ntilde;a
-            </div>
-            <!--login button-->
             <div class="row px-2 pt-3">
               <button
                 type="button"
                 class="btn btn-warning"
-                (click)="login()"
+                (click)="onLogin()"
                 [disabled]="userForm.invalid"
               >
                 Iniciar Sesi&oacute;n
               </button>
+              <span *ngIf="userForm.invalid" class="text-muted text-center pt-3" [style.font-size.px]="10"> Para poder continuar llene todos los campos obligatorios (*) </span>
             </div>
           </div>
+        </form>
+        <div *ngIf="userTypeField?.value != ''" class="my-4">
+          <div class="text-center text-warning py-2">
+            <a (click)="recoverPassword()">¿Olvidaste tu contrase&ntilde;a?</a>
+          </div>
+          <div class="text-center">
+            ¿No tiene una cuenta?
+            <a (click)="requestAccess()">
+              <b class="text-warning ps-2">
+                Solicite unirse a la plataforma
+              </b>
+            </a>
+          </div>
         </div>
-      </form>
-    </div>
-    <!--Footer-->
-    <div class="card-footer request">
-      <div class="col-sm-12 text-center">
-        <a (click)="recoverPassword()">¿Olvidaste tu contrase&ntilde;a?</a>
-      </div>
-      <div class="col-sm-12 text-center">
-        ¿No tiene una cuenta?
-        <a (click)="requestAccess()">Solicite unirse a la plataforma</a>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="newUser" class="modal-background"></div>
-<!-- request access' dialog box -->
-<div *ngIf="newUser" class="request-access-dialog">
-  <form [formGroup]="newUserForm">
-    <div class="modal-header">
-      <h5 class="modal-title">Ingrese el correo institucional</h5>
-    </div>
+<!--<div *ngIf="newUser" class="modal-background"></div>-->
+<!--&lt;!&ndash; request access' dialog box &ndash;&gt;-->
+<!--<div *ngIf="newUser" class="request-access-dialog">-->
+<!--  <form [formGroup]="newUserForm">-->
+<!--    <div class="modal-header">-->
+<!--      <h5 class="modal-title">Ingrese el correo institucional</h5>-->
+<!--    </div>-->
 
-    <div class="modal-body">
-      <div [ngClass]="{'mb-5': mailNewUserField?.invalid && (mailNewUserField?.dirty || mailNewUserField?.touched)}">
-        <mdb-form-control>
-          <input
-            mdbInput
-            mdbValidate
-            type="email"
-            id="mailNewUser"
-            class="form-control"
-            formControlName="mailNewUser"
-          />
-          <label mdbLabel class="form-label" for="mailNewUser">
-            Correo Electr&oacute;nico
-          </label>
-          <mdb-error
-            *ngIf="
-              mailNewUserField?.invalid &&
-              (mailNewUserField?.dirty || mailNewUserField?.touched)
-            "
-          >
-            <span *ngIf="mailNewUserField?.hasError('pattern')">
-              Correo no v&aacute;lido, debe tener el
-              formato <strong>usuario&#x40;netlife.net.ec</strong>
-            </span>
-          </mdb-error>
-        </mdb-form-control>
-      </div>
-    </div>
+<!--    <div class="modal-body">-->
+<!--      <div [ngClass]="{'mb-5': mailNewUserField?.invalid && (mailNewUserField?.dirty || mailNewUserField?.touched)}">-->
+<!--        <mdb-form-control>-->
+<!--          <input-->
+<!--            mdbInput-->
+<!--            mdbValidate-->
+<!--            type="email"-->
+<!--            id="mailNewUser"-->
+<!--            class="form-control"-->
+<!--            formControlName="mailNewUser"-->
+<!--          />-->
+<!--          <label mdbLabel class="form-label" for="mailNewUser">-->
+<!--            Correo Electr&oacute;nico-->
+<!--          </label>-->
+<!--          <mdb-error-->
+<!--            *ngIf="-->
+<!--              mailNewUserField?.invalid &&-->
+<!--              (mailNewUserField?.dirty || mailNewUserField?.touched)-->
+<!--            "-->
+<!--          >-->
+<!--            <span *ngIf="mailNewUserField?.hasError('pattern')">-->
+<!--              Correo no v&aacute;lido, debe tener el-->
+<!--              formato <strong>usuario&#x40;netlife.net.ec</strong>-->
+<!--            </span>-->
+<!--          </mdb-error>-->
+<!--        </mdb-form-control>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="modal-footer">
-      <button class="btn btn-cancel" (click)="closeRequestAccess()">CANCELAR</button>
-      <button class="btn btn-warning" (click)="sendRequestAccess()" [disabled]="newUserForm.invalid">ENVIAR</button>
-    </div>
-  </form>
-</div>
+<!--    <div class="modal-footer">-->
+<!--      <button class="btn btn-cancel" (click)="closeRequestAccess()">CANCELAR</button>-->
+<!--      <button class="btn btn-warning" (click)="sendRequestAccess()" [disabled]="newUserForm.invalid">ENVIAR</button>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
 
-<!-- success request alert -->
-<div class="position-fixed top-0 end-0 m-4 success-request">
-  <div class="alert alert-success" role="alert" *ngIf="successRequest">
-    Su solicitud se ha enviado exitosamente
-  </div>
-</div>
+<!--&lt;!&ndash; success request alert &ndash;&gt;-->
+<!--<div class="position-fixed top-0 end-0 m-4 success-request">-->
+<!--  <div class="alert alert-success" role="alert" *ngIf="successRequest">-->
+<!--    Su solicitud se ha enviado exitosamente-->
+<!--  </div>-->
+<!--</div>-->
 
 
-<div *ngIf="recover" class="modal-background"></div>
-<!-- recover password dialog box -->
-<div *ngIf="recover" class="request-access-dialog">
-  <form [formGroup]="newUserForm">
-    <div class="modal-header">
-      <h5 class="modal-title">Ingrese el correo institucional</h5>
-    </div>
+<!--<div *ngIf="recover" class="modal-background"></div>-->
+<!--&lt;!&ndash; recover password dialog box &ndash;&gt;-->
+<!--<div *ngIf="recover" class="request-access-dialog">-->
+<!--  <form [formGroup]="newUserForm">-->
+<!--    <div class="modal-header">-->
+<!--      <h5 class="modal-title">Ingrese el correo institucional</h5>-->
+<!--    </div>-->
 
-    <div class="modal-body">
-      <div [ngClass]="{'mb-5': recoverMailField?.invalid && (recoverMailField?.dirty || recoverMailField?.touched)}">
-        <mdb-form-control>
-          <input
-            mdbInput
-            mdbValidate
-            type="email"
-            id="recoverMail"
-            class="form-control"
-            formControlName="recoverMail"
-          />
-          <label mdbLabel class="form-label" for="recoverMail">
-            Correo Electr&oacute;nico
-          </label>
-          <mdb-error
-            *ngIf="
-              recoverMailField?.invalid &&
-              (recoverMailField?.dirty || recoverMailField?.touched)
-            "
-          >
-            <span *ngIf="recoverMailField?.hasError('pattern')">
-              Correo no v&aacute;lido, debe tener el
-              formato <strong>usuario&#x40;netlife.net.ec</strong>
-            </span>
-          </mdb-error>
-        </mdb-form-control>
-      </div>
-    </div>
+<!--    <div class="modal-body">-->
+<!--      <div [ngClass]="{'mb-5': recoverMailField?.invalid && (recoverMailField?.dirty || recoverMailField?.touched)}">-->
+<!--        <mdb-form-control>-->
+<!--          <input-->
+<!--            mdbInput-->
+<!--            mdbValidate-->
+<!--            type="email"-->
+<!--            id="recoverMail"-->
+<!--            class="form-control"-->
+<!--            formControlName="recoverMail"-->
+<!--          />-->
+<!--          <label mdbLabel class="form-label" for="recoverMail">-->
+<!--            Correo Electr&oacute;nico-->
+<!--          </label>-->
+<!--          <mdb-error-->
+<!--            *ngIf="-->
+<!--              recoverMailField?.invalid &&-->
+<!--              (recoverMailField?.dirty || recoverMailField?.touched)-->
+<!--            "-->
+<!--          >-->
+<!--            <span *ngIf="recoverMailField?.hasError('pattern')">-->
+<!--              Correo no v&aacute;lido, debe tener el-->
+<!--              formato <strong>usuario&#x40;netlife.net.ec</strong>-->
+<!--            </span>-->
+<!--          </mdb-error>-->
+<!--        </mdb-form-control>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="modal-footer">
-      <button class="btn btn-cancel" (click)="closeRecoverPassword()">CANCELAR</button>
-      <button class="btn btn-warning" (click)="sendRecoverPassword()" [disabled]="newUserForm.invalid">RECUPERAR</button>
-    </div>
-  </form>
-</div>
+<!--    <div class="modal-footer">-->
+<!--      <button class="btn btn-cancel" (click)="closeRecoverPassword()">CANCELAR</button>-->
+<!--      <button class="btn btn-warning" (click)="sendRecoverPassword()" [disabled]="newUserForm.invalid">RECUPERAR-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
 
-<!-- success recover alert -->
-<div class="position-fixed top-0 end-0 m-4 success-request">
-  <div class="alert alert-success" role="alert" *ngIf="successRecover">
-    Su solicitud se ha realizado exitosamente, pronto recibirá con las intrucciones de recuperación
-  </div>
-</div>
-<app-main-footer></app-main-footer>
+<!--&lt;!&ndash; success recover alert &ndash;&gt;-->
+<!--<div class="position-fixed top-0 end-0 m-4 success-request">-->
+<!--  <div class="alert alert-success" role="alert" *ngIf="successRecover">-->
+<!--    Su solicitud se ha realizado exitosamente, pronto recibirá con las intrucciones de recuperación-->
+<!--  </div>-->
+<!--</div>-->
+

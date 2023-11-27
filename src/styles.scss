@@ -26,28 +26,29 @@ $netbooking-palette: (
   principal: #E4A11B,
   white: #ffffff,
   contrast: (
-    50: #ffffff,
-    100: #ffffff,
-    200: #ffffff,
-    300: #ffffff,
-    400: #ffffff,
-    500: #ffffff,
-    600: #ffffff,
-    700: #ffffff,
-    800: #ffffff,
-    900: #ffffff,
-    A100: #ffffff,
-    A200: #ffffff,
-    A400: #ffffff,
-    A700: #ffffff,
+    50: #E4A11B,
+    100: #E4A11B,
+    200: #E4A11B,
+    300: #E4A11B,
+    400: #E4A11B,
+    500: #E4A11B,
+    600: #E4A11B,
+    700: #E4A11B,
+    800: #E4A11B,
+    900: #E4A11B,
+    A100: #E4A11B,
+    A200: #E4A11B,
+    A400: #E4A11B,
+    A700: #E4A11B,
   )
 );
+
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $webapp-bookings-primary: mat.define-palette($netbooking-palette, white);
-$webapp-bookings-accent: mat.define-palette($netbooking-palette, principal, 900);
+$webapp-bookings-accent: mat.define-palette(mat.$blue-palette);
 
 // The warn palette is optional (defaults to red).
 $webapp-bookings-warn: mat.define-palette(mat.$red-palette);
@@ -76,6 +77,7 @@ $webapp-bookings-theme: mat.define-light-theme((
 
 html, body {
   height: 100%;
+  width: 100%;
 }
 
 body {
@@ -91,7 +93,6 @@ $font-size-root: 0.8em;
   font-style: normal;
 }
 
-$font-family-base: "HelveticaLTStd", "Trebuchet MS", Verdana, sans-serif;
 
 i {
   color: #5B5B5B;
@@ -101,8 +102,6 @@ i {
   background-color: #F5F5F5;
 }
 
-
-
 @import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
 
 /*Mat-form-field*/
@@ -110,9 +109,9 @@ mat-form-field{
   width: 100%;
 }
 
-// .mat-mdc-form-field {
-//   line-height: none;
-// }
+ .mat-mdc-form-field {
+   line-height: none;
+ }
 
 .mdc-text-field--outlined {
   height: 30px !important;
