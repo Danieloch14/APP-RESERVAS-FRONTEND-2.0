@@ -10,12 +10,12 @@
         </button>
     </div>
 
-    <div class="alert alert-info" role="alert" *ngIf="dataSource.data.length == 0" >
+    <div class="alert alert-info" role="alert" *ngIf="listTypeResources?.length == 0" >
         <i class="fa-solid fa-circle-info me-2"></i>
         No existen tipos de recursos registrados
     </div>
 
-    <div class="data-table" *ngIf="dataSource.data.length != 0">
+    <div class="data-table" *ngIf="listTypeResources?.length != 0">
 
       <mdb-form-control class="search-input">
         <input
@@ -46,14 +46,8 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Opciones </th>
                 <td mat-cell *matCellDef="let row"> 
                     <div class="actions">
-                        <button type="button" class="btn btn-warning btn-md" title="Editar tipo de recurso" (click)="editTypeResource(row)">
-                            <i class="far fa-edit"></i>
-                            Editar
-                        </button>
-                        <button type="button" class="btn btn-warning btn-md" title="Eliminar tipo de recurso">
-                            <i class="far fa-trash-alt"></i>
-                            Eliminar
-                        </button>
+                      <i class="far fa-edit fa-lg" title="Editar tipo de recurso" (click)="editTypeResource(row)"></i>
+                        <i class="far fa-trash-alt fa-lg" title="Eliminar tipo de recurso" (click) = "deleteTypeResource(row)"></i>
                     </div> </td>
               </ng-container>
           
@@ -71,7 +65,11 @@
           
   </div>
 </div>
-
+<div class="position-fixed top-0 end-0 m-4 success">
+  <div class="alert alert-success" role="alert" *ngIf="successDelete">
+    Se ha eliminado el tipo de recurso exitosamente
+  </div>
+</div>
 
   
   

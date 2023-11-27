@@ -5,10 +5,10 @@
       --mdb-modal-box-shadow: none;
   
       .modal-header {
-        background-color: #e4a11b;
+        // background-color: #e4a11b;
         .modal-title {
           font-weight: bold;
-          color: white;
+          // color: white;
           text-align: center;
         }
       }
@@ -49,4 +49,8 @@
       }
     }
   }
-  
+  .success{
+    z-index: 1000; 
+    width: 25vw;
+    text-align: justify;
+  }

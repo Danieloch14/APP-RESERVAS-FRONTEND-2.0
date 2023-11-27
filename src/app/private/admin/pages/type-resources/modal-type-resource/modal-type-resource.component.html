@@ -58,3 +58,12 @@
     </div>
   </div>
 </div>
+<!-- success alert -->
+<div class="position-fixed top-0 end-0 m-4 success">
+  <div class="alert alert-success" role="alert" *ngIf="successCreate">
+    Se ha creado un nuevo tipo de recurso exitosamente
+  </div>
+  <div class="alert alert-success" role="alert" *ngIf="successEdit">
+    Se ha modificado el tipo de recurso exitosamente
+  </div>
+</div>

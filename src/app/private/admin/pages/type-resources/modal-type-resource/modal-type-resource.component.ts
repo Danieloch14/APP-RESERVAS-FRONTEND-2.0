@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { TypeResource } from 'src/app/models/TypeResource';
+import { TypeResourceService } from '../../../services/type-resource.service';
 
 @Component({
   selector: 'app-modal-type-resource',
@@ -14,11 +15,13 @@ export class ModalTypeResourceComponent implements OnInit{
   @Input() resourceType!: TypeResource;
 
   resourceTypeForm: FormGroup;
-  selectedFile: string | null = null;
+  successEdit: boolean = false;
+  successCreate: boolean = false;
 
   constructor(
     public modalRef: MdbModalRef<ModalTypeResourceComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private typeResourceService: TypeResourceService
   ) {
     this.resourceTypeForm = new FormGroup({});
   }
@@ -47,16 +50,42 @@ export class ModalTypeResourceComponent implements OnInit{
   }
 
   close(): void {
-    const closeMessage = 'Modal closed';
-    this.modalRef.close(closeMessage);
+    const state = true;
+    this.modalRef.close(state);
+  }
+
+  buildTypeResource(): TypeResource {
+    
+    const typeResource: TypeResource = {
+      idTypeResource: this.isEditing ? this.resourceType.idTypeResource : 0,
+      name: this.resourceTypeForm.value.nameTypeResource
+    }
+    return typeResource;
   }
 
   save() {
     if (this.isEditing) {
-      console.log('Guardando cambios para:', this.resourceTypeForm.value);
+      this.typeResourceService.updateTypeResource(this.buildTypeResource(), this.resourceType.idTypeResource)
+      .subscribe((typeResource) => {
+        console.log('Actualizando elemento:', typeResource);
+        this.successEdit = true;
+
+        setTimeout(() => {
+          this.successEdit = false;
+          this.close();
+        }, 3000);
+      });
+      
     } else {
-      console.log('Creando nuevo elemento:', this.resourceTypeForm.value);
+      this.typeResourceService.createTypeResource(this.buildTypeResource()).subscribe((typeResource) => {
+        console.log('Creando elemento:', typeResource);
+        this.successCreate = true;
+
+        setTimeout(() => {
+          this.successCreate = false;
+          this.close();
+        }, 3000);
+      });
     }
-    this.close();
   }
 }

@@ -20,4 +20,18 @@ export class TypeResourceService {
     return this.httpClient.get<TypeResource[]>(`${this.baseURL}`, { headers});
   }
   
+  createTypeResource(typeResource: TypeResource): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders({'Authorization': `Bearer ${this.token}`});
+    return this.httpClient.post<any>(`${this.baseURL}`, typeResource, { headers});
+  }
+
+  updateTypeResource(typeResource: TypeResource, idTypeResource: number){
+    const headers: HttpHeaders = new HttpHeaders({'Authorization': `Bearer ${this.token}`});
+    return this.httpClient.put<any>(`${this.baseURL}/${idTypeResource}`, typeResource, { headers});
+  }
+
+  deleteTypeResource(idTypeResource: number){
+    const headers: HttpHeaders = new HttpHeaders({'Authorization': `Bearer ${this.token}`});
+    return this.httpClient.delete<any>(`${this.baseURL}/${idTypeResource}`, { headers});
+  }
 }
