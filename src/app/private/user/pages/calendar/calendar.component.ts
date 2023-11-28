@@ -25,6 +25,8 @@ export class EventDetail {
   place!: string;
   floor!: number;
   status!: string;
+  capacity!: number;
+  price!: number;
 }
 @Component({
   selector: 'app-calendar',
@@ -94,6 +96,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.setActiveDay(null, new Date().getDate());
       });
+      console.log(this.eventsArr)
     });
   }
 
@@ -130,6 +133,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     event.place = reservation.idResource.idLocation.place;
     event.floor = reservation.idResource.idLocation.floor;
     event.status = reservation.status.toUpperCase();
+    event.capacity = reservation.idResource.capacity;
+    event.price = reservation.idResource.price;
 
     this.eventsArr.push(event);
   }

@@ -85,8 +85,66 @@
             </div>
           </ng-template>
           <ng-template mdbAccordionItemBody>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="event-sub-title">
+                  {{ event.nameResource}}
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="event-price">
+                   {{ event.price ? (event.price | currency: 'USD') : 'GRATIS'}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="event-typeResource">
+                  {{ event.typeResource | uppercase}}
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col">
+                <div class="event-label">CAPACIDAD:</div>
+                <div class="event-capacity">{{ event.capacity }}</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="event-label">ESTADO:</div>
+                <div class="event-data">{{ event.status | uppercase}}</div>
+              </div>
+              <div class="col-sm-6">
+                <div class="event-time-duration">
+                  <b>DE: </b> {{ event.startTime }} <b>A: </b> {{ event.endTime}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="event-label">CIUDAD:</div>
+                <div class="event-data">{{ event.city.toString() | uppercase}} </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="event-label">SECTOR:</div>
+                <div class="event-data"> {{ event.place | uppercase}} </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="event-label">DIRECCIÓN: </div>
+                <div class="event-address"> {{ event.address }} </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="event-label">NÚMERO DE PISO DONDE SE UBICA EL RECURSO: </div>
+                <div class="event-floor"> {{ event.floor }} </div>
+              </div>
+            </div>
             <div class="acciones">
-              <button class="btn btn-primary">Editar Reserva</button>
+              <button class="btn btn-warning">Editar Reserva</button>
               <button class="btn btn-danger">Cancelar Reserva</button>
             </div>
           </ng-template>
