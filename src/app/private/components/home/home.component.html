@@ -1,22 +1,74 @@
-<section class="container mb-5">
-    <div class="welcome">
-        <h2>BIENVENID&#x40; AL APLICATIVO DE RESERVAS</h2>
-    </div>
+<section class="container mb-2">
+  <div class="welcome">
+    <h1>BIENVENID&#x40; AL APLICATIVO DE RESERVAS</h1>
+  </div>
 
-    <div class="alert alert-info element-transition" role="alert">
-        <i class="fa-solid fa-circle-info me-2"></i>
-        RECUERDA QUE AQU&Iacute; PODRAS RESERVAR OFICINAS, SALAS, PARQUEADEROS Y MUCHO M&Aacute;S...
-    </div>
+  <div class="row">
+    <div class="col-sm-3"></div>
 
-    <div class="alert alert-info element-transition" role="alert">
-        <i class="fa-solid fa-circle-info me-2"></i>
-        NO OLVIDES QUE SI DESEAS CANCELAR UNA RESERVA PUEDES HACERLO &Uacute;NICAMENTE HASTA <strong>24 HORAS ANTES DE LA HORA DE INICIO</strong>.
+    <div class="col-sm-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <img src="assets/icons/bookmark.png" title="Recuerda que aquí podrás reservar oficinas, salas, parqueaderos y
+            muchos más" />
+          <p class="card-text">
+            Recuerda que aquí podrás reservar <strong>oficinas, salas, parqueaderos y
+            mucho más</strong>
+          </p>
+        </div>
+      </div>
     </div>
-</section>
-<section class="container">
-    <div class="d-flex justify-content-center video">
-        <video id="localVideo" class="video-size"  controls autoplay loop>
-            <source src="../../../../assets/img/Y2meta.app - 10 Segundos.mp4"type="video/mp4"/>
-        </video>
+    <div class="col-sm-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <img src="assets/icons/alert.png" title="No olvides que si desas cancelar una reserva puedes hacerlo
+            únicamente hasta 24 horas antes de la hora de inicio"/>
+          <p class="card-text">
+            No olvides que si desas cancelar una reserva puedes hacerlo
+            únicamente hasta
+            <strong>24 horas antes de la hora de inicio</strong>
+          </p>
+        </div>
+      </div>
     </div>
+    <div class="col-sm-3"></div>
+  </div>
 </section>
+
+<div class="carousel-inner rounded-5 shadow-4-strong">
+  <mdb-carousel
+    [controls]="true"
+    [indicators]="true"
+    [animation]="'fade'"
+    [dark]="true"
+  >
+    <mdb-carousel-item>
+      <img
+        src="assets/img/carousel_1.jpeg"
+        class="d-block w-100"
+        title="¡Un nuevo logro alcanzado!"
+      />
+    </mdb-carousel-item>
+    <mdb-carousel-item>
+      <img
+        src="assets/img/carousel_2.png"
+        class="d-block w-100"
+        title="5 niveles de tecnología superior"
+      />
+    </mdb-carousel-item>
+    <mdb-carousel-item>
+      <img
+        src="assets/img/carousel_3.webp"
+        class="d-block w-100"
+        title="5to año consecutivo ofreciendo la mejor experiencia"
+      />
+    </mdb-carousel-item>
+    <mdb-carousel-item>
+      <img
+        src="assets/img/carousel_4.jpg"
+        class="d-block w-100"
+        alt="Alto nivel de satisfacción"
+      />
+    </mdb-carousel-item>
+  </mdb-carousel>
+</div>

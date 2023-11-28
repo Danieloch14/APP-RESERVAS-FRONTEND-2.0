@@ -1,45 +1,20 @@
-.container{
-    font-family: 'HelveticaLTStd';
-}
 /* Welcome */
 .welcome {
     text-align: center;
-//   background-color: #f8f8f8;
     padding: 20px;
-
-    h2{
-        font-weight: bold;
-        background: #000000;
-        background: linear-gradient(to right, #000000 25%, #6C676E 39%, #FFD54F 41%, #FFC107 50%, #FFA000 62%, #FF6F00 67%, #8B2544 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
 }
 
-/* Video */
-.video{
-    max-width: 100%;
-    max-height: 170vh;
-
-}
-
-.video-size{
-    width: 90%;  
-    box-shadow: 0px 0px 10px 5px #C44923;
-}
-
-.element-transition {
-    animation: upDown 1.5s infinite alternate-reverse;
+.card{
+  --mdb-card-box-shadow: none;
+  img{
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: 10px;
   }
+}
 
-  @keyframes upDown {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-        transform: translateY(7px);
-      }
-    100% {
-      transform: translateY(0px);
-    }
+.carousel-inner{
+  img{
+    height: 500px;
   }
+}

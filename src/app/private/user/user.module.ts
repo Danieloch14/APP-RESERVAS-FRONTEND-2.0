@@ -12,8 +12,8 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
 import { MdbCheckboxModule } from "mdb-angular-ui-kit/checkbox";
+import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { HttpClientModule } from "@angular/common/http";
-import { AuthService } from "../../auth/services/auth.service";
 
 
 @NgModule({
@@ -33,7 +33,8 @@ import { AuthService } from "../../auth/services/auth.service";
     MatAutocompleteModule,
     MatIconModule,
     MdbCheckboxModule,
-    HttpClientModule
+    HttpClientModule,
+    MdbAccordionModule
   ],
 })
 export class UserModule { }

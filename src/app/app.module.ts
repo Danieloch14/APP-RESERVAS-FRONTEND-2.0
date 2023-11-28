@@ -21,9 +21,9 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatButtonModule } from "@angular/material/button";
+import { MatSelectModule } from '@angular/material/select';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TokenInterceptor } from "./auth/interceptors/token-interceptor.service";
-import { AuthService } from "./auth/services/auth.service";
 
 @NgModule({
   declarations: [
@@ -50,7 +50,8 @@ import { AuthService } from "./auth/services/auth.service";
     BrowserAnimationsModule,
     MatSidenavModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
