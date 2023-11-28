@@ -14,12 +14,16 @@ import { MatIconModule } from "@angular/material/icon";
 import { MdbCheckboxModule } from "mdb-angular-ui-kit/checkbox";
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { HttpClientModule } from "@angular/common/http";
+import { ResourceComponent } from './components/resource/resource.component';
+import { ResourcesComponent } from './components/resources/resources.component';
 
 
 @NgModule({
   declarations: [
     BookingsComponent,
-    CalendarComponent
+    CalendarComponent,
+    ResourceComponent,
+    ResourcesComponent
   ],
   imports: [
     CommonModule,

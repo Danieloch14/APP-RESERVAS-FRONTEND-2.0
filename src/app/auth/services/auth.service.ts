@@ -3,9 +3,10 @@ import { HttpClient, HttpResponse } from "@angular/common/http";
 import { environment } from "../../../environments/environment.dev";
 import { API_URL, API_VERSION } from "../../../constants/environment.const";
 import { User } from "../../models/User";
-import { BehaviorSubject, catchError, Observable, of, tap, throwError } from "rxjs";
 import { TokenService } from "./token.service";
 import { Router } from "@angular/router";
+import { UsersService } from "../../private/services/users.service";
+import { tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,20 +16,13 @@ export class AuthService {
   private apiUrl = environment[API_URL]
   private apiVersion = environment[API_VERSION]
 
-  private user = new BehaviorSubject<User | null>(null);
-  user$ = this.user.asObservable();
-
-
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
-    private router: Router
+    private router: Router,
+    private usersService: UsersService
   ) { }
 
-  private setUser(user: User | null) {
-    console.log('Auth services user:', user)
-    this.user.next(user)
-  }
 
   private handleLoginResponse(res: HttpResponse<User>): void {
     const token = res.headers.get('Jwt-Token');
@@ -43,7 +37,8 @@ export class AuthService {
       throw new Error('User data not found in response body');
     }
 
-    this.setUser(res.body);
+    this.usersService.setUser(res.body);
+    this.usersService.saveInCache(res.body);
   }
 
   performLogin(email: string, password: string) {
@@ -55,9 +50,10 @@ export class AuthService {
   }
 
   performLogout() {
-    this.tokenService.remove()
-    this.user.next(null);
-    this.router.navigate(['']).then()
+    this.tokenService.remove();
+    this.usersService.setUser(null);
+    this.usersService.clearCache();
+    this.router.navigate(['']).then();
   }
 
 

@@ -1,76 +1,79 @@
-<div class="rounded-1 py-2">
-  <div class="d-flex justify-content-around px-4 py-4 bg-grey rounded-1">
+<div class="inputs-search-container px-4 py-4 my-2 bg-grey rounded-1">
+  <mdb-form-control>
+    <input
+      mdbInput
+      mdbValidate
+      id="date"
+      class="form-control bg-white"
+    />
+    <label mdbLabel class="form-label border-0" for="date">
+      <i class="fas fa-calendar pe-2"></i>
+      <span>Fecha</span>
+    </label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input
+      mdbInput
+      mdbValidate
+      id="time"
+      class="form-control bg-white"
+    />
+    <label mdbLabel class="form-label" for="time">
+      <i class="fas fa-clock pe-2"></i>
+      <span>Hora</span>
+    </label>
+  </mdb-form-control>
+  <div class="d-flex gap-2">
     <mdb-form-control>
       <input
+        [style.width.px]="70"
         mdbInput
         mdbValidate
-        id="date"
-        class="form-control bg-white"
-      />
-      <label mdbLabel class="form-label border-0" for="date">
-        <i class="fas fa-calendar pe-2"></i>
-        <span>Fecha</span>
-      </label>
-    </mdb-form-control>
-    <mdb-form-control>
-      <input
-        mdbInput
-        mdbValidate
-        id="time"
-        class="form-control bg-white"
-      />
-      <label mdbLabel class="form-label" for="time">
-        <i class="fas fa-clock pe-2"></i>
-        <span>Hora</span>
-      </label>
-    </mdb-form-control>
-    <div class="d-flex gap-2">
-      <mdb-form-control>
-        <input
-          [style.width.px]="70"
-          mdbInput
-          mdbValidate
-          type="number"
-          id="hours"
-          class="form-control bg-white"
-        />
-        <label mdbLabel class="form-label" for="hours">
-          <span>hh</span>
-        </label>
-      </mdb-form-control>
-      <mdb-form-control>
-        <input
-          [style.width.px]="70"
-          type="number"
-          mdbInput
-          mdbValidate
-          id="minutes"
-          class="form-control bg-white"
-        />
-        <label mdbLabel class="form-label" for="minutes">
-          <span>mm</span>
-        </label>
-      </mdb-form-control>
-    </div>
-    <mdb-form-control>
-      <input
-        mdbInput
-        mdbValidate
-        id="capacidad"
-        class="form-control bg-white"
         type="number"
-
+        id="hours"
+        class="form-control bg-white"
       />
-      <label mdbLabel class="form-label" for="capacidad">
-        <i class="fas fa-people-group pe-2"></i>
-        <span>Capacidad</span>
+      <label mdbLabel class="form-label" for="hours">
+        <span>hh</span>
       </label>
     </mdb-form-control>
-
-
+    <mdb-form-control>
+      <input
+        [style.width.px]="70"
+        type="number"
+        mdbInput
+        mdbValidate
+        id="minutes"
+        class="form-control bg-white"
+      />
+      <label mdbLabel class="form-label" for="minutes">
+        <span>mm</span>
+      </label>
+    </mdb-form-control>
   </div>
+  <mdb-form-control>
+    <input
+      mdbInput
+      mdbValidate
+      id="capacidad"
+      class="form-control bg-white"
+      type="number"
+
+    />
+    <label mdbLabel class="form-label" for="capacidad">
+      <i class="fas fa-people-group pe-2"></i>
+      <span>Capacidad</span>
+    </label>
+  </mdb-form-control>
+
+  <button class="btn btn-warning">
+    <i class="fas fa-magnifying-glass fa-lg text-white pe-2"></i>
+    Buscar
+  </button>
+
 
 </div>
+
 
 <div class="d-flex justify-content-between py-5">
   <div class="d-flex gap-4 text-muted">

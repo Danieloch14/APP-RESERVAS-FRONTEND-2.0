@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef,Component,Input,NgZone,OnInit,} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
@@ -107,13 +107,13 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     return this.resourceForm.get('pathImages');
   }
 
-  getTypeResource(){
+  getTypeResource() {
     this.typeResourceService.getAll().subscribe((typeResource) => {
       this.listTypeResources = typeResource;
     })
   }
 
-  getRegions(){
+  getRegions() {
     this.regionService.getAll().subscribe((region) => {
       this.listRegions = region;
     })
@@ -145,7 +145,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       if (!['png', 'jpeg', 'jpg', 'webp'].includes(fileExtension)) {
         this.validExtension = false;
         return;
-      }else{
+      } else {
         this.validExtension = true;
       }
 
@@ -155,7 +155,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       // set pathImage value to the form
       this.resourceForm.patchValue({
         pathImages: imageUrl,
-        
+
       });
 
       if (this.isEditing && !this.isNewImage) {
@@ -179,7 +179,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
   }
 
   getImageUrl(file: File): string {
-    return URL.createObjectURL(file);;
+    return URL.createObjectURL(file);
+    ;
   }
 
   getImageUrlPath(path: string): SafeUrl {
@@ -200,7 +201,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
   }
 
   buildNewLocation(): LocationCreate {
-    
+
     const location: LocationCreate = {
       idLocation: 0,
       idRegion: this.resourceForm.value.idRegion,
@@ -228,7 +229,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
   }
 
   buildLocation(): Location {
-    
+
     const location: Location = {
       idLocation: this.resource.idLocation.idLocation,
       idRegion: this.findRegionById(this.resourceForm.value.idRegion),
@@ -240,7 +241,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
   };
 
   buildResource(): Resource {
-    const resource: Resource = {
+    return {
+      description: "", name: "",
       idResource: this.resource.idResource,
       idLocation: this.buildLocation(),
       idTypeResource: this.findTypeResourceById(this.resourceForm.value.idTypeResource),
@@ -249,9 +251,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       codNumber: this.resourceForm.value.codNumber,
       price: parseInt(this.resourceForm.value.price),
       isParking: this.findTypeResourceById(this.resourceForm.value.idTypeResource).name.toLowerCase() == 'parqueadero' ? true : false,
-      pathImages: this.resourceForm.value.pathImages,
+      pathImages: this.resourceForm.value.pathImages
     };
-    return resource;
   }
 
   save() {

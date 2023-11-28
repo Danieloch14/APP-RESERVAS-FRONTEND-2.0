@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TOKEN_NETBOOKING } from "../../../constants/environment.const";
+import { TOKEN_NET_BOOKING } from "../../../constants/environment.const";
 
 @Injectable({
   providedIn: 'root'
@@ -7,15 +7,15 @@ import { TOKEN_NETBOOKING } from "../../../constants/environment.const";
 export class TokenService {
 
   get() {
-    return localStorage.getItem(TOKEN_NETBOOKING);
+    return localStorage.getItem(TOKEN_NET_BOOKING);
   }
 
   save(token: string) {
-    localStorage.setItem(TOKEN_NETBOOKING, token);
+    localStorage.setItem(TOKEN_NET_BOOKING, token);
   }
 
   remove() {
-    localStorage.removeItem(TOKEN_NETBOOKING);
+    localStorage.removeItem(TOKEN_NET_BOOKING);
   }
 
 }

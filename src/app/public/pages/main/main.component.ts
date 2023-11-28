@@ -1,26 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { MainLayoutComponent } from 'src/app/components/main-layout/main-layout.component';
-import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.component';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-main',
   standalone: true,
   imports: [
     CommonModule,
-    MainLayoutComponent,
-    MainFooterComponent],
+    RouterLink,
+  ],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
 
   constructor(
-    private route: Router
+    private router: Router
   ) { }
 
-  login(path: string) {
-    this.route.navigateByUrl(path);
+
+  onLogin() {
+    this.router.navigate(['auth/login']).then();
   }
+
+  protected readonly window = window;
 }

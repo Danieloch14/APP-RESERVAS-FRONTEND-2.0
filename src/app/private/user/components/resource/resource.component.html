@@ -1,0 +1,37 @@
+<div class="card" *ngIf="resource">
+  <div class="card-img-top px-3 pt-3">
+    <img
+      [style.border-radius.px]="5"
+      [style.height.px]="150"
+      [style.width.%]="100"
+      src="{{resource.pathImages || 'https://colineal.com/cdn/shop/articles/8-tips-tener-sala-mas-ordenada-colineal.jpg?v=1653063563&width=1000'}}"
+      alt="Card image cap"
+    />
+  </div>
+  <div class="card-body">
+    <h5 class="text-muted mb-4"><b>{{resource.name || 'Nombre del recurso'}}</b></h5>
+    <div class="badge rounded-pill badge-success py-2 px-3">
+      <i class="fas fa-people-group pe-2"></i>
+      <span>Capacidad: {{resource.capacity}}</span>
+    </div>
+    <p class="my-3">
+      {{
+      resource.description ||
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+      voluptatum, quibusdam, quia, quod voluptatem voluptas quos
+      voluptates quae doloribus quas natus. Quisquam voluptatum,
+      quibusdam, quia, quod voluptatem voluptas quos voluptates quae
+      doloribus quas natus.'
+      }}
+    </p>
+    <p class="text-muted">
+      <i class="fas fa-map-marker-alt pe-2"></i>
+      <span>Edificio 1, piso 2</span>
+    </p>
+    <button
+      class="btn btn-warning"
+    >
+      Ver más
+    </button>
+  </div>
+</div>

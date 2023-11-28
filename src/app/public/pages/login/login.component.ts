@@ -1,19 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { Router } from "@angular/router";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule, HttpResponse } from '@angular/common/http';
-import { MainLayoutComponent } from 'src/app/components/main-layout/main-layout.component';
-import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.component';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from "../../../auth/services/auth.service";
-import { User } from "../../../models/User";
 
 @Component({
   selector: 'app-login',
@@ -25,12 +19,9 @@ import { User } from "../../../models/User";
     MdbValidationModule,
     MatFormFieldModule,
     MatSelectModule,
-    MainLayoutComponent,
-    MainFooterComponent,
     HttpClientModule
   ],
-  providers: [
-  ],
+  providers: [],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -111,20 +102,12 @@ export class LoginComponent implements OnInit {
 
     this.authService.performLogin(this.mailField?.value, this.passwordField?.value).subscribe({
       next: () => {
-        this.authService.user$.subscribe(user => {
-          if (user) {
-            console.log('User authenticated. Navigating to user/home');
-            this.router.navigate(['user/home']);
-          } else {
-            console.log('User not authenticated. Check AuthService logic.');
-          }
-        });
+        this.router.navigate(['user/home']).then();
       },
       error: (loginError) => {
         console.error('Error during login:', loginError);
       }
     });
-
 
 
   }
