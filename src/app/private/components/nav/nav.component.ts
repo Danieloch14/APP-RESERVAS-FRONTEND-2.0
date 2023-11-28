@@ -4,6 +4,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {NotificationBellComponent} from "../notification-bell/notification-bell.component";
+import { AuthService } from "../../../auth/services/auth.service";
 
 @Component({
   selector: 'app-nav',
@@ -17,9 +18,17 @@ export class NavComponent {
   @Output() toggleSideNav = new EventEmitter<boolean>();
   isToggled = false;
 
+  constructor(private authService: AuthService) {}
+
+
   toggleMenu() {
     this.isToggled = !this.isToggled;
     this.toggleSideNav.emit(this.isToggled);
   }
+
+  onLogout(){
+    this.authService.performLogout();
+  }
+
 
 }

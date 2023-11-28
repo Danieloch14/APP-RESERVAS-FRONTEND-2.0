@@ -9,10 +9,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpResponse } from '@angular/common/http';
 import { MainLayoutComponent } from 'src/app/components/main-layout/main-layout.component';
 import { MainFooterComponent } from 'src/app/components/main-footer/main-footer.component';
 import { AuthService } from "../../../auth/services/auth.service";
+import { User } from "../../../models/User";
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,6 @@ import { AuthService } from "../../../auth/services/auth.service";
     HttpClientModule
   ],
   providers: [
-    AuthService
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.userForm = new FormGroup({});
     this.newUserForm = new FormGroup({});
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
     this.userForm = this.builder.group({
 
       userType: [''],
-      mail: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]],
+      mail: ['', [Validators.required]],
       password: ['', [Validators.required]],
       region: [''],
     });
@@ -109,8 +109,23 @@ export class LoginComponent implements OnInit {
   onLogin() {
     if (this.userForm.invalid) return
 
-    this.authService.performLogin(this.mailField?.value, this.passwordField?.value)
-    console.log(this.userForm.value)
+    this.authService.performLogin(this.mailField?.value, this.passwordField?.value).subscribe({
+      next: () => {
+        this.authService.user$.subscribe(user => {
+          if (user) {
+            console.log('User authenticated. Navigating to user/home');
+            this.router.navigate(['user/home']);
+          } else {
+            console.log('User not authenticated. Check AuthService logic.');
+          }
+        });
+      },
+      error: (loginError) => {
+        console.error('Error during login:', loginError);
+      }
+    });
+
+
 
   }
 

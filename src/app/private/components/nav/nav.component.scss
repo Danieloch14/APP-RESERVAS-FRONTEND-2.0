@@ -1,5 +1,7 @@
-.spacer {
-  flex: 1 1 auto;
+.nav{
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
 }
 
 .notification-bell {
@@ -28,7 +30,7 @@
     color: white;
   }
 
-  background: rgba(228, 161, 27);
+  background: #DA6E32;
   color: white;
 }
 

@@ -6,6 +6,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { NavComponent } from "../nav/nav.component";
 import { CommonModule, UpperCasePipe } from "@angular/common";
+import { AuthService } from "../../../auth/services/auth.service";
 
 @Component({
   selector: 'app-layout',
@@ -27,6 +28,7 @@ import { CommonModule, UpperCasePipe } from "@angular/common";
 })
 export class LayoutComponent {
 
+
   items = [
     {
       name: 'Inicio',
@@ -44,6 +46,7 @@ export class LayoutComponent {
       route: 'calendar'
     }
   ]
+
 
 
 }

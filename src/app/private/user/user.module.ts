@@ -12,6 +12,8 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
 import { MdbCheckboxModule } from "mdb-angular-ui-kit/checkbox";
+import { HttpClientModule } from "@angular/common/http";
+import { AuthService } from "../../auth/services/auth.service";
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { MdbCheckboxModule } from "mdb-angular-ui-kit/checkbox";
     MatChipsModule,
     MatAutocompleteModule,
     MatIconModule,
-    MdbCheckboxModule
-  ]
+    MdbCheckboxModule,
+    HttpClientModule
+  ],
 })
 export class UserModule { }

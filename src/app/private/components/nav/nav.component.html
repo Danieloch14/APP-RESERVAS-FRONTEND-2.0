@@ -1,11 +1,9 @@
-<mat-toolbar color="primary" class="shadow-3">
+<div  class="nav shadow-3">
   <button
     (click)="toggleMenu()"
     class="btn btn-floating shadow-0" aria-label=" menu icon">
     <i class="fas fa-xl fa-bars"></i>
   </button>
-  <img src="assets/icons/icon-logo.png" [style.width.px]="150" [style.height.px]="30" alt=""/>
-  <span class="spacer"></span>
 
   <div class="d-flex gap-5 align-items-center">
     <div class="notification-bell">
@@ -20,11 +18,11 @@
           <i class="fas fa-cog pe-2"></i>
           Configurar cuenta
         </button>
-        <button class="menu-item">
+        <button class="menu-item" (click)="onLogout()">
           <i class="fas fa-right-from-bracket pe-2"></i>
           Cerrar sesión
         </button>
       </mat-menu>
     </div>
   </div>
-</mat-toolbar>
+</div>
