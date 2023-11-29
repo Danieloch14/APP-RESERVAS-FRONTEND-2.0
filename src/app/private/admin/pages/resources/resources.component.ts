@@ -16,15 +16,15 @@ import { ResourceService } from '../../services/resource.service';
 export class ResourcesComponent implements OnInit {
 
   displayedColumns: string[] = [
-    'typeResource', 
+    'typeResource',
     'region',
     'place',
     'address',
     'floor',
-    'codeNumber', 
-    'capacity', 
-    'price', 
-    'image', 
+    'codeNumber',
+    'capacity',
+    'price',
+    'image',
     'actions'
   ];
 
@@ -35,7 +35,7 @@ export class ResourcesComponent implements OnInit {
 
   listResources!: Resource[];
   successDelete: boolean = false;
-  
+
   constructor(
     private resourceService: ResourceService,
     private modalService: MdbModalService
@@ -48,7 +48,7 @@ export class ResourcesComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.listResources);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    }, 
+    },
     (error) =>{
       console.log(error);
     })
@@ -69,7 +69,7 @@ export class ResourcesComponent implements OnInit {
       data: {  title: 'Nuevo Recurso' },
       modalClass: 'modal-dialog-centered',
       ignoreBackdropClick: true,
-      
+
     });
 
     modalRef.onClose.subscribe((state: boolean) => {
@@ -80,7 +80,7 @@ export class ResourcesComponent implements OnInit {
   }
 
   seeImage(path: string | null, title: string | null){
-    const modalRef: MdbModalRef<ModalImageResourceComponent> = this.modalService.open(ModalImageResourceComponent, { 
+    const modalRef: MdbModalRef<ModalImageResourceComponent> = this.modalService.open(ModalImageResourceComponent, {
       data: {
           imageUrl: path,
           imageTitle: title
@@ -91,14 +91,14 @@ export class ResourcesComponent implements OnInit {
 
   editResource(row: Resource) {
     const modalRef: MdbModalRef<ModalResourceComponent> = this.modalService.open(ModalResourceComponent, {
-      data: { 
+      data: {
         title: 'Edición Recurso',
         isEditing: true,
-        resource: row 
+        resource: row
       },
       modalClass: 'modal-dialog-centered',
       ignoreBackdropClick: true,
-      
+
     });
 
     modalRef.onClose.subscribe((state: boolean) => {
@@ -109,7 +109,7 @@ export class ResourcesComponent implements OnInit {
   }
 
   deleteResource(row: Resource){
-    this.resourceService.deleteResource(row.idResource).subscribe((response) => {
+    this.resourceService.delete(row.idResource).subscribe((response) => {
       console.log(response);
       this.successDelete = true;
 
@@ -117,7 +117,7 @@ export class ResourcesComponent implements OnInit {
         this.successDelete = false;
         this.ngOnInit();
       }, 2000);
-    }, 
+    },
     (error) =>{
       console.log(error);
     })

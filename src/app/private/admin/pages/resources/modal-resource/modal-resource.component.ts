@@ -257,7 +257,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
 
   save() {
     if (this.isEditing) {
-      this.resourceService.updateResource(this.buildResource(), this.resource.idResource).subscribe((resource) => {
+      this.resourceService.update(this.buildResource(), this.resource.idResource).subscribe((resource) => {
         console.log(resource)
         this.successEdit = true;
 
@@ -268,7 +268,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       })
 
     } else {
-      this.resourceService.saveResource(this.buildNewResource()).subscribe((resource) => {
+      this.resourceService.save(this.buildNewResource()).subscribe((resource) => {
         console.log(resource)
         this.successCreate = true;
 

@@ -84,7 +84,7 @@ export class TypeResourcesComponent implements OnInit, AfterViewInit {
 
   deleteTypeResource(row: TypeResource) {
     this.typeResourceService
-      .deleteTypeResource(row.idTypeResource)
+      .delete(row.idTypeResource)
       .subscribe((response) => {
         this.successDelete = true;
 

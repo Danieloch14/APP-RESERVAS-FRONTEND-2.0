@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
 
   userForm: FormGroup;
   newUserForm: FormGroup;
+
   newUser: boolean = false;
   recover: boolean = false;
   successRequest: boolean = false;

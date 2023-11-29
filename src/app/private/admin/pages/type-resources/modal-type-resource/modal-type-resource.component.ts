@@ -55,7 +55,7 @@ export class ModalTypeResourceComponent implements OnInit{
   }
 
   buildTypeResource(): TypeResource {
-    
+
     const typeResource: TypeResource = {
       idTypeResource: this.isEditing ? this.resourceType.idTypeResource : 0,
       name: this.resourceTypeForm.value.nameTypeResource
@@ -65,7 +65,7 @@ export class ModalTypeResourceComponent implements OnInit{
 
   save() {
     if (this.isEditing) {
-      this.typeResourceService.updateTypeResource(this.buildTypeResource(), this.resourceType.idTypeResource)
+      this.typeResourceService.update(this.buildTypeResource(), this.resourceType.idTypeResource)
       .subscribe((typeResource) => {
         console.log('Actualizando elemento:', typeResource);
         this.successEdit = true;
@@ -75,9 +75,9 @@ export class ModalTypeResourceComponent implements OnInit{
           this.close();
         }, 3000);
       });
-      
+
     } else {
-      this.typeResourceService.createTypeResource(this.buildTypeResource()).subscribe((typeResource) => {
+      this.typeResourceService.create(this.buildTypeResource()).subscribe((typeResource) => {
         console.log('Creando elemento:', typeResource);
         this.successCreate = true;
 
