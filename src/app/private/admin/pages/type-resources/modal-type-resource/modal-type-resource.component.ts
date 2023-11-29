@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import { TypeResource } from 'src/app/models/TypeResource';
-import { TypeResourceService } from '../../../services/type-resource.service';
+import { ResourceType } from 'src/app/models/ResourceType';
+import { ResourceTypeService } from '../../../services/resource-type.service';
 
 @Component({
   selector: 'app-modal-type-resource',
@@ -12,7 +12,7 @@ import { TypeResourceService } from '../../../services/type-resource.service';
 export class ModalTypeResourceComponent implements OnInit{
   @Input() isEditing = false;
   @Input() title!: string;
-  @Input() resourceType!: TypeResource;
+  @Input() resourceType!: ResourceType;
 
   resourceTypeForm: FormGroup;
   successEdit: boolean = false;
@@ -21,7 +21,7 @@ export class ModalTypeResourceComponent implements OnInit{
   constructor(
     public modalRef: MdbModalRef<ModalTypeResourceComponent>,
     private fb: FormBuilder,
-    private typeResourceService: TypeResourceService
+    private typeResourceService: ResourceTypeService
   ) {
     this.resourceTypeForm = new FormGroup({});
   }
@@ -54,9 +54,9 @@ export class ModalTypeResourceComponent implements OnInit{
     this.modalRef.close(state);
   }
 
-  buildTypeResource(): TypeResource {
+  buildTypeResource(): ResourceType {
 
-    const typeResource: TypeResource = {
+    const typeResource: ResourceType = {
       idTypeResource: this.isEditing ? this.resourceType.idTypeResource : 0,
       name: this.resourceTypeForm.value.nameTypeResource
     }

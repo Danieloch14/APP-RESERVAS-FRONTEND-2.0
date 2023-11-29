@@ -3,9 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { TypeResource } from 'src/app/models/TypeResource';
+import { ResourceType } from 'src/app/models/ResourceType';
 import { ModalTypeResourceComponent } from './modal-type-resource/modal-type-resource.component';
-import { TypeResourceService } from '../../services/type-resource.service';
+import { ResourceTypeService } from '../../services/resource-type.service';
 
 @Component({
   selector: 'app-type-resources',
@@ -15,17 +15,17 @@ import { TypeResourceService } from '../../services/type-resource.service';
 export class TypeResourcesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['typeResource', 'actions'];
 
-  dataSource!: MatTableDataSource<TypeResource>;
+  dataSource!: MatTableDataSource<ResourceType>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  listTypeResources!: TypeResource[];
+  listTypeResources!: ResourceType[];
   successDelete: boolean = false;
 
   constructor(
     private modalService: MdbModalService,
-    private typeResourceService: TypeResourceService
+    private typeResourceService: ResourceTypeService
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +63,7 @@ export class TypeResourcesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  editTypeResource(row: TypeResource) {
+  editTypeResource(row: ResourceType) {
     const modalRef: MdbModalRef<ModalTypeResourceComponent> =
       this.modalService.open(ModalTypeResourceComponent, {
         data: {
@@ -82,7 +82,7 @@ export class TypeResourcesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteTypeResource(row: TypeResource) {
+  deleteTypeResource(row: ResourceType) {
     this.typeResourceService
       .delete(row.idTypeResource)
       .subscribe((response) => {

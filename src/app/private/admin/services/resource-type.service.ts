@@ -1,28 +1,28 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TypeResource } from 'src/app/models/TypeResource';
+import { ResourceType } from 'src/app/models/ResourceType';
 import { environment } from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TypeResourceService {
+export class ResourceTypeService {
 
   private baseURL = environment.API_URL + environment.API_VERSION + "/type-resources";
 
   constructor(private httpClient: HttpClient) { }
 
 
-  getAll(): Observable<TypeResource[]> {
-    return this.httpClient.get<TypeResource[]>(`${ this.baseURL }`,);
+  getAll(): Observable<ResourceType[]> {
+    return this.httpClient.get<ResourceType[]>(`${ this.baseURL }`,);
   }
 
-  create(typeResource: TypeResource): Observable<any> {
+  create(typeResource: ResourceType): Observable<any> {
     return this.httpClient.post<any>(`${ this.baseURL }`, typeResource);
   }
 
-  update(typeResource: TypeResource, idTypeResource: number) {
+  update(typeResource: ResourceType, idTypeResource: number) {
     return this.httpClient.put<any>(`${ this.baseURL }/${ idTypeResource }`, typeResource);
   }
 

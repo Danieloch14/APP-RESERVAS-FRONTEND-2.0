@@ -16,6 +16,9 @@ import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { HttpClientModule } from "@angular/common/http";
 import { ResourceComponent } from './components/resource/resource.component';
 import { ResourcesComponent } from './components/resources/resources.component';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MaxAndMinValueDirective } from "../../directives/max-and-min-value.directive";
 
 
 @NgModule({
@@ -23,7 +26,8 @@ import { ResourcesComponent } from './components/resources/resources.component';
     BookingsComponent,
     CalendarComponent,
     ResourceComponent,
-    ResourcesComponent
+    ResourcesComponent,
+    MaxAndMinValueDirective,
   ],
   imports: [
     CommonModule,
@@ -38,7 +42,13 @@ import { ResourcesComponent } from './components/resources/resources.component';
     MatIconModule,
     MdbCheckboxModule,
     HttpClientModule,
-    MdbAccordionModule
-  ],
+    MdbAccordionModule,
+    MatDatepickerModule,
+  ], providers: [
+    MatNativeDateModule,
+  ]
+
 })
-export class UserModule { }
+
+export class UserModule {
+}

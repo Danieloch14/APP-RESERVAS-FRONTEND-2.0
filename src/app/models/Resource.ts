@@ -1,9 +1,9 @@
-import { TypeResource } from './TypeResource';
+import { ResourceType } from './ResourceType';
 import { Location } from './Location';
 
 export interface Resource {
   idResource: number;
-  idTypeResource: TypeResource;
+  idTypeResource: ResourceType;
   idLocation: Location;
   parentResource: any;
   codNumber: string;

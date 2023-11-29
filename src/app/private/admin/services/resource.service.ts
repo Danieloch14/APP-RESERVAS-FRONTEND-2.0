@@ -19,6 +19,10 @@ export class ResourceService {
     return this.httpClient.get<Resource[]>(`${ this.baseURL }`,);
   }
 
+  getAllByRegionId(id: number): Observable<Resource[]> {
+    return this.httpClient.get<Resource[]>(`${ this.baseURL }/by-region-id/${id}`,);
+  }
+
   save(resource: ResourceCreate): Observable<any> {
     return this.httpClient.post<any>(`${ this.baseURL }`, resource,);
   }

@@ -1,68 +1,120 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { FormControl } from "@angular/forms";
-import { map, Observable, startWith } from "rxjs";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { MatChipInputEvent } from "@angular/material/chips";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SearchResourceDto } from "../../../../models/dto/SearchResourceDto";
+import { ResourceType } from "../../../../models/ResourceType";
+import { ResourceTypeService } from "../../../admin/services/resource-type.service";
+import { icons } from "../../../../../constants/icons.const";
+import { Resource } from "../../../../models/Resource";
+import { ResourceService } from "../../../admin/services/resource.service";
 
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
   styleUrls: ['./bookings.component.scss']
 })
-export class BookingsComponent {
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl('');
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+export class BookingsComponent implements OnInit {
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  searchForm: FormGroup;
+  resourceTypes: ResourceType[];
+  filteredResourceTypes: ResourceType[];
+  resources: Resource[];
+  filteredResources: Resource[];
 
-  announcer = inject(LiveAnnouncer);
+  constructor(
+    private builder: FormBuilder,
+    private resourceTypeService: ResourceTypeService,
+    private resourceService: ResourceService
+  ) {
+    this.resourceTypes = []
+    this.resources = [];
+    this.filteredResources = [];
+    this.filteredResourceTypes = [];
+    this.searchForm = new FormGroup({});
+    this.buildForm();
+  }
 
-  constructor() {
-    this.fruitInput = {} as ElementRef<HTMLInputElement>;
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+  ngOnInit() {
+    this.loadResourceTypes();
+    this.loadResources();
+  }
+
+  private loadResourceTypes() {
+    this.resourceTypeService.getAll().subscribe({
+      next: (resourceTypes) => {
+        this.resourceTypes = resourceTypes;
+        this.resourceTypes.forEach(resourceType => {
+          resourceType.icon = icons[resourceType.name.toLowerCase()];
+        });
+        this.sortResourceTypes();
+      },
+      error: (err) => this.handleError(err)
+    });
+  }
+
+  private loadResources() {
+    this.resourceService.getAllByRegionId(1).subscribe({
+      next: (resources) => {
+        this.resources = resources;
+        this.filteredResources = resources;
+      },
+      error: (err) => this.handleError(err)
+    });
+  }
+
+  private sortResourceTypes() {
+    this.resourceTypes.sort((a, b) => a.name.localeCompare(b.name));
+    this.resourceTypes.sort((a, b) => (a.name.toLowerCase() === 'otros') ? 1 : (b.name.toLowerCase() === 'otros') ? -1 : 0);
+  }
+
+  private filterResources(filteredResourceTypes: ResourceType[]) {
+    if (filteredResourceTypes.length === 0) {
+      this.filteredResources = this.resources;
+      return;
+    }
+
+    this.filteredResources = this.resources.filter(resource => {
+      return filteredResourceTypes.some(type => type.idTypeResource === resource.idTypeResource.idTypeResource);
+    });
+  }
+
+  private handleError(err: any) {
+    console.error(err);
+  }
+
+  private buildForm() {
+    this.searchForm = this.builder.group({
+      date: ['', [Validators.required]],
+      time: ['', [Validators.required]],
+      hours: ['', [Validators.required]],
+      minutes: ['', [Validators.required]],
+      capacity: ['', [Validators.required]],
+    });
+  }
+
+  onSearchResource() {
+    if (this.searchForm.invalid) return;
+
+    const rawDate = this.searchForm.get('date')?.value;
+    const date = rawDate ? new Date(rawDate) : new Date();
+
+    const search: SearchResourceDto = {
+      date: new Date(date.setDate(date.getDate() + 1)),
+      time: this.searchForm.get('time')?.value ?? '',
+      hours: this.searchForm.get('hours')?.value ?? 0,
+      minutes: this.searchForm.get('minutes')?.value ?? 0,
+      capacity: this.searchForm.get('capacity')?.value ?? 0,
+    };
+
+    // Realizar la lógica de búsqueda según 'search'
+  }
+
+  onToggleFilterResource(resourceType: ResourceType) {
+    const index = this.filteredResourceTypes.findIndex(
+      (type) => type.idTypeResource === resourceType.idTypeResource
     );
+
+    index !== -1 ? this.filteredResourceTypes.splice(index, 1) : this.filteredResourceTypes.push(resourceType);
+    this.filterResources(this.filteredResourceTypes);
   }
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.fruits.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-
-      this.announcer.announce(`Removed ${ fruit }`);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  }
 }

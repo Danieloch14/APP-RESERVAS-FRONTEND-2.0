@@ -6,8 +6,8 @@ import { LocationCreate } from 'src/app/models/LocationCreate';
 import { Region } from 'src/app/models/Region';
 import { Resource } from 'src/app/models/Resource';
 import { ResourceCreate } from 'src/app/models/ResourceCreate';
-import { TypeResource } from 'src/app/models/TypeResource';
-import { TypeResourceService } from '../../../services/type-resource.service';
+import { ResourceType } from 'src/app/models/ResourceType';
+import { ResourceTypeService } from '../../../services/resource-type.service';
 import { RegionService } from '../../../services/region.service';
 import { ResourceService } from '../../../services/resource.service';
 import { Location } from 'src/app/models/Location';
@@ -27,7 +27,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
   isNewImage = false;
   validExtension: boolean = true;
   listRegions: Region[] = []
-  listTypeResources: TypeResource[] = []
+  listTypeResources: ResourceType[] = []
   pathImage: any;
   successCreate: boolean = false;
   successEdit: boolean = false;
@@ -37,7 +37,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
-    private typeResourceService: TypeResourceService,
+    private typeResourceService: ResourceTypeService,
     private regionService: RegionService,
     private resourceService: ResourceService,
   ) {
@@ -196,7 +196,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     return this.listRegions.find(region => region.idRegion === id)!;
   }
 
-  findTypeResourceById(id: number): TypeResource {
+  findTypeResourceById(id: number): ResourceType {
     return this.listTypeResources.find(typeResource => typeResource.idTypeResource === id)!;
   }
 
