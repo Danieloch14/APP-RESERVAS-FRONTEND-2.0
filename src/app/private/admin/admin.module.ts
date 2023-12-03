@@ -23,6 +23,9 @@ import { ModalTypeResourceComponent } from './pages/type-resources/modal-type-re
     TypeResourcesComponent,
     ModalTypeResourceComponent
   ],
+  exports: [
+    ResourcesComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,

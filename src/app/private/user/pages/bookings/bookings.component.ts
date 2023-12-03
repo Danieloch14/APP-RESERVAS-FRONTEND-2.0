@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { SearchResourceDto } from "../../../../models/dto/SearchResourceDto";
 import { ResourceType } from "../../../../models/ResourceType";
 import { ResourceTypeService } from "../../../admin/services/resource-type.service";
-import { icons } from "../../../../../constants/icons.const";
+import { ICONS } from "../../../../../constants/icons.const";
+import { MINUTES } from "../../../../../constants/minutes.const";
 import { Resource } from "../../../../models/Resource";
 import { ResourceService } from "../../../admin/services/resource.service";
 
@@ -19,6 +20,7 @@ export class BookingsComponent implements OnInit {
   filteredResourceTypes: ResourceType[];
   resources: Resource[];
   filteredResources: Resource[];
+  minutes: number[] = MINUTES;
 
   constructor(
     private builder: FormBuilder,
@@ -43,7 +45,7 @@ export class BookingsComponent implements OnInit {
       next: (resourceTypes) => {
         this.resourceTypes = resourceTypes;
         this.resourceTypes.forEach(resourceType => {
-          resourceType.icon = icons[resourceType.name.toLowerCase()];
+          resourceType.icon = ICONS[resourceType.name.toLowerCase()];
         });
         this.sortResourceTypes();
       },
@@ -101,9 +103,11 @@ export class BookingsComponent implements OnInit {
       date: new Date(date.setDate(date.getDate() + 1)),
       time: this.searchForm.get('time')?.value ?? '',
       hours: this.searchForm.get('hours')?.value ?? 0,
-      minutes: this.searchForm.get('minutes')?.value ?? 0,
+      minutes: +this.searchForm.get('minutes')?.value ?? 0,
       capacity: this.searchForm.get('capacity')?.value ?? 0,
     };
+
+    console.log({ search })
 
     // Realizar la lógica de búsqueda según 'search'
   }

@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Resource } from "../../../../models/Resource";
+import { MdbModalRef, MdbModalService } from "mdb-angular-ui-kit/modal";
+import { ModalReserveResourceComponent } from "../modal-reserve-resource/modal-reserve-resource.component";
 
 @Component({
   selector: 'app-resource',
@@ -9,9 +11,23 @@ import { Resource } from "../../../../models/Resource";
 export class ResourceComponent {
 
   @Input() resource: Resource
+  modalRef: MdbModalRef<ModalReserveResourceComponent> | null
 
-  constructor() {
+  constructor(private modalService: MdbModalService) {
     this.resource = {} as Resource;
+    this.modalRef = null;
   }
+
+  onOpenModalReserveResource() {
+    this.modalRef = this.modalService.open(ModalReserveResourceComponent,
+      {
+        modalClass: 'modal-dialog-centered',
+        ignoreBackdropClick: true,
+        data: {
+          resource: this.resource
+        }
+      })
+  }
+
 
 }
