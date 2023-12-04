@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private usersService: UsersService,
     private regionService: RegionService
-
   ) {}
 
   canActivate(
@@ -26,10 +25,10 @@ export class AuthGuard implements CanActivate {
       this.usersService.setUser(this.usersService.getFromLocalStorage());
       this.regionService.currentRegion = this.regionService.getFromLocalStorage();
       return true;
-    } else {
-      this.router.createUrlTree(['/auth/login'])
-      return false;
     }
+
+    this.router.navigate(['/auth/login']).then();
+    return false;
   }
 }
 

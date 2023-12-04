@@ -9,7 +9,7 @@ import { environment } from "../../../../environments/environment";
 })
 export class ResourceTypeService {
 
-  private baseURL = environment.API_URL + environment.API_VERSION + "/type-resources";
+  private baseURL = environment.API_URL + "/" + environment.API_VERSION + "/type-resources";
 
   constructor(private httpClient: HttpClient) { }
 
