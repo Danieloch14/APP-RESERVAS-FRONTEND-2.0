@@ -5,16 +5,17 @@ import { User } from 'src/app/models/User';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MdbRippleModule } from "mdb-angular-ui-kit/ripple";
 
 @Component({
   selector: 'app-profile-settings',
   standalone: true,
-  imports: [CommonModule, MdbFormsModule, MatMenuModule, ReactiveFormsModule],
+  imports: [CommonModule, MdbFormsModule, MatMenuModule, ReactiveFormsModule, MdbRippleModule],
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.scss']
 })
-export class ProfileSettingsComponent implements OnInit{
-  user!: User;
+export class ProfileSettingsComponent implements OnInit {
+  user: User | null = null;
   username: string = '';
   userEmail: string = '';
   currentRol: string = '';
@@ -27,19 +28,21 @@ export class ProfileSettingsComponent implements OnInit{
     private location: Location,
     private builder: FormBuilder,
   ) {
-    this.user = this.usersService.getFromCache()!;
-    this.username = `${this?.user.personalData.name} ${this?.user.personalData.lastname}`;
-    this.userEmail = this.user?.personalData.email!;
     this.profileForm = new FormGroup({});
   }
 
   ngOnInit(): void {
+    this.usersService.user$.subscribe({
+      next: (user) => {
+        this.user = user;
+      }
+    });
     const currentPath = this.location.path().split('/');
 
-    if(currentPath[1] === 'user'){
+    if (currentPath[1] === 'user') {
       this.currentRol = 'Usuario';
     }
-    if(currentPath[1] === 'admin'){
+    if (currentPath[1] === 'admin') {
       this.currentRol = 'Administrador';
     }
 
@@ -59,33 +62,33 @@ export class ProfileSettingsComponent implements OnInit{
 
   setForm() {
     this.profileForm.patchValue({
-      firstName: this.user.personalData.name,
-      lastName: this.user.personalData.lastname,
-      company: this.user.personalData.company,
-      address: this.user.personalData.address,
-      mail: this.user.personalData.email,
-      cellphone: this.user.personalData.cellphone,
+      firstName: this.user?.personalData.name,
+      lastName: this.user?.personalData.lastname,
+      company: this.user?.personalData.company,
+      address: this.user?.personalData.address,
+      mail: this.user?.personalData.email,
+      cellphone: this.user?.personalData.cellphone,
     });
   }
 
-  onEdit(){
+  onEdit() {
     this.setForm();
     this.isEditProfile = true;
 
   }
 
-  onSave(){
+  onSave() {
     this.isEditProfile = false;
   }
 
-  onCancel(){
+  onCancel() {
     this.isEditProfile = false;
   }
-  
-  onUploadPhoto(){
+
+  onUploadPhoto() {
 
   }
 
-  onDeletePhoto(){
+  onDeletePhoto() {
   }
 }

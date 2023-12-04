@@ -1,156 +1,158 @@
 <ng-container *ngIf="!isEditProfile">
-    <ng-container *ngTemplateOutlet="seeProfile"></ng-container>
+  <ng-container *ngTemplateOutlet="seeProfile"></ng-container>
 </ng-container>
 
 <ng-container *ngIf="isEditProfile">
-    <ng-container *ngTemplateOutlet="editProfile"></ng-container>
+  <ng-container *ngTemplateOutlet="editProfile"></ng-container>
 </ng-container>
 
 
 <ng-template #seeProfile>
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <div class="card text-center">
-                <div class="profile-img m-5">
-                    <img src="assets/img/images.jpg" [style.width.px]="130" class="rounded-circle" alt=""/>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">{{username}}</h5>
-                  <p class="card-text">{{userEmail}}</p>
-                  <button type="button" class="btn btn-warning" (click)="onEdit()">Editar perfil</button>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="card text-center">
+        <div class="profile-img m-5">
+          <img src="assets/img/images.jpg" [style.width.px]="130" class="rounded-circle" alt=""/>
         </div>
-        <div class="col-md-8">
-            <div class="card px-3">
-                <div class="card-body">
-                  <h3 class="card-title mb-5 mt-4 mx-3">Datos Personales</h3>
-                  <label class="rol mx-3">{{currentRol}}</label>
-                  <div class="row mt-2">
-                    <div class="col-6">
-                        <div class="d-flex personalData">
-                            <label class="mx-3">Nombre:</label>
-                            <p>{{user.personalData.name}}</p>
-                        </div>
-                        <div class="d-flex personalData">
-                            <label class="mx-3">Apellido:</label>
-                            <p>{{user.personalData.lastname}}</p>
-                        </div>
-                        <div class="d-flex personalData">
-                            <label class="mx-3">Empresa:</label>
-                            <p>{{user.personalData.company}}</p>
-                        </div>
-                        <div class="d-flex personalData">
-                            <label class="mx-3 ">Correo Institucional:</label>
-                            <p>{{user.personalData.email}}</p>
-                        </div>
-                    </div>
-    
-                    <div class="col-6">
-                        <div class="d-flex personalData">
-                            <label class="mx-3">Celular:</label>
-                            <p>{{user.personalData.cellphone}}</p>
-                        </div>
-                        <div class="d-flex personalData">
-                            <label class="mx-3">Dirección:</label>
-                            <p>{{user.personalData.address}}</p>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
+        <div class="card-body">
+          <h5 class="card-title">{{username}}</h5>
+          <p class="card-text">{{userEmail}}</p>
+          <button type="button" class="btn btn-warning" (click)="onEdit()">Editar perfil</button>
         </div>
-    </div>  
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card px-3">
+        <div class="card-body">
+          <h3 class="card-title mb-4 mt-4 mx-3">Datos Personales</h3>
+          <label class="rol mx-3">{{currentRol}}</label>
+          <div class="row mt-2">
+            <div class="col-6">
+              <div class="d-flex personalData">
+                <label class="mx-3">Nombre:</label>
+                <p>{{user?.personalData?.name}}</p>
+              </div>
+              <div class="d-flex personalData">
+                <label class="mx-3">Apellido:</label>
+                <p>{{user?.personalData?.lastname}}</p>
+              </div>
+              <div class="d-flex personalData">
+                <label class="mx-3">Empresa:</label>
+                <p>{{user?.personalData?.company}}</p>
+              </div>
+              <div class="d-flex personalData">
+                <label class="mx-3 ">Correo Institucional:</label>
+                <p>{{user?.personalData?.email}}</p>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="d-flex personalData">
+                <label class="mx-3">Celular:</label>
+                <p>{{user?.personalData?.cellphone}}</p>
+              </div>
+              <div class="d-flex personalData">
+                <label class="mx-3">Dirección:</label>
+                <p>{{user?.personalData?.address}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #editProfile>
-    <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center">
 
-        <div class="card editProfileCard w-75 m-3">
-            <div class="card-body">
-                <div class="card-title text-center">
-                    <h1>Editar Perfil</h1>
-                </div>
-    
-                <div class="d-flex justify-content-center">
-                    <div class="profile-img m-5">
-                        <img src="assets/img/images.jpg" [style.width.px]="180" class="rounded-circle" title="Foto de perfil" *ngIf="isPhotoUploaded" />
-                        <img src="assets/icons/user-icon.png" [style.width.px]="180" class="rounded-circle" title="Sin foto de perfil" *ngIf="!isPhotoUploaded"/>
-                    </div>
-
-                    <div class="editProfileBtn">
-                        <button class="btn btn-warning" [matMenuTriggerFor]="menu">
-                            <i class="far fa-edit"></i> 
-                            Editar
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before" class="container">
-                          <button class="menu-item" (click)="onUploadPhoto()">
-                            <i class="fas fa-upload"></i>
-                            Subir foto
-                          </button>
-                          <button class="menu-item" (click)="onDeletePhoto()">
-                            <i class="far fa-trash-alt"></i>
-                            Eliminar foto
-                          </button>
-                        </mat-menu>
-                    </div>
-                </div>
-  
-                  
-                <form [formGroup]="profileForm">
-                    <!-- 2 column grid layout with text inputs for the first and last names -->
-                    <div class="row mb-4">
-                      <div class="col">
-                        <mdb-form-control>
-                          <input mdbInput type="text" id="firstname" class="form-control" formControlName="firstName"/>
-                          <label mdbLabel class="form-label" for="firstname">Nombres</label>
-                        </mdb-form-control>
-                      </div>
-                      <div class="col">
-                        <mdb-form-control>
-                          <input mdbInput type="text" id="lastname" class="form-control" formControlName="lastName"/>
-                          <label mdbLabel class="form-label" for="lastname">Apellidos</label>
-                        </mdb-form-control>
-                      </div>
-                    </div>
-                  
-                    <!-- Text input -->
-                    <mdb-form-control class="mb-4">
-                      <input mdbInput type="text" id="company" class="form-control" formControlName="company"/>
-                      <label mdbLabel class="form-label" for="company">Nombre de la empresa</label>
-                    </mdb-form-control>
-                  
-                    <!-- Text input -->
-                    <mdb-form-control class="mb-4">
-                      <input mdbInput type="text" id="address" class="form-control" formControlName="address"/>
-                      <label mdbLabel class="form-label" for="address">Dirección</label>
-                    </mdb-form-control>
-                  
-                    <!-- Email input -->
-                    <mdb-form-control class="mb-4">
-                      <input mdbInput type="email" id="mail" class="form-control" formControlName="mail" />
-                      <label mdbLabel class="form-label" for="mail">Correo Institucional</label>
-                    </mdb-form-control>
-                  
-                    <!-- cellphone -->
-                    <mdb-form-control class="form-outline mb-4">
-                      <input mdbInput type="text" id="cellphone" class="form-control" formControlName="cellphone"/>
-                      <label mdbLabel class="form-label" for="cellphone">Celular</label>
-                    </mdb-form-control>
-                  
-                    <!-- Submit button -->
-                    <div class="actions">
-                        <button mdbRipple type="button" class="btn btn-warning" (click)="onSave()">
-                            Guardar
-                        </button>
-                        <button mdbRipple type="button" class="btn btn-danger" (click)="onCancel()">
-                            Cancelar
-                        </button>
-                    </div>
-                </form>
-            </div>
+    <div class="card editProfileCard w-75 m-3">
+      <div class="card-body">
+        <div class="card-title text-center">
+          <h1>Editar Perfil</h1>
         </div>
 
+        <div class="d-flex justify-content-center">
+          <div class="profile-img m-5">
+            <img src="assets/img/images.jpg" [style.width.px]="180" class="rounded-circle" title="Foto de perfil"
+                 *ngIf="isPhotoUploaded"/>
+            <img src="assets/icons/user-icon.png" [style.width.px]="180" class="rounded-circle"
+                 title="Sin foto de perfil" *ngIf="!isPhotoUploaded"/>
+          </div>
+
+          <div class="editProfileBtn">
+            <button class="btn btn-warning" [matMenuTriggerFor]="menu">
+              <i class="far fa-edit"></i>
+              Editar
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before" class="container">
+              <button class="menu-item" (click)="onUploadPhoto()">
+                <i class="fas fa-upload"></i>
+                Subir foto
+              </button>
+              <button class="menu-item" (click)="onDeletePhoto()">
+                <i class="far fa-trash-alt"></i>
+                Eliminar foto
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+
+
+        <form [formGroup]="profileForm">
+          <!-- 2 column grid layout with text inputs for the first and last names -->
+          <div class="row mb-4">
+            <div class="col">
+              <mdb-form-control>
+                <input mdbInput type="text" id="firstname" class="form-control" formControlName="firstName"/>
+                <label mdbLabel class="form-label" for="firstname">Nombres</label>
+              </mdb-form-control>
+            </div>
+            <div class="col">
+              <mdb-form-control>
+                <input mdbInput type="text" id="lastname" class="form-control" formControlName="lastName"/>
+                <label mdbLabel class="form-label" for="lastname">Apellidos</label>
+              </mdb-form-control>
+            </div>
+          </div>
+
+          <!-- Text input -->
+          <mdb-form-control class="mb-4">
+            <input mdbInput type="text" id="company" class="form-control" formControlName="company"/>
+            <label mdbLabel class="form-label" for="company">Nombre de la empresa</label>
+          </mdb-form-control>
+
+          <!-- Text input -->
+          <mdb-form-control class="mb-4">
+            <input mdbInput type="text" id="address" class="form-control" formControlName="address"/>
+            <label mdbLabel class="form-label" for="address">Dirección</label>
+          </mdb-form-control>
+
+          <!-- Email input -->
+          <mdb-form-control class="mb-4">
+            <input mdbInput type="email" id="mail" class="form-control" formControlName="mail"/>
+            <label mdbLabel class="form-label" for="mail">Correo Institucional</label>
+          </mdb-form-control>
+
+          <!-- cellphone -->
+          <mdb-form-control class="form-outline mb-4">
+            <input mdbInput type="text" id="cellphone" class="form-control" formControlName="cellphone"/>
+            <label mdbLabel class="form-label" for="cellphone">Celular</label>
+          </mdb-form-control>
+
+          <!-- Submit button -->
+          <div class="actions">
+            <button mdbRipple type="button" class="btn btn-warning" (click)="onSave()">
+              Guardar
+            </button>
+            <button mdbRipple type="button" class="btn btn-danger" (click)="onCancel()">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-    
+
+  </div>
+
 </ng-template>
