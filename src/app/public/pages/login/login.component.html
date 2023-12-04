@@ -40,8 +40,12 @@
               <span class="text-danger">*</span>
             </mat-label>
             <mat-select id="region" formControlName="region">
-              <mat-option value="quito">Quito</mat-option>
-              <mat-option value="guayaquil">Guayaquil</mat-option>
+              <mat-option
+                *ngFor="let region of regions"
+                [value]="region"
+              >
+                {{ region?.name | titlecase }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 

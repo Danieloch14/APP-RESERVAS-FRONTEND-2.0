@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from "../../../auth/services/auth.service";
+import { RegionService } from "../../../private/admin/services/region.service";
+import { Region } from "../../../models/Region";
 
 @Component({
   selector: 'app-login',
@@ -28,7 +30,7 @@ import { AuthService } from "../../../auth/services/auth.service";
 export class LoginComponent implements OnInit {
 
   userForm: FormGroup;
-  newUserForm: FormGroup;
+  regions: Region[];
 
   newUser: boolean = false;
   recover: boolean = false;
@@ -39,28 +41,36 @@ export class LoginComponent implements OnInit {
     private builder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private regionService: RegionService
   ) {
+    this.regions = [];
     this.userForm = new FormGroup({});
-    this.newUserForm = new FormGroup({});
   }
 
   ngOnInit(): void {
+    this.loadRegionData();
     this.buildForm();
-    this.newUserForm = this.builder.group({
-      mailNewUser: ['', [Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]],
-      recoverMail: ['', [Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]]
-    });
-    // this.getRegionData();
   }
 
   private buildForm() {
     this.userForm = this.builder.group({
-
       userType: [''],
       mail: ['', [Validators.required]],
       password: ['', [Validators.required]],
       region: [''],
     });
+  }
+
+  private loadRegionData() {
+    this.regionService.getAll().subscribe({
+      next: (regions) => {
+        this.regions = regions;
+      },
+      error: (error) => {
+        console.error('Error during region load:', error);
+      }
+    })
+
   }
 
   get userTypeField() {
@@ -79,30 +89,15 @@ export class LoginComponent implements OnInit {
     return this.userForm.get('region');
   }
 
-  get mailNewUserField() {
-    return this.newUserForm.get('mailNewUser');
-  }
-
-  get recoverMailField() {
-    return this.newUserForm.get('recoverMail');
-  }
-
-  // getRegionData(){
-  //   this.regionService.getAllRegion().subscribe(
-  //     (regions) => {
-  //       console.log(regions);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   )
-  // }
 
   onLogin() {
     if (this.userForm.invalid) return
 
     this.authService.performLogin(this.mailField?.value, this.passwordField?.value).subscribe({
       next: () => {
+        const region: Region = this.regionField?.value;
+        this.regionService.currentRegion = region;
+        this.regionService.saveInLocalStorage(region);
         this.router.navigate(['user/home']).then();
       },
       error: (loginError) => {
@@ -113,7 +108,6 @@ export class LoginComponent implements OnInit {
 
   }
 
-  /**Request access dialog */
   requestAccess() {
     this.newUser = true;
   }
@@ -131,7 +125,6 @@ export class LoginComponent implements OnInit {
     }, 3000);
   }
 
-  /**Recover password */
   recoverPassword() {
     this.recover = true;
   }

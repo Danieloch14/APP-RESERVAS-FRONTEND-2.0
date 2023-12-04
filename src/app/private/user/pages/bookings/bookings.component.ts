@@ -7,6 +7,7 @@ import { ICONS } from "../../../../../constants/icons.const";
 import { MINUTES } from "../../../../../constants/minutes.const";
 import { Resource } from "../../../../models/Resource";
 import { ResourceService } from "../../../admin/services/resource.service";
+import { RegionService } from "../../../admin/services/region.service";
 
 @Component({
   selector: 'app-bookings',
@@ -25,7 +26,8 @@ export class BookingsComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private resourceTypeService: ResourceTypeService,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    private regionService: RegionService
   ) {
     this.resourceTypes = []
     this.resources = [];
@@ -54,7 +56,10 @@ export class BookingsComponent implements OnInit {
   }
 
   private loadResources() {
-    this.resourceService.getAllByRegionId(1).subscribe({
+
+    if (!this.regionService.currentRegion) return console.error('No se ha seleccionado una región');
+
+    this.resourceService.getAllByRegionId(this.regionService.currentRegion.idRegion).subscribe({
       next: (resources) => {
         this.resources = resources;
         this.filteredResources = resources;

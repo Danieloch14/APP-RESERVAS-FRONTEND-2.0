@@ -10,7 +10,7 @@
       <app-notification-bell></app-notification-bell>
     </div>
     <div class="d-flex gap-3 align-items-center">
-      <div class="text-white">¡Hola {{ user?.codDatosPersonales?.name | titlecase}} !</div>
+      <div class="text-white">¡Hola {{ user?.personalData?.name | titlecase}} !</div>
       <div>
         <button class="btn btn-floating shadow-0" [matMenuTriggerFor]="menu">
           <img src="assets/img/images.jpg" [style.width.px]="35" class="rounded-circle" alt=""/>

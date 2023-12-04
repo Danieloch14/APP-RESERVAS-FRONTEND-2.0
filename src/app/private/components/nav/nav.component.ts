@@ -25,10 +25,16 @@ export class NavComponent implements OnInit {
     private authService: AuthService,
     private usersService: UsersService
   ) {
-    this.user = this.usersService.getFromCache();
+    this.user = null;
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.usersService.user$.subscribe({
+      next: (user) => {
+        this.user = user;
+        console.log("user", user);
+      }
+    });
   }
 
   toggleMenu() {
