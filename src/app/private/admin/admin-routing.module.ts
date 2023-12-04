@@ -4,6 +4,8 @@ import { ResourcesComponent } from './pages/resources/resources.component';
 import { LayoutComponent } from '../components/layout/layout.component';
 import { HomeComponent } from '../components/home/home.component';
 import { TypeResourcesComponent } from './pages/type-resources/type-resources.component';
+import { AccessRequestComponent } from './pages/access-request/access-request.component';
+import { ProfileSettingsComponent } from '../components/profile-settings/profile-settings.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,12 @@ const routes: Routes = [
       },
       {
         path: 'type-resources', component: TypeResourcesComponent
+      },
+      {
+        path: 'access-request', component: AccessRequestComponent
+      },
+      {
+        path: 'profile-settings', component: ProfileSettingsComponent
       }
 
     ]

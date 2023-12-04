@@ -4,6 +4,7 @@ import { LayoutComponent } from "../components/layout/layout.component";
 import { HomeComponent } from "../components/home/home.component";
 import { BookingsComponent } from "./pages/bookings/bookings.component";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
+import { ProfileSettingsComponent } from '../components/profile-settings/profile-settings.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,9 @@ const routes: Routes = [
       },
       {
         path: 'calendar', component: CalendarComponent,
+      },
+      {
+        path: 'profile-settings', component: ProfileSettingsComponent
       }
 
     ]

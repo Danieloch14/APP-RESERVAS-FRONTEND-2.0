@@ -7,6 +7,8 @@ import { NotificationBellComponent } from "../notification-bell/notification-bel
 import { AuthService } from "../../../auth/services/auth.service";
 import { User } from "../../../models/User";
 import { UsersService } from "../../services/users.service";
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -20,10 +22,13 @@ export class NavComponent implements OnInit {
   @Output() toggleSideNav = new EventEmitter<boolean>();
   isToggled = false;
   user: User | null
+  currentRol: string = '';
 
   constructor(
     private authService: AuthService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private location: Location,
+    private router: Router
   ) {
     this.user = null;
   }
@@ -35,6 +40,15 @@ export class NavComponent implements OnInit {
         console.log("user", user);
       }
     });
+    const currentPath = this.location.path().split('/');
+
+    if(currentPath[1] === 'user'){
+      this.currentRol = 'user';
+    }
+    if(currentPath[1] === 'admin'){
+      this.currentRol = 'admin';
+    }
+
   }
 
   toggleMenu() {
@@ -46,5 +60,8 @@ export class NavComponent implements OnInit {
     this.authService.performLogout();
   }
 
+  onProfile(){
+    this.router.navigate([ this.currentRol,`profile-settings` ]);
+  }
 
 }
