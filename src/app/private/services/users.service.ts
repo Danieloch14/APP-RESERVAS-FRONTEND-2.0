@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { USER_NET_BOOKING } from "../../../constants/environment.const";
+import { API_URL, API_VERSION, USER_NET_BOOKING } from "../../../constants/environment.const";
 import { User } from "../../models/User";
 import { BehaviorSubject } from "rxjs";
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,12 @@ export class UsersService {
   private user = new BehaviorSubject<User | null>(null);
   user$ = this.user.asObservable();
 
-  constructor() { }
+  private apiUrl = environment[API_URL]
+  private apiVersion = environment[API_VERSION]
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   setUser(user: User | null) {
     this.user.next(user)
@@ -30,5 +37,8 @@ export class UsersService {
     localStorage.removeItem(USER_NET_BOOKING);
   }
 
+  update(user: User) {
+    return this.http.post<User>(`${ this.apiUrl }/${ this.apiVersion }/users/actualizar`, user);
+  }
 
 }

@@ -16,6 +16,13 @@ import { ModalImageResourceComponent } from './pages/resources/modal-image-resou
 import { TypeResourcesComponent } from './pages/type-resources/type-resources.component';
 import { ModalTypeResourceComponent } from './pages/type-resources/modal-type-resource/modal-type-resource.component';
 import { AccessRequestComponent } from './pages/access-request/access-request.component';
+import { MenusComponent } from './pages/menus/menus.component';
+import { RoleComponent } from './pages/role/role.component';
+import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
+import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
+import { ModalMenuComponent } from './pages/menus/modal-menu/modal-menu.component';
+import { ModalRoleComponent } from './pages/role/modal-role/modal-role.component';
+import { AlertComponent } from '../components/alert/alert.component';
 @NgModule({
   declarations: [
     ResourcesComponent,
@@ -23,7 +30,12 @@ import { AccessRequestComponent } from './pages/access-request/access-request.co
     ModalImageResourceComponent,
     TypeResourcesComponent,
     ModalTypeResourceComponent,
-    AccessRequestComponent
+    AccessRequestComponent,
+    MenusComponent,
+    RoleComponent,
+    MenuByRoleComponent,
+    ModalMenuComponent,
+    ModalRoleComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +47,9 @@ import { AccessRequestComponent } from './pages/access-request/access-request.co
     MdbFormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    MdbValidationModule
+    MdbValidationModule,
+    MdbTooltipModule,
+    AlertComponent
   ]
 })
 export class AdminModule { }
