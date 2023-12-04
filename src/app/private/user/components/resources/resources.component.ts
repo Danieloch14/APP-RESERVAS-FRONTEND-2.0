@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Resource } from "../../../../models/Resource";
 
 @Component({
   selector: 'app-resources',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./resources.component.scss']
 })
 export class ResourcesComponent {
+
+  @Input() resources: Resource[];
+
+  constructor() {
+    this.resources = [];
+  }
 
 }

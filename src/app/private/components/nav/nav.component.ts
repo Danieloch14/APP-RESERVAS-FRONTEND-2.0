@@ -30,10 +30,16 @@ export class NavComponent implements OnInit {
     private location: Location,
     private router: Router
   ) {
-    this.user = this.usersService.getFromCache();
+    this.user = null;
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.usersService.user$.subscribe({
+      next: (user) => {
+        this.user = user;
+        console.log("user", user);
+      }
+    });
     const currentPath = this.location.path().split('/');
 
     if(currentPath[1] === 'user'){

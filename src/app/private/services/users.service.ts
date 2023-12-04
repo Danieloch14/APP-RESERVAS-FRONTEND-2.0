@@ -24,16 +24,16 @@ export class UsersService {
     this.user.next(user)
   }
 
-  getFromCache(): User | null {
+  getFromLocalStorage(): User | null {
     const storedData = localStorage.getItem(USER_NET_BOOKING);
     return storedData ? JSON.parse(storedData) : null;
   }
 
-  saveInCache(user: User) {
+  saveInLocalStorage(user: User) {
     localStorage.setItem(USER_NET_BOOKING, JSON.stringify(user));
   }
 
-  clearCache() {
+  clearLocalStorage() {
     localStorage.removeItem(USER_NET_BOOKING);
   }
 

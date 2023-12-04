@@ -37,6 +37,9 @@ import { AlertComponent } from '../components/alert/alert.component';
     ModalMenuComponent,
     ModalRoleComponent
   ],
+  exports: [
+    ResourcesComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,

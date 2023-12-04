@@ -15,8 +15,8 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.scss']
 })
-export class ProfileSettingsComponent implements OnInit{
-  user!: User;
+export class ProfileSettingsComponent implements OnInit {
+  user: User | null = null;
   username: string = '';
   userEmail: string = '';
   currentRol: string = '';
@@ -30,19 +30,21 @@ export class ProfileSettingsComponent implements OnInit{
     private location: Location,
     private builder: FormBuilder,
   ) {
-    this.user = this.usersService.getFromCache()!;
-    this.username = `${this?.user.personalData.name} ${this?.user.personalData.lastname}`;
-    this.userEmail = this.user?.personalData.email!;
     this.profileForm = new FormGroup({});
   }
 
   ngOnInit(): void {
+    this.usersService.user$.subscribe({
+      next: (user) => {
+        this.user = user;
+      }
+    });
     const currentPath = this.location.path().split('/');
 
-    if(currentPath[1] === 'user'){
+    if (currentPath[1] === 'user') {
       this.currentRol = 'Usuario';
     }
-    if(currentPath[1] === 'admin'){
+    if (currentPath[1] === 'admin') {
       this.currentRol = 'Administrador';
     }
 
@@ -63,16 +65,16 @@ export class ProfileSettingsComponent implements OnInit{
 
   setForm() {
     this.profileForm.patchValue({
-      firstName: this.user.personalData.name,
-      lastName: this.user.personalData.lastname,
-      company: this.user.personalData.company,
-      address: this.user.personalData.address,
-      mail: this.user.personalData.email,
-      cellphone: this.user.personalData.cellphone,
+      firstName: this.user?.personalData.name,
+      lastName: this.user?.personalData.lastname,
+      company: this.user?.personalData.company,
+      address: this.user?.personalData.address,
+      mail: this.user?.personalData.email,
+      cellphone: this.user?.personalData.cellphone,
     });
   }
 
-  onEdit(){
+  onEdit() {
     this.setForm();
     this.isEditProfile = true;
 
@@ -80,7 +82,7 @@ export class ProfileSettingsComponent implements OnInit{
 
   buildPersonalData(): PersonalData{
     const PersonalData: PersonalData = {
-      idPersonalData: this.user.personalData.idPersonalData,
+      idPersonalData: this.user?.personalData.idPersonalData,
       name: this.profileForm.get('firstName')?.value,
       lastname: this.profileForm.get('lastName')?.value,
       company: this.profileForm.get('company')?.value,
@@ -93,13 +95,13 @@ export class ProfileSettingsComponent implements OnInit{
 
   buildUser(): User{
     const User: User = {
-      idUser: this.user.idUser,
+      idUser: this.user?.idUser!,
       personalData: this.buildPersonalData(),
-      username: this.user.username,
-      dateEntry: this.user.dateEntry,
-      dateLastLogin: this.user.dateLastLogin,
-      active: this.user.active,
-      notLocked: this.user.notLocked
+      username: this.user?.username!,
+      dateEntry: this.user?.dateEntry!,
+      dateLastLogin: this.user?.dateLastLogin!,
+      active: this.user?.active!,
+      notLocked: this.user?.notLocked!
     }
     return User;
   }
@@ -126,14 +128,14 @@ export class ProfileSettingsComponent implements OnInit{
     
   }
 
-  onCancel(){
+  onCancel() {
     this.isEditProfile = false;
   }
-  
-  onUploadPhoto(){
+
+  onUploadPhoto() {
 
   }
 
-  onDeletePhoto(){
+  onDeletePhoto() {
   }
 }

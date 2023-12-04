@@ -1,1 +1,6 @@
-<p>resources works!</p>
+<div class="resources-grid" *ngIf="resources && resources.length !== 0">
+  <app-resource
+    *ngFor="let resource of resources"
+    [resource]="resource">
+  </app-resource>
+</div>

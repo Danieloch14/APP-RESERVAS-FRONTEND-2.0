@@ -56,19 +56,21 @@
         </mdb-form-control>
         <div class="d-flex flex-column-reverse">
           <mdb-form-control>
-            <input
-              [style.width.px]="70"
-              type="number"
+            <select
               mdbInput
               mdbValidate
-              id="minutes"
-              min="0"
-              max="59"
-              [appMinValue]="0"
-              [appMaxValue]="59"
+              [style.width.px]="70"
               class="form-control bg-white"
               formControlName="minutes"
-            />
+              id="minutes"
+            >
+              <option
+                *ngFor="let minute of minutes"
+                [value]="minute"
+              >
+                {{minute}}
+              </option>
+            </select>
             <label mdbLabel class="form-label" for="minutes">
               <span>mm</span>
             </label>
@@ -157,42 +159,5 @@
 </div>
 
 <div class="rounded-1 bg-grey rounded-1 p-5">
-  <div *ngFor="let resource of filteredResources" class="card">
-    <div class="card-img-top px-3 pt-3">
-      <img
-        [style.border-radius.px]="5"
-        [style.height.px]="150"
-        [style.width.%]="100"
-        src="https://colineal.com/cdn/shop/articles/8-tips-tener-sala-mas-ordenada-colineal.jpg?v=1653063563&width=1000"
-        alt="Card image cap"
-      />
-    </div>
-    <div class="card-body">
-      <h5 class="text-muted mb-4">
-        <div class="d-flex justify-content-between">
-          <b>{{resource.name || 'No tiene nombre'}}</b>
-          <div class="type-resource-badge">
-            <span>{{resource.idTypeResource.name | titlecase}}</span>
-          </div>
-        </div>
-
-      </h5>
-      <div class="badge rounded-pill badge-success py-2 px-3">
-        <i class="fas fa-people-group pe-2"></i>
-        <span>Capacidad: {{resource.capacity}}</span>
-      </div>
-      <p class="my-3">
-        {{resource.description || 'No tiene descripción'}}
-      </p>
-      <p class="text-muted">
-        <i class="fas fa-map-marker-alt pe-2"></i>
-        <span>{{resource.idLocation.address | uppercase}}</span>
-      </p>
-      <button
-        class="btn btn-warning"
-      >
-        Ver más
-      </button>
-    </div>
-  </div>
+  <app-resources [resources]="filteredResources"></app-resources>
 </div>

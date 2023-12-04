@@ -5,3 +5,4 @@ export const API_VERSION = 'API_VERSION';
 
 export const TOKEN_NET_BOOKING = 'token_net_booking'
 export const USER_NET_BOOKING = 'user_net_booking'
+export const REGION_NET_BOOKING = 'region_net_booking'

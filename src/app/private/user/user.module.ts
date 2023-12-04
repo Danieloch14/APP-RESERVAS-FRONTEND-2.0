@@ -19,6 +19,8 @@ import { ResourcesComponent } from './components/resources/resources.component';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MaxAndMinValueDirective } from "../../directives/max-and-min-value.directive";
+import { ModalReserveResourceComponent } from './components/modal-reserve-resource/modal-reserve-resource.component';
+import { MdbCarouselModule } from "mdb-angular-ui-kit/carousel";
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import { MaxAndMinValueDirective } from "../../directives/max-and-min-value.dire
     ResourceComponent,
     ResourcesComponent,
     MaxAndMinValueDirective,
+    ModalReserveResourceComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,7 @@ import { MaxAndMinValueDirective } from "../../directives/max-and-min-value.dire
     HttpClientModule,
     MdbAccordionModule,
     MatDatepickerModule,
+    MdbCarouselModule,
   ], providers: [
     MatNativeDateModule,
   ]

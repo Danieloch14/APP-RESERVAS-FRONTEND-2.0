@@ -1,4 +1,4 @@
-export const icons: { [key: string]: string } = {
+export const ICONS: { [key: string]: string } = {
   parqueadero: 'fas fa-car',
   sala: 'fas fa-people-carry',
   oficina: 'fas fa-building',

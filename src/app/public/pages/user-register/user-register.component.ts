@@ -4,7 +4,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { Router } from '@angular/router';
-import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { MdbModalRef, MdbModalService } from "mdb-angular-ui-kit/modal";
+import {
+  ModalTermsAndReferenceComponent
+} from "../../../components/modal-terms-and-reference/modal-terms-and-reference.component";
+import { NetbookingValidator } from "../../../Validators/NetbookingValidator";
+import { UserRegisterDto } from "../../../models/dto/UserRegisterDto";
+import { AuthService } from "../../../auth/services/auth.service";
 import { AlertComponent } from 'src/app/private/components/alert/alert.component';
 
 @Component({
@@ -20,31 +26,27 @@ import { AlertComponent } from 'src/app/private/components/alert/alert.component
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss']
 })
-export class UserRegisterComponent implements OnInit{
+export class UserRegisterComponent implements OnInit {
 
-  userForm: FormGroup;
-  checkTerms!: boolean;
-  showVideoDialog: boolean = false;
-  videoEnded: boolean = false;
-  enableRegister: boolean = false;
-  success: boolean = false;
-  alertType: any;
-  messageAlert!: string;
+  registrationForm: FormGroup;
+  modalRef: MdbModalRef<ModalTermsAndReferenceComponent> | null
 
   constructor(
     private builder: FormBuilder,
-    private route: Router
-  ){
-    this.userForm = new FormGroup({});
-  }
-
-  ngOnInit(): void {
+    private route: Router,
+    private modalService: MdbModalService,
+    private authService: AuthService
+  ) {
+    this.registrationForm = new FormGroup({});
+    this.modalRef = null;
     this.buildForm();
   }
 
-  private buildForm() {
-    this.userForm = this.builder.group({
+  ngOnInit(): void {
+  }
 
+  private buildForm() {
+    this.registrationForm = this.builder.group({
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       enterprise: ['Netlife', [Validators.required]],
@@ -52,68 +54,87 @@ export class UserRegisterComponent implements OnInit{
       mail: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]],
       role: ['', [Validators.required]],
       address: ['', [Validators.required]],
+
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      passwordConfirm: ['', [Validators.required, Validators.minLength(8)]],
+    }, {
+      validators: NetbookingValidator.matchPasswords(),
     });
+
+  }
+
+  private registerUser() {
+
+    const user: UserRegisterDto = {
+      username: this.mailField?.value,
+      password: this.passwordField?.value,
+      personalData: {
+        name: this.nameField?.value,
+        lastname: this.lastnameField?.value,
+        address: this.addressField?.value,
+        cellphone: this.cellphoneField?.value,
+        email: this.mailField?.value,
+        company: this.enterpriseField?.value,
+        role: this.roleField?.value,
+      }
+    }
+
+    this.authService.performRegister(user).subscribe({
+      next: () => {
+        console.log('User registered successfully');
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+
   }
 
   get nameField() {
-    return this.userForm.get('name');
+    return this.registrationForm.get('name');
   }
 
-  get lastnameField(){
-    return this.userForm.get('lastname');
+  get lastnameField() {
+    return this.registrationForm.get('lastname');
   }
 
   get enterpriseField() {
-    return this.userForm.get('enterprise');
+    return this.registrationForm.get('enterprise');
   }
 
   get cellphoneField() {
-    return this.userForm.get('cellphone');
+    return this.registrationForm.get('cellphone');
   }
 
   get mailField() {
-    return this.userForm.get('mail');
+    return this.registrationForm.get('mail');
   }
 
   get roleField() {
-    return this.userForm.get('role');
+    return this.registrationForm.get('role');
   }
 
   get addressField() {
-    return this.userForm.get('address');
+    return this.registrationForm.get('address');
   }
 
-  openVideoDialog() {
-    this.showVideoDialog = true;
+  get passwordField() {
+    return this.registrationForm.get('password');
   }
 
-  closeVideoDialog() {
-    this.showVideoDialog = false;
+  onOpenModalTermsAndRef() {
+    this.modalRef = this.modalService.open(ModalTermsAndReferenceComponent,
+      {
+        ignoreBackdropClick: true,
+        containerClass: 'modal-dialog-centered modal-lg',
+      });
+
+    this.modalRef?.onClose.subscribe((isAccepted: boolean) => {
+      if (isAccepted) {
+        this.registerUser();
+        this.route.navigate(['auth/login']).then();
+      }
+    });
   }
 
-  endedVideo() {
-    console.log('El video ha terminado');
-    this.closeVideoDialog();
-    this.videoEnded = true;
-  }
-
-  onCheckTermsChange(event: any) {
-    this.checkTerms = event.target.checked;
-    if (this.checkTerms) {
-      this.enableRegister = true;
-    } else {
-      this.enableRegister = false;
-    }
-  }
-
-  register(path: string){
-    this.alertType= AlertType.SUCCESS;
-    this.messageAlert = 'Se ha registrado exitosamente en la plataforma, por favor inicie sesión';
-    this.success = true;
-
-    setTimeout(() => {
-      this.success = false;
-      this.route.navigate([path]);
-    }, 3000);
-  }
 }

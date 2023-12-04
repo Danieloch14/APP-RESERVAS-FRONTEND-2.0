@@ -3,9 +3,12 @@
     <div class="logo-container">
       <img
         class="logo"
+        alt="Netbookin Logo"
         src="assets/img/logo-netbookin.svg">
     </div>
-    <img src="assets/img/paco.png">
+    <img src="assets/img/paco.png"
+         alt="Paco"
+    >
   </div>
   <div class="main-container__form">
     <div class="card">
@@ -37,8 +40,12 @@
               <span class="text-danger">*</span>
             </mat-label>
             <mat-select id="region" formControlName="region">
-              <mat-option value="quito">Quito</mat-option>
-              <mat-option value="guayaquil">Guayaquil</mat-option>
+              <mat-option
+                *ngFor="let region of regions"
+                [value]="region"
+              >
+                {{ region?.name | titlecase }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 

@@ -7,6 +7,8 @@ import { TokenService } from "./token.service";
 import { Router } from "@angular/router";
 import { UsersService } from "../../private/services/users.service";
 import { tap } from "rxjs";
+import { UserRegisterDto } from "../../models/dto/UserRegisterDto";
+import { RegionService } from "../../private/admin/services/region.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +17,15 @@ export class AuthService {
 
   private apiUrl = environment[API_URL]
   private apiVersion = environment[API_VERSION]
+  private url = `${ this.apiUrl }/${ this.apiVersion }`;
 
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
     private router: Router,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private regionService: RegionService
   ) { }
-
 
   private handleLoginResponse(res: HttpResponse<User>): void {
     const token = res.headers.get('Jwt-Token');
@@ -38,23 +41,32 @@ export class AuthService {
     }
 
     this.usersService.setUser(res.body);
-    this.usersService.saveInCache(res.body);
+    this.usersService.saveInLocalStorage(res.body);
   }
 
   performLogin(email: string, password: string) {
-    const url = `${ this.apiUrl }/${ this.apiVersion }/users/login`;
-
-    return this.http.post<User>(url, { username: email, password }, { observe: 'response' }).pipe(
-      tap((res: HttpResponse<User>) => this.handleLoginResponse(res))
+    return this.http.post<User>(`${ this.url }/users/login`, {
+      username: email,
+      password
+    }, { observe: 'response' }).pipe(
+      tap((res: HttpResponse<User>) => this.handleLoginResponse(res)
+      )
     );
   }
 
   performLogout() {
     this.tokenService.remove();
     this.usersService.setUser(null);
-    this.usersService.clearCache();
+    this.usersService.clearLocalStorage();
+    this.regionService.clearLocalStorage()
     this.router.navigate(['']).then();
   }
 
+  performRegister(user: UserRegisterDto) {
+    return this.http.post(`${ this.url }/users/register`, user);
+  }
 
+  isUsuarioLoggedIn() {
+    return !!this.tokenService.get();
+  }
 }

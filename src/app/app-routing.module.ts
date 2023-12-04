@@ -5,12 +5,14 @@ import { NotFoundPageComponent } from "./components/not-found-page/not-found-pag
 import { UserRegisterComponent } from './public/pages/user-register/user-register.component';
 import { MainComponent } from './public/pages/main/main.component';
 import { AuthGuard } from "./auth/guards/auth.guard";
+import { RegistrationAppComponent } from "./public/pages/registration-app/registration-app.component";
 
 const routes: Routes = [
   // { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: '', component: MainComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/register', component: UserRegisterComponent},
+  { path: 'auth/registration-application', component: RegistrationAppComponent},
   {
     path: 'admin',
     loadChildren: () => import('./private/admin/admin.module').then(m => m.AdminModule)
