@@ -80,78 +80,81 @@
                  title="Sin foto de perfil" *ngIf="!isPhotoUploaded"/>
           </div>
 
-          <div class="editProfileBtn">
-            <button class="btn btn-warning" [matMenuTriggerFor]="menu">
-              <i class="far fa-edit"></i>
-              Editar
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before" class="container">
-              <button class="menu-item" (click)="onUploadPhoto()">
-                <i class="fas fa-upload"></i>
-                Subir foto
-              </button>
-              <button class="menu-item" (click)="onDeletePhoto()">
-                <i class="far fa-trash-alt"></i>
-                Eliminar foto
-              </button>
-            </mat-menu>
-          </div>
+                    <div class="editProfileBtn">
+                        <button class="btn btn-warning" [matMenuTriggerFor]="menu">
+                            <i class="far fa-edit"></i> 
+                            Editar
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before" class="container">
+                          <button class="menu-item" (click)="onUploadPhoto()">
+                            <i class="fas fa-upload"></i>
+                            Subir foto
+                          </button>
+                          <button class="menu-item" (click)="onDeletePhoto()">
+                            <i class="far fa-trash-alt"></i>
+                            Eliminar foto
+                          </button>
+                        </mat-menu>
+                    </div>
+                </div>
+  
+                  
+                <form [formGroup]="profileForm">
+                    
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row mb-4">
+                      <div class="col">
+                        <mdb-form-control>
+                          <input mdbInput mdbValidate type="text" id="firstname" class="form-control" formControlName="firstName"/>
+                          <label mdbLabel class="form-label" for="firstname">Nombres <span class="text-danger">*</span></label>
+                        </mdb-form-control>
+                      </div>
+                      <div class="col">
+                        <mdb-form-control>
+                          <input mdbInput mdbValidate type="text" id="lastname" class="form-control" formControlName="lastName"/>
+                          <label mdbLabel class="form-label" for="lastname">Apellidos <span class="text-danger">*</span></label>
+                        </mdb-form-control>
+                      </div>
+                    </div>
+                  
+                    <!-- Text input -->
+                    <mdb-form-control class="mb-4">
+                      <input mdbInput mdbValidate type="text" id="company" class="form-control" formControlName="company"/>
+                      <label mdbLabel class="form-label" for="company">Nombre de la empresa <span class="text-danger">*</span></label>
+                    </mdb-form-control>
+                  
+                    <!-- Text input -->
+                    <mdb-form-control class="mb-4">
+                      <input mdbInput mdbValidate type="text" id="address" class="form-control" formControlName="address"/>
+                      <label mdbLabel class="form-label" for="address">Dirección <span class="text-danger">*</span></label>
+                    </mdb-form-control>
+                  
+                    <!-- Email input -->
+                    <mdb-form-control class="mb-4">
+                      <input mdbInput mdbValidate type="email" id="mail" class="form-control" formControlName="mail" placeholder="Ej. usuario@netlife.net.ec" />
+                      <label mdbLabel class="form-label" for="mail">Correo Institucional <span class="text-danger">*</span></label>
+                    </mdb-form-control>
+                  
+                    <!-- cellphone -->
+                    <mdb-form-control class="form-outline mb-4">
+                      <input mdbInput mdbValidate type="text" id="cellphone" class="form-control" formControlName="cellphone"/>
+                      <label mdbLabel class="form-label" for="cellphone">Celular <span class="text-danger">*</span></label>
+                    </mdb-form-control>
+                  
+                    <!-- Submit button -->
+                    <div class="actions">
+                        <button mdbRipple type="button" class="btn btn-warning" [disabled]="profileForm.invalid" (click)="onSave()">
+                            Guardar
+                        </button>
+                        <button mdbRipple type="button" class="btn btn-danger" (click)="onCancel()">
+                            Cancelar
+                        </button>
+                    </div>
+                    <span *ngIf="profileForm.invalid" class="text-muted text-center pt-3" [style.font-size.px]="10"> Para poder continuar llene todos los campos obligatorios (*) </span>
+                    
+                </form>
+            </div>
         </div>
-
-
-        <form [formGroup]="profileForm">
-          <!-- 2 column grid layout with text inputs for the first and last names -->
-          <div class="row mb-4">
-            <div class="col">
-              <mdb-form-control>
-                <input mdbInput type="text" id="firstname" class="form-control" formControlName="firstName"/>
-                <label mdbLabel class="form-label" for="firstname">Nombres</label>
-              </mdb-form-control>
-            </div>
-            <div class="col">
-              <mdb-form-control>
-                <input mdbInput type="text" id="lastname" class="form-control" formControlName="lastName"/>
-                <label mdbLabel class="form-label" for="lastname">Apellidos</label>
-              </mdb-form-control>
-            </div>
-          </div>
-
-          <!-- Text input -->
-          <mdb-form-control class="mb-4">
-            <input mdbInput type="text" id="company" class="form-control" formControlName="company"/>
-            <label mdbLabel class="form-label" for="company">Nombre de la empresa</label>
-          </mdb-form-control>
-
-          <!-- Text input -->
-          <mdb-form-control class="mb-4">
-            <input mdbInput type="text" id="address" class="form-control" formControlName="address"/>
-            <label mdbLabel class="form-label" for="address">Dirección</label>
-          </mdb-form-control>
-
-          <!-- Email input -->
-          <mdb-form-control class="mb-4">
-            <input mdbInput type="email" id="mail" class="form-control" formControlName="mail"/>
-            <label mdbLabel class="form-label" for="mail">Correo Institucional</label>
-          </mdb-form-control>
-
-          <!-- cellphone -->
-          <mdb-form-control class="form-outline mb-4">
-            <input mdbInput type="text" id="cellphone" class="form-control" formControlName="cellphone"/>
-            <label mdbLabel class="form-label" for="cellphone">Celular</label>
-          </mdb-form-control>
-
-          <!-- Submit button -->
-          <div class="actions">
-            <button mdbRipple type="button" class="btn btn-warning" (click)="onSave()">
-              Guardar
-            </button>
-            <button mdbRipple type="button" class="btn btn-danger" (click)="onCancel()">
-              Cancelar
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
 
   </div>
 

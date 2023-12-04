@@ -85,11 +85,5 @@
   </div>
 </div>
 
-<div class="position-fixed top-0 end-0 m-4 success">
-  <div class="alert alert-success" role="alert" *ngIf="successAccepted">
-    Se ha aceptado la solicitud exitosamente
-  </div>
-  <div class="alert alert-success" role="alert" *ngIf="successDenied">
-    Se ha rechazado la solicitud exitosamente
-  </div>
-</div>
+<app-alert [typeAlert]="alertType" [messageAlert]="messageAlert" *ngIf="successAccepted"></app-alert>
+<app-alert [typeAlert]="alertType" [messageAlert]="messageAlert" *ngIf="successDenied"></app-alert>

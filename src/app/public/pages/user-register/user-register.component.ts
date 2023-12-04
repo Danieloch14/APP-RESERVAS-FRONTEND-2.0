@@ -11,6 +11,7 @@ import {
 import { NetbookingValidator } from "../../../Validators/NetbookingValidator";
 import { UserRegisterDto } from "../../../models/dto/UserRegisterDto";
 import { AuthService } from "../../../auth/services/auth.service";
+import { AlertComponent } from 'src/app/private/components/alert/alert.component';
 
 @Component({
   selector: 'app-user-register',
@@ -20,6 +21,7 @@ import { AuthService } from "../../../auth/services/auth.service";
     ReactiveFormsModule,
     MdbFormsModule,
     MdbValidationModule,
+    AlertComponent
   ],
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss']

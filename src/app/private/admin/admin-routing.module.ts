@@ -6,6 +6,9 @@ import { HomeComponent } from '../components/home/home.component';
 import { TypeResourcesComponent } from './pages/type-resources/type-resources.component';
 import { AccessRequestComponent } from './pages/access-request/access-request.component';
 import { ProfileSettingsComponent } from '../components/profile-settings/profile-settings.component';
+import { MenusComponent } from './pages/menus/menus.component';
+import { RoleComponent } from './pages/role/role.component';
+import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
 
 const routes: Routes = [
   {
@@ -27,6 +30,15 @@ const routes: Routes = [
       },
       {
         path: 'profile-settings', component: ProfileSettingsComponent
+      },
+      {
+        path: 'menu', component: MenusComponent
+      },
+      {
+        path: 'role', component: RoleComponent
+      },
+      {
+        path: 'menu-role', component: MenuByRoleComponent
       }
 
     ]

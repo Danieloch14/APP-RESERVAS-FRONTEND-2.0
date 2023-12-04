@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RequestService } from '../../services/request.service';
 import { Request } from 'src/app/models/Request';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
   selector: 'app-access-request',
@@ -30,6 +31,9 @@ export class AccessRequestComponent {
   listRequest!: Request[];
   successAccepted: boolean = false;
   successDenied: boolean = false;
+
+  alertType!: string;
+  messageAlert!: string;
 
   constructor(
     private requestService: RequestService
@@ -107,6 +111,8 @@ export class AccessRequestComponent {
   }
 
   onAccept(row: Request) {
+    this.alertType= AlertType.SUCCESS;
+    this.messageAlert = 'Se ha aceptado la solicitud exitosamente'
     this.successAccepted = true;
 
       setTimeout(() => {
@@ -128,6 +134,8 @@ export class AccessRequestComponent {
     // (error) =>{
     //   console.log(error);
     // })
+    this.alertType= AlertType.SUCCESS;
+    this.messageAlert = 'Se ha rechazado la solicitud exitosamente'
     this.successDenied = true;
 
       setTimeout(() => {

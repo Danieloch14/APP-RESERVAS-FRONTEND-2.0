@@ -7,6 +7,7 @@ import { ModalResourceComponent } from './modal-resource/modal-resource.componen
 import { Resource } from 'src/app/models/Resource';
 import { ModalImageResourceComponent } from './modal-image-resource/modal-image-resource.component';
 import { ResourceService } from '../../services/resource.service';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
   selector: 'app-resources',
@@ -35,6 +36,8 @@ export class ResourcesComponent implements OnInit {
 
   listResources!: Resource[];
   successDelete: boolean = false;
+  alertType: any;
+  messageAlert!: string;
 
   constructor(
     private resourceService: ResourceService,
@@ -111,6 +114,8 @@ export class ResourcesComponent implements OnInit {
   deleteResource(row: Resource){
     this.resourceService.delete(row.idResource).subscribe((response) => {
       console.log(response);
+      this.alertType = AlertType.SUCCESS;
+      this.messageAlert = 'Se ha eliminado el recurso exitosamente'
       this.successDelete = true;
 
       setTimeout(() => {
