@@ -1,335 +1,165 @@
-<div class="register-card">
-  <div class="card">
-    <!--Logo-->
-    <div class="d-flex justify-content-center">
+<div class="main-container">
+  <div class="main-container__assets">
+    <div class="logo-container">
       <img
-        src="assets/icons/icon-logo.png"
-        alt="Registro de usuario"
-        class="img-fluid logo"
-      />
+        class="logo"
+        alt="Netbookin"
+        src="assets/img/logo-netbookin.svg">
+
     </div>
-    <!--Title-->
-    <div class="card-header text-center">
-      <h5 class="card-title">REGISTRO DE USUARIO</h5>
-    </div>
-    <!--Body-->
-    <div class="card-body px-5">
-      <form [formGroup]="userForm">
-        <!--Names and Lastnames-->
-        <div class="row">
-          <div class="col-sm-6">
-            <mdb-form-control>
-              <input
-                mdbInput
-                mdbValidate
-                type="text"
-                id="name"
-                class="form-control mb-4"
-                formControlName="name"
-              />
-              <label mdbLabel class="form-label" for="name">
-                Nombres <span class="text-danger">*</span>
-              </label>
-            </mdb-form-control>
-          </div>
-
-          <div class="col-sm-6">
-            <mdb-form-control>
-              <input
-                mdbInput
-                mdbValidate
-                type="text"
-                id="lastname"
-                class="form-control mb-4"
-                formControlName="lastname"
-              />
-              <label mdbLabel class="form-label" for="lastname">
-                Apellidos <span class="text-danger">*</span>
-              </label>
-            </mdb-form-control>
-          </div>
-        </div>
-
-        <!--Professional mail-->
-        <div class="row">
-          <div class="col-sm-12">
-            <mdb-form-control>
-              <input
-                mdbInput
-                mdbValidate
-                type="email"
-                id="mail"
-                class="form-control mb-4"
-                formControlName="mail"
-              />
-              <label mdbLabel class="form-label" for="mail">
-                Correo Electr&oacute;nico <span class="text-danger">*</span>
-              </label>
-            </mdb-form-control>
-          </div>
-        </div>
-
-        <!--cellphone-->
-        <div class="row">
-          <div class="col-sm-12">
-            <mdb-form-control>
-              <input
-                mdbInput
-                mdbValidate
-                type="tel"
-                id="cellphone"
-                class="form-control mb-4"
-                formControlName="cellphone"
-              />
-              <label mdbLabel class="form-label" for="cellphone">
-                Teléfono <span class="text-danger">*</span>
-              </label>
-            </mdb-form-control>
-          </div>
-        </div>
-
-        <!--address-->
-        <div class="row">
-          <div class="col-sm-12">
-            <mdb-form-control>
-              <input
-                mdbInput
-                mdbValidate
-                type="tel"
-                id="address"
-                class="form-control mb-4"
-                formControlName="address"
-              />
-              <label mdbLabel class="form-label" for="address">
-                Dirección <span class="text-danger">*</span>
-              </label>
-            </mdb-form-control>
-          </div>
-        </div>
-
-        <!--Enterprise and role-->
-        <div class="row">
-          <div class="col-sm-6">
-            <mdb-form-control>
-              <input
-                mdbInput
-                mdbValidate
-                type="text"
-                id="enterprise"
-                class="form-control mb-3"
-                formControlName="enterprise"
-              />
-              <label mdbLabel class="form-label" for="enterprise">
-                Empresa <span class="text-danger">*</span>
-              </label>
-            </mdb-form-control>
-          </div>
-
-          <div class="col-sm-6">
-            <mdb-form-control>
-              <input
-                mdbInput
-                mdbValidate
-                type="text"
-                id="role"
-                class="form-control mb-3"
-                formControlName="role"
-              />
-              <label mdbLabel class="form-label" for="role">
-                Cargo <span class="text-danger">*</span>
-              </label>
-            </mdb-form-control>
-          </div>
-        </div>
-
-        <!--Names error alert-->
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="nameField?.invalid && (nameField?.dirty || nameField?.touched)"
-        >
-          <span *ngIf="nameField?.hasError('required')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            Ingrese sus nombres
-          </span>
-        </div>
-        <!--Lastnames error alert-->
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="
-            lastnameField?.invalid &&
-            (lastnameField?.dirty || lastnameField?.touched)
-          "
-        >
-          <span *ngIf="lastnameField?.hasError('required')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            Ingrese sus apellidos
-          </span>
-        </div>
-        <!--Email error alert-->
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="mailField?.invalid && (mailField?.dirty || mailField?.touched)"
-        >
-          <span *ngIf="mailField?.hasError('required')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            El correo es requerido
-          </span>
-          <span *ngIf="mailField?.hasError('pattern')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            El correo electr&oacute;nico no es v&aacute;lido, debe tener el
-            formato <strong>usuario&#x40;netlife.net.ec</strong>
-          </span>
-        </div>
-        <!--cellphone error alert-->
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="
-            cellphoneField?.invalid &&
-            (cellphoneField?.dirty || cellphoneField?.touched)
-          "
-        >
-          <span *ngIf="cellphoneField?.hasError('required')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            Ingrese su número de teléfono
-          </span>
-          <span *ngIf="cellphoneField?.hasError('minlength')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            El teléfono debe tener 10 dígitos
-          </span>
-          <span *ngIf="cellphoneField?.hasError('maxlength')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            El teléfono debe tener 10 dígitos
-          </span>
-        </div>
-        <!--Address error alert-->
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="
-            addressField?.invalid &&
-            (addressField?.dirty || addressField?.touched)
-          "
-        >
-          <span *ngIf="addressField?.hasError('required')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            Ingrese su dirección
-          </span>
-        </div>
-        <!--Enterprise error alert-->
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="
-            enterpriseField?.invalid &&
-            (enterpriseField?.dirty || enterpriseField?.touched)
-          "
-        >
-          <span *ngIf="enterpriseField?.hasError('required')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            Ingrese el nombre de la Empresa en la que trabaja
-          </span>
-        </div>
-        <!--Role error alert-->
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="roleField?.invalid && (roleField?.dirty || roleField?.touched)"
-        >
-          <span *ngIf="roleField?.hasError('required')">
-            <i class="fas fa-exclamation-circle mb-1"></i>
-            Ingrese el cargo que ejerce en la empresa
-          </span>
-        </div>
-      </form>
-    </div>
-
-    <!--Continue button-->
-    <div class="card-footer" *ngIf="!videoEnded">
-      <div class="row px-4">
-        <button
-          type="button"
-          class="btn btn-warning"
-          [disabled]="userForm.invalid"
-          (click)="openVideoDialog()"
-        >
-          CONTINUAR
-        </button>
-      </div>
-    </div>
-
-    <!--Terms & conditions section and register button-->
-    <div class="card-footer" *ngIf="videoEnded">
-      <h5 class="w-100 text-center">
-        <strong>Acepte los términos y condiciones</strong>
-      </h5>
-
-      <div class="row px-4">
-        <div class="col-sm-12">
-          <div class="form-check mb-3">
+    <img src="assets/img/paco.png"
+         alt="Paco">
+  </div>
+  <div class="main-container__form">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="text-center pb-4">Registro de usuario</h2>
+        <form [formGroup]="registrationForm">
+          <mdb-form-control>
             <input
-              mdbCheckbox
-              class="form-check-input"
-              type="checkbox"
-              value="true"
-              id="CheckTerm"
-              [checked]="checkTerms"
-              (change)="onCheckTermsChange($event)"
+              mdbInput
+              mdbValidate
+              type="text"
+              id="name"
+              class="form-control mb-4"
+              formControlName="name"
             />
-            <label mdbLabel class="form-check-label fs-6 terms" for="CheckTerm">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam
-              architecto asperiores similique impedit. Hic laudantium recusandae
-              reprehenderit nobis quae, iure est sit nemo ducimus consectetur
-              delectus, odit rerum, modi tempora.
+            <label mdbLabel class="form-label" for="name">
+              Nombres <span class="text-danger">*</span>
             </label>
+          </mdb-form-control>
+          <mdb-form-control>
+            <input
+              mdbInput
+              mdbValidate
+              type="text"
+              id="lastname"
+              class="form-control mb-4"
+              formControlName="lastname"
+            />
+            <label mdbLabel class="form-label" for="lastname">
+              Apellidos <span class="text-danger">*</span>
+            </label>
+          </mdb-form-control>
+          <mdb-form-control>
+            <input
+              mdbInput
+              mdbValidate
+              type="email"
+              id="mail"
+              class="form-control mb-4"
+              formControlName="mail"
+            />
+            <label mdbLabel class="form-label" for="mail">
+              Correo Electr&oacute;nico <span class="text-danger">*</span>
+            </label>
+          </mdb-form-control>
+          <mdb-form-control>
+            <input
+              mdbInput
+              mdbValidate
+              type="tel"
+              id="cellphone"
+              class="form-control mb-4"
+              formControlName="cellphone"
+            />
+            <label mdbLabel class="form-label" for="cellphone">
+              Teléfono <span class="text-danger">*</span>
+            </label>
+          </mdb-form-control>
+          <mdb-form-control>
+            <input
+              mdbInput
+              mdbValidate
+              type="tel"
+              id="address"
+              class="form-control mb-4"
+              formControlName="address"
+            />
+            <label mdbLabel class="form-label" for="address">
+              Dirección <span class="text-danger">*</span>
+            </label>
+          </mdb-form-control>
+          <mdb-form-control>
+            <input
+              mdbInput
+              mdbValidate
+              type="text"
+              id="enterprise"
+              class="form-control mb-3"
+              formControlName="enterprise"
+            />
+            <label mdbLabel class="form-label" for="enterprise">
+              Empresa <span class="text-danger">*</span>
+            </label>
+          </mdb-form-control>
+          <mdb-form-control>
+            <input
+              mdbInput
+              mdbValidate
+              type="text"
+              id="role"
+              class="form-control mb-3"
+              formControlName="role"
+            />
+            <label mdbLabel class="form-label" for="role">
+              Cargo <span class="text-danger">*</span>
+            </label>
+          </mdb-form-control>
+          <div class="row">
+            <div class="col-6">
+              <mdb-form-control>
+                <input
+                  mdbInput
+                  mdbValidate
+                  type="password"
+                  id="password"
+                  class="form-control mb-3"
+                  formControlName="password"
+                />
+                <label mdbLabel class="form-label" for="password">
+                  Contraseña <span class="text-danger">*</span>
+                </label>
+              </mdb-form-control>
+            </div>
+            <div class="col-6">
+              <mdb-form-control>
+                <input
+                  mdbInput
+                  mdbValidate
+                  type="password"
+                  id="passwordConfirm"
+                  class="form-control mb-3"
+                  formControlName="passwordConfirm"
+                />
+                <label mdbLabel class="form-label" for="passwordConfirm">
+                  Confirmar Contraseña <span class="text-danger">*</span>
+                </label>
+              </mdb-form-control>
+            </div>
           </div>
-        </div>
-      </div>
+          <div
+            *ngIf="
+              registrationForm?.hasError('invalid_passwords') &&
+        (registrationForm?.get('passwordConfirm')?.touched || registrationForm?.get('passwordConfirm')?.dirty)"
+          >
+            <span class="text-danger"><i class="fas fa-info-circle text-danger"></i> Las contraseñas no coinciden</span>
+          </div>
 
-      <div class="row px-4">
-        <button
-          type="button"
-          class="btn btn-warning"
-          [disabled]="!enableRegister || userForm.invalid"
-          (click)="register('/auth')"
-        >
-          REGISTRAR CUENTA
-        </button>
+          <div class="row px-2 pt-3">
+            <button
+              type="button"
+              class="btn btn-warning"
+              (click)="onOpenModalTermsAndRef()"
+              [disabled]="registrationForm.invalid"
+            >
+              Continuar
+            </button>
+            <span *ngIf="registrationForm.invalid" class="text-muted text-center pt-3" [style.font-size.px]="10"> Para poder continuar llene todos los campos obligatorios (*) </span>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
-<!-- video's dialog box -->
-<div *ngIf="showVideoDialog" class="video-dialog">
-  <div class="modal-header">
-    <h5 class="modal-title">Mira el siguiente video para continuar</h5>
-    <button (click)="closeVideoDialog()">Cerrar</button>
-  </div>
-
-  <div class="modal-body">
-    <video
-      id="localVideo"
-      width="560"
-      height="315"
-      autoplay
-      (ended)="endedVideo()"
-    >
-      <source
-        src="../../../../assets/img/Y2meta.app - 10 Segundos.mp4"
-        type="video/mp4"
-      />
-    </video>
-  </div>
-</div>
-
-<!-- success register alert -->
-<div class="position-fixed top-0 end-0 m-4 success-register">
-  <div class="alert alert-success" role="alert" *ngIf="success">
-    Se ha registrado exitosamente en la plataforma, por favor
-    <strong>Inicie sesión</strong>
-  </div>
-</div>

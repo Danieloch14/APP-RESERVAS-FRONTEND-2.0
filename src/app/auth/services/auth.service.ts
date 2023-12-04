@@ -7,6 +7,7 @@ import { TokenService } from "./token.service";
 import { Router } from "@angular/router";
 import { UsersService } from "../../private/services/users.service";
 import { tap } from "rxjs";
+import { UserRegisterDto } from "../../models/dto/UserRegisterDto";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class AuthService {
 
   private apiUrl = environment[API_URL]
   private apiVersion = environment[API_VERSION]
+
+  private url = `${ this.apiUrl }/${ this.apiVersion }`;
 
   constructor(
     private http: HttpClient,
@@ -42,9 +45,11 @@ export class AuthService {
   }
 
   performLogin(email: string, password: string) {
-    const url = `${ this.apiUrl }/${ this.apiVersion }/users/login`;
 
-    return this.http.post<User>(url, { username: email, password }, { observe: 'response' }).pipe(
+    return this.http.post<User>(`${ this.url }/users/login`, {
+      username: email,
+      password
+    }, { observe: 'response' }).pipe(
       tap((res: HttpResponse<User>) => this.handleLoginResponse(res))
     );
   }
@@ -54,6 +59,10 @@ export class AuthService {
     this.usersService.setUser(null);
     this.usersService.clearCache();
     this.router.navigate(['']).then();
+  }
+
+  performRegister(user: UserRegisterDto) {
+    return this.http.post(`${ this.url }/users/register`, user);
   }
 
 
