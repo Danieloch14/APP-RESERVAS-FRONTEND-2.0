@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { Router } from '@angular/router';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { AlertComponent } from 'src/app/private/components/alert/alert.component';
 
 @Component({
   selector: 'app-user-register',
@@ -13,6 +15,7 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     MdbFormsModule,
     MdbValidationModule,
+    AlertComponent
   ],
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss']
@@ -25,6 +28,8 @@ export class UserRegisterComponent implements OnInit{
   videoEnded: boolean = false;
   enableRegister: boolean = false;
   success: boolean = false;
+  alertType: any;
+  messageAlert!: string;
 
   constructor(
     private builder: FormBuilder,
@@ -102,6 +107,8 @@ export class UserRegisterComponent implements OnInit{
   }
 
   register(path: string){
+    this.alertType= AlertType.SUCCESS;
+    this.messageAlert = 'Se ha registrado exitosamente en la plataforma, por favor inicie sesión';
     this.success = true;
 
     setTimeout(() => {

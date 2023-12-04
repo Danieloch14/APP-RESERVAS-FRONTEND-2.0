@@ -326,10 +326,4 @@
   </div>
 </div>
 
-<!-- success register alert -->
-<div class="position-fixed top-0 end-0 m-4 success-register">
-  <div class="alert alert-success" role="alert" *ngIf="success">
-    Se ha registrado exitosamente en la plataforma, por favor
-    <strong>Inicie sesión</strong>
-  </div>
-</div>
+<app-alert [typeAlert]="alertType" [messageAlert]="messageAlert" *ngIf="success"></app-alert>

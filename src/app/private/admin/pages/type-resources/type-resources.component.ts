@@ -6,6 +6,7 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ResourceType } from 'src/app/models/ResourceType';
 import { ModalTypeResourceComponent } from './modal-type-resource/modal-type-resource.component';
 import { ResourceTypeService } from '../../services/resource-type.service';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
   selector: 'app-type-resources',
@@ -22,6 +23,8 @@ export class TypeResourcesComponent implements OnInit, AfterViewInit {
 
   listTypeResources!: ResourceType[];
   successDelete: boolean = false;
+  messageAlert!: string;
+  alertType: any;
 
   constructor(
     private modalService: MdbModalService,
@@ -86,6 +89,8 @@ export class TypeResourcesComponent implements OnInit, AfterViewInit {
     this.typeResourceService
       .delete(row.idTypeResource)
       .subscribe((response) => {
+        this.alertType= AlertType.SUCCESS;
+        this.messageAlert = 'Se ha eliminado el tipo de recurso exitosamente'
         this.successDelete = true;
 
         setTimeout(() => {

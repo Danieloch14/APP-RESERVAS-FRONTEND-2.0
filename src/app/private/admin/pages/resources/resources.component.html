@@ -117,11 +117,7 @@
           
   </div>
 </div>
-<div class="position-fixed top-0 end-0 m-4 success">
-  <div class="alert alert-success" role="alert" *ngIf="successDelete">
-    Se ha eliminado el recurso exitosamente
-  </div>
-</div>
+<app-alert [typeAlert]="alertType" [messageAlert]="messageAlert" *ngIf="successDelete"></app-alert>
 
   
   
