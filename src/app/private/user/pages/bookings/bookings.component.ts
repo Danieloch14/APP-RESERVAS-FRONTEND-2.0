@@ -98,23 +98,29 @@ export class BookingsComponent implements OnInit {
     });
   }
 
-  onSearchResource() {
-    if (this.searchForm.invalid) return;
-
+  private buildSearchResourceDto(): SearchResourceDto {
     const rawDate = this.searchForm.get('date')?.value;
     const date = rawDate ? new Date(rawDate) : new Date();
+    const time = this.searchForm.get('time')?.value;
+    date.setHours(+time.split(':')[0]);
+    date.setMinutes(+time.split(':')[1]);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
 
-    const search: SearchResourceDto = {
+    return {
       date: new Date(date.setDate(date.getDate() + 1)),
-      time: this.searchForm.get('time')?.value ?? '',
       hours: this.searchForm.get('hours')?.value ?? 0,
       minutes: +this.searchForm.get('minutes')?.value ?? 0,
       capacity: this.searchForm.get('capacity')?.value ?? 0,
+      idRegion: this.regionService.currentRegion?.idRegion ?? 0,
     };
+  }
 
-    console.log({ search })
+  onSearchResource() {
+    if (this.searchForm.invalid) return;
 
-    // Realizar la lógica de búsqueda según 'search'
+    const searchResourceDto = this.buildSearchResourceDto();
+    console.log(searchResourceDto);
   }
 
   onToggleFilterResource(resourceType: ResourceType) {

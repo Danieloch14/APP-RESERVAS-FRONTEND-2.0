@@ -21,7 +21,7 @@ export class MainComponent {
   ) { }
 
   onLogin() {
-    if (this.authService.isUsuarioLoggedIn()) {
+    if (this.authService.isUserLoggedIn()) {
       this.router.navigate(['user/home']).then();
       return;
     }
