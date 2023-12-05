@@ -4,6 +4,7 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ModalRoleComponent } from './modal-role/modal-role.component';
 import { Rol } from 'src/app/models/Rol';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { RolService } from '../../services/rol.service';
 
 @Component({
   selector: 'app-role',
@@ -27,30 +28,18 @@ export class RoleComponent {
   alertType: any;
 
   constructor(
-    private modalService: MdbModalService
-  ) {  
-    this.listRoles = [
-      {
-        id_role: 1,
-        rol_name: 'Admin',
-        description: "gestiona toda la plataforma"
-      },
-      {
-        id_role: 2,
-        rol_name: 'User',
-        description: 'accede a ciertas funcionalidades'
-      },
-      {
-        id_role: 3,
-        rol_name: 'Client',
-        description: 'accede a ciertas funcionalidades'
-      }
-    ];
-  }
+    private modalService: MdbModalService,
+    private rolService: RolService
+  ) { }
 
   ngOnInit(): void {
+    this.rolService.getAll().subscribe((roles) => {
+      this.listRoles = roles;
       this.dataSource = new MatTableDataSource(this.listRoles);
-
+    },
+    (error) => {
+      console.log(error);
+    });
   }
 
   onSave() {
@@ -90,13 +79,28 @@ export class RoleComponent {
   }
 
   onDelete(row: Rol){
-    this.alertType= AlertType.SUCCESS;
-    this.messageAlert = 'Se ha eliminado el rol exitosamente'
-    this.isSuccessDeleted = true;
+    this.rolService.delete(row.idRol).subscribe({
+      next: () => {
+        this.alertType = AlertType.SUCCESS;
+        this.messageAlert = 'Se ha eliminado el rol exitosamente'
+          this.isSuccessDeleted = true;
 
-      setTimeout(() => {
-        this.isSuccessDeleted = false;
-        this.ngOnInit();
-      }, 2000);
+          setTimeout(() => {
+            this.isSuccessDeleted = false;
+            this.ngOnInit();
+          }, 3000);
+      },
+      error: (error) => {
+        console.log(error);
+        this.alertType = AlertType.ERROR;
+        this.messageAlert = 'No se pudo eliminar el rol, inténtelo nuevamente'
+          this.isSuccessDeleted = true;
+
+          setTimeout(() => {
+            this.isSuccessDeleted = false;
+            this.ngOnInit();
+          }, 3000);
+      }
+    })
   }
 }

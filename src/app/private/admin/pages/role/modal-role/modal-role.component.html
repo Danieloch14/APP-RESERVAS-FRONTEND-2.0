@@ -34,8 +34,8 @@
                 </label>
             </mdb-form-control>
               
-          
-          <div class="action mt-5 mb-2">
+            <span *ngIf="roleForm.invalid" class="text-muted text-center pt-3" [style.font-size.px]="10"> Para poder continuar llene todos los campos obligatorios (*) </span>
+          <div class="action mt-2 mb-2">
             <button type="button" class="btn btn-danger btn-lg" (click)="onClose()">
               CANCELAR
             </button>

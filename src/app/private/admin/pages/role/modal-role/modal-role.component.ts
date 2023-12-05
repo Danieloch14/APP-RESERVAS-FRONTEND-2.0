@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { Rol } from 'src/app/models/Rol';
+import { RolService } from '../../../services/rol.service';
 
 @Component({
   selector: 'app-modal-role',
@@ -23,6 +24,7 @@ export class ModalRoleComponent implements OnInit {
   constructor(
     public modalRef: MdbModalRef<ModalRoleComponent>,
     private fb: FormBuilder,
+    private rolService: RolService
   ) {
     this.roleForm = new FormGroup({});
   }
@@ -51,7 +53,7 @@ export class ModalRoleComponent implements OnInit {
 
   setForm() {
     this.roleForm.patchValue({
-      rol_name: this.rol.rol_name,
+      rol_name: this.rol.nombre,
       description: this.rol.description
     });
   }
@@ -63,8 +65,8 @@ export class ModalRoleComponent implements OnInit {
 
   buildRol(): Rol {
     const rol: Rol = {
-      id_role: this.isEditing ? this.rol.id_role : 0,
-      rol_name: this.roleForm.value.rol_name,
+      idRol: this.isEditing ? this.rol.idRol : 0,
+      nombre: this.roleForm.value.rol_name,
       description: this.roleForm.value.description
     };
     return rol;
@@ -72,32 +74,50 @@ export class ModalRoleComponent implements OnInit {
 
   onSave() {
     if (this.isEditing) {
-      // this.resourceService.update(this.buildResource(), this.resource.idResource).subscribe((resource) => {
-      //   console.log(resource)
-      this.alertType= AlertType.SUCCESS;
-      this.messageAlert = 'Se ha modificado el rol exitosamente'
-        this.isSuccessEdit = true;
+      this.rolService.update(this.buildRol()).subscribe((rol) => {
+        this.alertType= AlertType.SUCCESS;
+        this.messageAlert = 'Se ha modificado el rol exitosamente'
+          this.isSuccessEdit = true;
 
-        setTimeout(() => {
-          this.isSuccessEdit = false;
-          this.onClose();
-        }, 3000);
-      // })
-      console.log(this.buildRol())
+          setTimeout(() => {
+            this.isSuccessEdit = false;
+            this.onClose();
+          }, 3000);
+      },
+      (error) => {
+        console.log(error);
+        this.alertType= AlertType.ERROR;
+        this.messageAlert = 'No se pudo modificar el rol, inténtelo nuevamente'
+          this.isSuccessEdit = true;
+
+          setTimeout(() => {
+            this.isSuccessEdit = false;
+            this.onClose();
+          }, 3000);
+      });
 
     } else {
-      // this.resourceService.save(this.buildNewResource()).subscribe((resource) => {
-      //   console.log(resource)
-      this.alertType= AlertType.SUCCESS;
-      this.messageAlert = 'Se ha creado un nuevo rol exitosamente'
-        this.isSuccessCreate = true;
+      this.rolService.save(this.buildRol()).subscribe((rol) => {
+        this.alertType= AlertType.SUCCESS;
+        this.messageAlert = 'Se ha creado un nuevo rol exitosamente'
+          this.isSuccessCreate = true;
 
-        setTimeout(() => {
-          this.isSuccessCreate = false;
-          this.onClose();
-        }, 3000);
-      // })
-      console.log(this.buildRol())
+          setTimeout(() => {
+            this.isSuccessCreate = false;
+            this.onClose();
+          }, 3000);
+      },
+      (error) => {
+        console.log(error);
+        this.alertType= AlertType.ERROR;
+        this.messageAlert = 'No se pudo crear el rol, inténtelo nuevamente'
+          this.isSuccessCreate = true;
+
+          setTimeout(() => {
+            this.isSuccessCreate = false;
+            this.onClose();
+          }, 3000);
+      });
     }
   }
 }
