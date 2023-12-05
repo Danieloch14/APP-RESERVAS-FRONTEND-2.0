@@ -20,10 +20,11 @@ export class BookingsComponent implements OnInit {
   searchForm: FormGroup;
   resourceTypes: ResourceType[];
   filteredResourceTypes: ResourceType[];
-  resources: Resource[];
-  filteredResources: Resource[];
-  minutes: number[] = MINUTES;
 
+  resources: Resource[];
+  leakedResources: Resource[];
+  resourcesFilteredSearch: Resource[];
+  minutes: number[] = MINUTES;
 
   constructor(
     private builder: FormBuilder,
@@ -34,7 +35,8 @@ export class BookingsComponent implements OnInit {
   ) {
     this.resourceTypes = []
     this.resources = [];
-    this.filteredResources = [];
+    this.leakedResources = [];
+    this.resourcesFilteredSearch = [];
     this.filteredResourceTypes = [];
     this.searchForm = new FormGroup({});
     this.buildForm();
@@ -65,7 +67,7 @@ export class BookingsComponent implements OnInit {
     this.resourceService.getAllByRegionId(this.regionService.currentRegion.idRegion).subscribe({
       next: (resources) => {
         this.resources = resources;
-        this.filteredResources = resources;
+        this.leakedResources = resources;
       },
       error: (err) => this.handleError(err)
     });
@@ -76,14 +78,14 @@ export class BookingsComponent implements OnInit {
     this.resourceTypes.sort((a, b) => (a.name.toLowerCase() === 'otros') ? 1 : (b.name.toLowerCase() === 'otros') ? -1 : 0);
   }
 
-  private filterResources(filteredResourceTypes: ResourceType[]) {
-    if (filteredResourceTypes.length === 0) {
-      this.filteredResources = this.resources;
+  private filterResources(typesToFilter: ResourceType[], resourcesToFilter: Resource[]) {
+    if (typesToFilter.length === 0 || !resourcesToFilter || resourcesToFilter.length === 0) {
+      this.leakedResources = resourcesToFilter || this.resources;
       return;
     }
 
-    this.filteredResources = this.resources.filter(resource => {
-      return filteredResourceTypes.some(type => type.idTypeResource === resource.idTypeResource.idTypeResource);
+    this.leakedResources = resourcesToFilter.filter(resource => {
+      return typesToFilter.some(type => type.idTypeResource === resource.idTypeResource.idTypeResource);
     });
   }
 
@@ -126,21 +128,40 @@ export class BookingsComponent implements OnInit {
     console.log(searchResourceDto);
     this.resourceService.findAvailable(searchResourceDto).subscribe({
       next: (resources) => {
-        this.filteredResources = resources;
+        this.resourcesFilteredSearch = resources;
+        this.leakedResources = resources;
         this.resourceService.isSearchDone = true;
         this.reservationService.searchResourceDto = searchResourceDto;
+        this.filterResources(this.filteredResourceTypes, resources);
       },
       error: (err) => this.handleError(err)
     });
   }
 
   onToggleFilterResource(resourceType: ResourceType) {
-    const index = this.filteredResourceTypes.findIndex(
-      (type) => type.idTypeResource === resourceType.idTypeResource
-    );
+
+    this.filteredResourceTypes.forEach(({ idTypeResource, checked }) => {
+      if (idTypeResource === resourceType.idTypeResource) {
+        checked = resourceType.checked;
+      }
+    })
+
+    const index = this.filteredResourceTypes.findIndex(type => type.idTypeResource === resourceType.idTypeResource);
 
     index !== -1 ? this.filteredResourceTypes.splice(index, 1) : this.filteredResourceTypes.push(resourceType);
-    this.filterResources(this.filteredResourceTypes);
+
+    const resourcesToFilter = this.resourcesFilteredSearch.length > 0 ? this.resourcesFilteredSearch : this.resources;
+    this.filterResources(this.filteredResourceTypes, resourcesToFilter);
+  }
+
+  onClearSearch() {
+    this.searchForm.reset();
+    this.resourcesFilteredSearch = [];
+    this.leakedResources = this.resources;
+    this.resourceService.isSearchDone = false;
+    this.reservationService.searchResourceDto = null;
+    this.filteredResourceTypes.forEach(type => type.checked = false);
+    this.filteredResourceTypes = [];
   }
 
 }

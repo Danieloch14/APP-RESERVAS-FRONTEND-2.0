@@ -4,3 +4,6 @@
     [resource]="resource">
   </app-resource>
 </div>
+<div *ngIf="resources && resources.length === 0">
+  <p>No se encontraron recursos</p>
+</div>
