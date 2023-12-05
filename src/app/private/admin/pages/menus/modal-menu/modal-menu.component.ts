@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { Menu } from 'src/app/models/Menu';
+import { MenuService } from '../../../services/menu.service';
 
 @Component({
   selector: 'app-modal-menu',
@@ -14,6 +15,7 @@ export class ModalMenuComponent implements OnInit {
   @Input() title!: string;
   @Input() menu!: Menu;
   @Input() levelMenu!: number;
+  @Input() idParentMenu!: number;
 
   menuForm: FormGroup;
   isSuccessCreate: boolean = false;
@@ -24,7 +26,7 @@ export class ModalMenuComponent implements OnInit {
   constructor(
     public modalRef: MdbModalRef<ModalMenuComponent>,
     private fb: FormBuilder,
-    // private menuService: MenuService,
+    private menuService: MenuService,
   ) {
     this.menuForm = new FormGroup({});
   }
@@ -35,10 +37,6 @@ export class ModalMenuComponent implements OnInit {
       this.setForm();
     }
   }
-
-  // ngAfterViewInit() {
-  //   this.cdr.detectChanges();
-  // }
 
   buildForm() {
     this.menuForm = this.fb.group({
@@ -77,9 +75,9 @@ export class ModalMenuComponent implements OnInit {
 
   buildMenu(): Menu {
     const menu: Menu = {
-      id_Menu: this.isEditing ? this.menu.id_Menu : 0,
+      idMenu: this.isEditing ? this.menu.idMenu : 0,
       label: this.menuForm.value.label,
-      parent_menu: this.isEditing ? this.menu.parent_menu : 0,
+      parentMenu: this.isEditing ? this.menu.parentMenu : this.idParentMenu,
       order: parseInt(this.menuForm.value.order),
       path: this.menuForm.value.url,
       description: this.menuForm.value.description
@@ -89,32 +87,51 @@ export class ModalMenuComponent implements OnInit {
 
   onSave() {
     if (this.isEditing) {
-      // this.resourceService.update(this.buildResource(), this.resource.idResource).subscribe((resource) => {
-      //   console.log(resource)
-      this.alertType = AlertType.SUCCESS;
-      this.messageAlert = 'Se ha modificado el menú exitosamente'
-        this.isSuccessEdit = true;
+      this.menuService.update(this.buildMenu(), this.menu.idMenu).subscribe((menu) => {
+        this.alertType = AlertType.SUCCESS;
+        this.messageAlert = 'Se ha modificado el menú exitosamente'
+          this.isSuccessEdit = true;
 
-        setTimeout(() => {
-          this.isSuccessEdit = false;
-          this.onClose();
-        }, 3000);
-      // })
-      console.log('editando menu')
+          setTimeout(() => {
+            this.isSuccessEdit = false;
+            this.onClose();
+          }, 3000);
+      },
+      (error) => {
+        console.log(error);
+        this.alertType = AlertType.ERROR;
+        this.messageAlert = 'Error, no se pudo modificar el menú, inténtelo nuevamente'
+          this.isSuccessEdit = true;
+
+          setTimeout(() => {
+            this.isSuccessEdit = false;
+            this.onClose();
+          }, 3000);
+      });
 
     } else {
-      // this.resourceService.save(this.buildNewResource()).subscribe((resource) => {
-      //   console.log(resource)
-      this.alertType = AlertType.SUCCESS;
-      this.messageAlert = 'Se ha creado un nuevo menú exitosamente'
-        this.isSuccessCreate = true;
+      this.menuService.save(this.buildMenu()).subscribe((menu) => {
 
-        setTimeout(() => {
-          this.isSuccessCreate = false;
-          this.onClose();
-        }, 3000);
-      // })
-      console.log('creando menu')
+        this.alertType = AlertType.SUCCESS;
+        this.messageAlert = 'Se ha creado un nuevo menú exitosamente'
+          this.isSuccessCreate = true;
+
+          setTimeout(() => {
+            this.isSuccessCreate = false;
+            this.onClose();
+          }, 3000);
+      },
+      (error) => {
+        console.log(error);
+        this.alertType = AlertType.ERROR;
+        this.messageAlert = 'Error, no se pudo crear el menu, inténtelo nuevamente'
+          this.isSuccessCreate = true;
+
+          setTimeout(() => {
+            this.isSuccessCreate = false;
+            this.onClose();
+          }, 3000);
+      });
     }
   }
 }

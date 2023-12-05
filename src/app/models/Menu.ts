@@ -1,8 +1,8 @@
 export interface Menu{
-    id_Menu: number;
+    idMenu: number;
     label: string;
-    parent_menu: number;
-    order: number;
     path: string;
+    parentMenu: number;
+    order: number;
     description: String;
 }
