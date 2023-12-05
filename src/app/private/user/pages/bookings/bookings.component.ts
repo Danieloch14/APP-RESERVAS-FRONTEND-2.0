@@ -8,6 +8,7 @@ import { MINUTES } from "../../../../../constants/minutes.const";
 import { Resource } from "../../../../models/Resource";
 import { ResourceService } from "../../../admin/services/resource.service";
 import { RegionService } from "../../../admin/services/region.service";
+import { ReservationService } from "../../services/reservation.service";
 
 @Component({
   selector: 'app-bookings',
@@ -23,11 +24,13 @@ export class BookingsComponent implements OnInit {
   filteredResources: Resource[];
   minutes: number[] = MINUTES;
 
+
   constructor(
     private builder: FormBuilder,
     private resourceTypeService: ResourceTypeService,
     private resourceService: ResourceService,
-    private regionService: RegionService
+    private regionService: RegionService,
+    private reservationService: ReservationService,
   ) {
     this.resourceTypes = []
     this.resources = [];
@@ -121,6 +124,14 @@ export class BookingsComponent implements OnInit {
 
     const searchResourceDto = this.buildSearchResourceDto();
     console.log(searchResourceDto);
+    this.resourceService.findAvailable(searchResourceDto).subscribe({
+      next: (resources) => {
+        this.filteredResources = resources;
+        this.resourceService.isSearchDone = true;
+        this.reservationService.searchResourceDto = searchResourceDto;
+      },
+      error: (err) => this.handleError(err)
+    });
   }
 
   onToggleFilterResource(resourceType: ResourceType) {

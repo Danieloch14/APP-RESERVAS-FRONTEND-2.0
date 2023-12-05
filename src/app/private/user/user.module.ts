@@ -22,7 +22,6 @@ import { MaxAndMinValueDirective } from "../../directives/max-and-min-value.dire
 import { ModalReserveResourceComponent } from './components/modal-reserve-resource/modal-reserve-resource.component';
 import { MdbCarouselModule } from "mdb-angular-ui-kit/carousel";
 
-
 @NgModule({
   declarations: [
     BookingsComponent,

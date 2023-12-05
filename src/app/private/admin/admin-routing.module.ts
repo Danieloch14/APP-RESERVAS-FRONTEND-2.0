@@ -8,7 +8,6 @@ import { AccessRequestComponent } from './pages/access-request/access-request.co
 import { ProfileSettingsComponent } from '../components/profile-settings/profile-settings.component';
 import { MenusComponent } from './pages/menus/menus.component';
 import { RoleComponent } from './pages/role/role.component';
-import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
 
 const routes: Routes = [
   {
@@ -37,9 +36,7 @@ const routes: Routes = [
       {
         path: 'role', component: RoleComponent
       },
-      {
-        path: 'menu-role', component: MenuByRoleComponent
-      }
+
 
     ]
   }

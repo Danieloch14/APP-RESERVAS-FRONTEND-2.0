@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResourceType } from 'src/app/models/ResourceType';
 import { environment } from "../../../../environments/environment";
+import { SearchResourceDto } from "../../../models/dto/SearchResourceDto";
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +30,6 @@ export class ResourceTypeService {
   delete(idTypeResource: number) {
     return this.httpClient.delete<any>(`${ this.baseURL }/${ idTypeResource }`);
   }
+
+
 }

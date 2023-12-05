@@ -4,4 +4,5 @@ export interface SearchResourceDto {
   minutes: number;
   capacity: number;
   idRegion: number;
+  idResource?: number;
 }
