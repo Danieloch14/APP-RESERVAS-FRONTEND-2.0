@@ -27,13 +27,13 @@
 
           <div class="mat-elevation-z8 table-responsive">
             <table mat-table [dataSource]="dataSource" matSort>
-          
+
               <!-- date request -->
               <ng-container matColumnDef="dateRequest">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de solicitud </th>
                 <td mat-cell *matCellDef="let row"> {{ row.dateRequest }} </td>
               </ng-container>
-          
+
               <!-- requester Name -->
               <ng-container matColumnDef="requesterName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
@@ -51,39 +51,37 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo Electrónico </th>
                 <td mat-cell *matCellDef="let row"> {{row.requesterEmail }} </td>
               </ng-container>
-            
+
               <!-- requesterEmail -->
               <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
                 <td mat-cell *matCellDef="let row"> {{row.status }} </td>
               </ng-container>
-          
+
               <!-- actions -->
               <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Opciones </th>
-                <td mat-cell *matCellDef="let row" > 
+                <td mat-cell *matCellDef="let row" >
                     <div class="actions" *ngIf="row.status && row.status == 'Pendiente'">
                         <i class="fas fa-check fa-lg" title="Aceptar solicitud" (click)="onAccept(row)"></i>
                         <i class="fas fa-ban fa-lg" title="Rechazar Solicitud" (click)="onDenied(row)"></i>
-                            
-                    </div> 
+
+                    </div>
                   </td>
               </ng-container>
-          
+
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          
+
               <!-- Row shown when there is no matching data. -->
               <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">No existe solicitud "{{input.value}}"</td>
               </tr>
             </table>
-          
+
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of request"></mat-paginator>
           </div>
-          
+
   </div>
 </div>
 
-<app-alert [typeAlert]="alertType" [messageAlert]="messageAlert" *ngIf="successAccepted"></app-alert>
-<app-alert [typeAlert]="alertType" [messageAlert]="messageAlert" *ngIf="successDenied"></app-alert>

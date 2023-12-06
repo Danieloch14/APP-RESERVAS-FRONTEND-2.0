@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TokenInterceptor } from "./auth/interceptors/token-interceptor.service";
 import { MatNativeDateModule } from "@angular/material/core";
+import { AlertComponent } from "./utils/components/alert/alert.component";
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MatNativeDateModule } from "@angular/material/core";
     HttpClientModule,
     MatSelectModule,
     MatNativeDateModule,
+    AlertComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

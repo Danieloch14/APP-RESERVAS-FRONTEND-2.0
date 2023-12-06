@@ -9,6 +9,8 @@ import { Resource } from "../../../../models/Resource";
 import { ResourceService } from "../../../admin/services/resource.service";
 import { RegionService } from "../../../admin/services/region.service";
 import { ReservationService } from "../../services/reservation.service";
+import { AlertHandler } from "../../../../utils/AlertHandler";
+import { AlertType } from "../../../../models/Enums/AlertType.enum";
 
 @Component({
   selector: 'app-bookings',
@@ -56,20 +58,20 @@ export class BookingsComponent implements OnInit {
         });
         this.sortResourceTypes();
       },
-      error: (err) => this.handleError(err)
+      error: () => AlertHandler.show('No se pudieron cargar los tipos de recursos', AlertType.ERROR)
     });
   }
 
   private loadResources() {
 
-    if (!this.regionService.currentRegion) return console.error('No se ha seleccionado una región');
+    if (!this.regionService.currentRegion) return AlertHandler.show('No hay región seleccionada', AlertType.ERROR);
 
     this.resourceService.getAllByRegionId(this.regionService.currentRegion.idRegion).subscribe({
       next: (resources) => {
         this.resources = resources;
         this.leakedResources = resources;
       },
-      error: (err) => this.handleError(err)
+      error: () => AlertHandler.show('No se pudieron cargar los recursos', AlertType.ERROR)
     });
   }
 
@@ -87,10 +89,6 @@ export class BookingsComponent implements OnInit {
     this.leakedResources = resourcesToFilter.filter(resource => {
       return typesToFilter.some(type => type.idTypeResource === resource.idTypeResource.idTypeResource);
     });
-  }
-
-  private handleError(err: any) {
-    console.error(err);
   }
 
   private buildForm() {
@@ -134,7 +132,7 @@ export class BookingsComponent implements OnInit {
         this.reservationService.searchResourceDto = searchResourceDto;
         this.filterResources(this.filteredResourceTypes, resources);
       },
-      error: (err) => this.handleError(err)
+      error: () => AlertHandler.show('No se pudieron cargar los recursos', AlertType.ERROR)
     });
   }
 

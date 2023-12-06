@@ -8,10 +8,9 @@ import { MdbModalRef, MdbModalService } from "mdb-angular-ui-kit/modal";
 import {
   ModalTermsAndReferenceComponent
 } from "../../../components/modal-terms-and-reference/modal-terms-and-reference.component";
-import { NetbookingValidator } from "../../../Validators/NetbookingValidator";
 import { UserRegisterDto } from "../../../models/dto/UserRegisterDto";
 import { AuthService } from "../../../auth/services/auth.service";
-import { AlertComponent } from 'src/app/private/components/alert/alert.component';
+import { NetbookingValidator } from "../../../validators/NetbookingValidator";
 
 @Component({
   selector: 'app-user-register',
@@ -21,7 +20,6 @@ import { AlertComponent } from 'src/app/private/components/alert/alert.component
     ReactiveFormsModule,
     MdbFormsModule,
     MdbValidationModule,
-    AlertComponent
   ],
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss']

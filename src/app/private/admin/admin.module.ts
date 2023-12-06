@@ -22,7 +22,8 @@ import { RoleComponent } from './pages/role/role.component';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ModalMenuComponent } from './pages/menus/modal-menu/modal-menu.component';
 import { ModalRoleComponent } from './pages/role/modal-role/modal-role.component';
-import { AlertComponent } from '../components/alert/alert.component';
+import { AlertComponent } from '../../utils/components/alert/alert.component';
+
 @NgModule({
   declarations: [
     ResourcesComponent,
