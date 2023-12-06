@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Menu } from 'src/app/models/Menu';
 import { ModalMenuComponent } from './modal-menu/modal-menu.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MenuService } from '../../services/menu.service';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
   selector: 'app-menus',
@@ -34,145 +36,47 @@ export class MenusComponent implements OnInit{
 
   selectedRow: any;
   isFirstLevelSelected: boolean = false;
-  parentMenu!: Menu;;
+  parentMenu!: Menu;alertType: any;
+  messageAlert!: string;
+  isSuccessDelete: boolean = false;
+;
 
   constructor(
-    private modalService: MdbModalService
-  ) {
-    
-    this.listFirstLevelMenu = [
-      {
-        id_Menu: 1,
-        label: 'Home',
-        parent_menu: 0,
-        order: 1,
-        path: '/home',
-        description: 'Home'
-      },
-      {
-        id_Menu: 2,
-        label: 'Admin',
-        parent_menu: 0,
-        order: 2,
-        path: '/admin',
-        description: 'Admin'
-      },
-      {
-        id_Menu: 3,
-        label: 'Resources',
-        parent_menu: 0,
-        order: 3,
-        path: '/resources',
-        description: 'Resources'
-      },
-      {
-        id_Menu: 4,
-        label: 'Access Request',
-        parent_menu: 0,
-        order: 4,
-        path: '/access-request',
-        description: 'Access Request'
-      },
-      {
-        id_Menu: 5,
-        label: 'Profile Settings',
-        parent_menu: 0,
-        order: 5,
-        path: '/profile-settings',
-        description: 'Profile Settings'
-      },
-      {
-        id_Menu: 6,
-        label: 'Administración plataforma',
-        parent_menu: 0,
-        order: 6,
-        path: '/admin',
-        description: 'Administración plataforma'
-      }
-    ]
-   }
+    private modalService: MdbModalService,
+    private menuService: MenuService
+  ) { }
 
   ngOnInit(): void {
+    this.menuService.getAllFirstLevel().subscribe((firstLevelMenu) =>{
+      this.listFirstLevelMenu = firstLevelMenu;
       this.firstTable = new MatTableDataSource(this.listFirstLevelMenu);
-
+    },
+    (error) => {
+      console.log(error);
+    });
   }
 
-  // selección de menu de primer nivel
+  // first lavel menu selection
   public onSelectRow(menu: Menu, level: number): void {
-    console.log('menu seleccionado', menu);
     if (level === 1) {
       this.isFirstLevelSelected = true;
       this.parentMenu = menu;
-      // this.menuN1Seleccionado = menu;
-      // this.menuN2Seleccionado = null;
-      // this.menuN3Seleccionado = null;
 
       this.listSecondLevelMenu = [];
-      this.getChildrenMenu(menu.id_Menu, level);
-
-      // obtiene los hijos del menú seleccionado
-      // this.obtenerMenusHijos(menu.codMenu, nivel);
-    } else if (level === 2) {
-      // this.menuN2Seleccionado = menu;
-
-      // obtiene los hijos del menú seleccionado
-      // this.obtenerMenusHijos(menu.codMenu, nivel);
+      this.getChildrenMenu(menu.idMenu);
     } else{
       this.isFirstLevelSelected = false;
     }
   }
 
-  getChildrenMenu(idParentMenu: number, level: number): void {
-    // this.subscriptions.push(
-    //   this.menuService.listarHijos(codMenuPadre).subscribe((data: Menu[]) => {
-    //     if (nivel === 1) this.menusSegundoNivel = data;
-    //     else if (nivel === 2) this.menusTercerNivel = data;
-    //   })
-    // );
-    this.listSecondLevelMenu = [
-      {
-        id_Menu: 7,
-        label: 'Resources',
-        parent_menu: 0,
-        order: 1,
-        path: '/resources',
-        description: 'Resources'
-      },
-      {
-        id_Menu: 8,
-        label: 'Type Resources',
-        parent_menu: 0,
-        order: 2,
-        path: '/type-resources',
-        description: 'Type Resources'
-      },
-      {
-        id_Menu: 9,
-        label: 'Role',
-        parent_menu: 0,
-        order: 3,
-        path: '/role',
-        description: 'Role'
-      },
-      {
-        id_Menu: 10,
-        label: 'Menu by Role',
-        parent_menu: 0,
-        order: 4,
-        path: '/menu-by-role',
-        description: 'Menu by Role'
-      },
-      {
-        id_Menu: 11,
-        label: 'Menu',
-        parent_menu: 0,
-        order: 5,
-        path: '/menu',
-        description: 'Menu'
-      }
-    ]
-
-    this.secondTable = new MatTableDataSource(this.listSecondLevelMenu);
+  getChildrenMenu(idParentMenu: number): void {
+    this.menuService.getAllByMenuParent(idParentMenu).subscribe((childrenMenu) => {
+      this.listSecondLevelMenu = childrenMenu;
+      this.secondTable = new MatTableDataSource(this.listSecondLevelMenu);
+    },
+    (error) => {
+      console.log(error);
+    });
   }
 
   onCreate(level: number) {
@@ -181,7 +85,8 @@ export class MenusComponent implements OnInit{
       const modalRef: MdbModalRef<ModalMenuComponent> = this.modalService.open(ModalMenuComponent, {
         data: {
           title: 'Nuevo Menú de Primer Nivel',
-          levelMenu: level
+          levelMenu: level,
+          idParentMenu: null
         },
         modalClass: 'modal-dialog-centered',
         ignoreBackdropClick: true,
@@ -198,7 +103,9 @@ export class MenusComponent implements OnInit{
       const modalRef: MdbModalRef<ModalMenuComponent> = this.modalService.open(ModalMenuComponent, {
         data: {
           title: 'Nuevo Menú de Segundo Nivel',
-          levelMenu: level
+          levelMenu: level,
+          idParentMenu: this.parentMenu.idMenu
+
         },
         modalClass: 'modal-dialog-centered',
         ignoreBackdropClick: true,
@@ -207,7 +114,7 @@ export class MenusComponent implements OnInit{
   
       modalRef.onClose.subscribe((state: boolean) => {
         if(state){
-          this.ngOnInit();
+          this.getChildrenMenu(this.parentMenu.idMenu);
         }
       });
     }
@@ -250,10 +157,35 @@ export class MenusComponent implements OnInit{
   
       modalRef.onClose.subscribe((state: boolean) => {
         if(state){
-          this.ngOnInit();
+          this.getChildrenMenu(menu.parentMenu);
         }
       });
     }
-   
+  }
+
+  onDelete(idMenu: number){
+    this.menuService.delete(idMenu).subscribe({
+      next: () => {
+        this.alertType = AlertType.SUCCESS;
+        this.messageAlert = 'Se ha eliminado el menú exitosamente'
+          this.isSuccessDelete = true;
+
+          setTimeout(() => {
+            this.isSuccessDelete = false;
+            this.ngOnInit();
+          }, 3000);
+      },
+      error: (error) => {
+        console.log(error);
+        this.alertType = AlertType.ERROR;
+        this.messageAlert = 'No se ha podido eliminar el menu, inténtelo nuevamente'
+        this.isSuccessDelete = true;
+
+          setTimeout(() => {
+            this.isSuccessDelete = false;
+            this.ngOnInit();
+          }, 3000);
+      }
+    });
   }
 }

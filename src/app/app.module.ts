@@ -29,7 +29,7 @@ import { AlertComponent } from "./utils/components/alert/alert.component";
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

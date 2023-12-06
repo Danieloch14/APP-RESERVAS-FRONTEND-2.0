@@ -100,6 +100,7 @@
                   <i
                     class="far fa-trash-alt fa-lg"
                     title="Eliminar menú de primer nivel"
+                    (click)="onDelete(row.idMenu)"
                   ></i>
                 </div>
               </td>
@@ -131,7 +132,17 @@
           ></i>
         </div>
       </div>
-      <div class="data-table">
+
+      <div
+        class="alert alert-info"
+        role="alert"
+        *ngIf="listSecondLevelMenu?.length == 0"
+      >
+        <i class="fa-solid fa-circle-info me-2"></i>
+        No existen menús de segundo nivel para el menú seleccionado
+      </div>
+
+      <div class="data-table" *ngIf="listSecondLevelMenu?.length != 0">
         <div class="mat-elevation-z8 table-responsive">
           <table mat-table [dataSource]="secondTable">
             <!-- label -->
@@ -171,6 +182,7 @@
                   <i
                     class="far fa-trash-alt fa-lg"
                     title="Eliminar menú de segundo nivel"
+                    (click)="onDelete(row.idMenu)"
                   ></i>
                 </div>
               </td>
@@ -185,3 +197,4 @@
     <!------------------Second Level Menu------------------->
   </div>
 </div>
+<app-alert [typeAlert]="alertType" [messageAlert]="messageAlert" *ngIf="isSuccessDelete"></app-alert>
