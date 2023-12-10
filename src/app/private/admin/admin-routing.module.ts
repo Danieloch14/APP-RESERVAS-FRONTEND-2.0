@@ -11,6 +11,7 @@ import { RoleComponent } from './pages/role/role.component';
 import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
 import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component';
 import { SubmenusComponent } from '../components/submenus/submenus.component';
+import { CalendarAdminComponent } from './pages/calendar-admin/calendar-admin.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,9 @@ const routes: Routes = [
       },
       {
         path: 'submenu/:id', component: SubmenusComponent
+      },
+      {
+        path: 'calendar', component: CalendarAdminComponent
       }
 
     ]

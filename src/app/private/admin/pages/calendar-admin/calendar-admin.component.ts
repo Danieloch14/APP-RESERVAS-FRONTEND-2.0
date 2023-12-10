@@ -1,42 +1,15 @@
-import { BACKSPACE } from '@angular/cdk/keycodes';
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { ReservationService } from '../../services/reservation.service';
-import { Reservation } from 'src/app/models/Reservation';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { UsersService } from 'src/app/private/services/users.service';
-import { User } from 'src/app/models/User';
+import { Reservation } from 'src/app/models/Reservation';
+import { EventDetail } from 'src/app/private/user/pages/calendar/calendar.component';
+import { ReservationService } from 'src/app/private/user/services/reservation.service';
 
-export class EventDetail {
-  title!: string;
-  day!: number;
-  month!: number;
-  year!: number;
-  startTime!: string;
-  endTime!: string;
-  nameResource!: string;
-  typeResource!: string;
-  city!: String;
-  address!: string;
-  place!: string;
-  floor!: number;
-  status!: string;
-  capacity!: number;
-  price!: number;
-  username!: string;
-}
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  selector: 'app-calendar-admin',
+  templateUrl: './calendar-admin.component.html',
+  styleUrls: ['./calendar-admin.component.scss']
 })
-export class CalendarComponent implements OnInit, AfterViewInit {
+export class CalendarAdminComponent implements OnInit, AfterViewInit {
   @ViewChild('daysContainer') daysContainer!: ElementRef;
 
   today = new Date();
@@ -78,28 +51,17 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   showDetails: boolean = false;
 
   showSpinner: boolean = false;
-  user: User | null = null;
-  
+
   constructor(
     private cdr: ChangeDetectorRef,
-    private reservationService: ReservationService,
-    private usersService: UsersService,
+    private reservationService: ReservationService
   ) {}
 
   ngOnInit(): void {
     this.showSpinner = true;
     this.eventsArr = [];
-    this.usersService.user$.subscribe({
-      next: (user) => {
-        this.user = user;
-      }
-    });
     forkJoin([this.reservationService.getAll()]).subscribe(([reservations]) => {
-      // reservations.forEach((reservation) => {
-      //   this.pushReservation(reservation);
-      // });
-      const userReservations = reservations.filter(reservation => reservation.idUser.idUser === this.user?.idUser);
-      userReservations.forEach((reservation) => {
+      reservations.forEach((reservation) => {
         this.pushReservation(reservation);
       });
 
@@ -149,6 +111,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     event.status = reservation.status.toUpperCase();
     event.capacity = reservation.idResource.capacity;
     event.price = reservation.idResource.price;
+    event.username = reservation.idUser.personalData.name + ' ' + reservation.idUser.personalData.lastname;
 
     this.eventsArr.push(event);
   }
