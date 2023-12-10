@@ -72,7 +72,7 @@ export class LayoutComponent implements OnInit {
         this.rolUserService.listByIdUser(this.user?.idUser!).subscribe(role => {
           
           this.menuRolService.getById(role[0].rolUserId.idRol).subscribe(menuRoles => {
-
+            this.listMenus = [];
             menuRoles.forEach(menuRol => {
               this.menuService.getMenuById(menuRol.menuRolId.idMenu).subscribe(menu => {
                 this.listMenus.push(menu);

@@ -37,7 +37,7 @@ export class NavComponent implements OnInit {
     this.usersService.user$.subscribe({
       next: (user) => {
         this.user = user;
-        console.log("user", user);
+        // console.log("user", user);
       }
     });
     const currentPath = this.location.path().split('/');
