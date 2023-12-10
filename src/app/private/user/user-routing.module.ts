@@ -5,6 +5,7 @@ import { HomeComponent } from "../components/home/home.component";
 import { BookingsComponent } from "./pages/bookings/bookings.component";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
 import { ProfileSettingsComponent } from '../components/profile-settings/profile-settings.component';
+import { SubmenusComponent } from '../components/submenus/submenus.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,9 @@ const routes: Routes = [
       },
       {
         path: 'profile-settings', component: ProfileSettingsComponent
+      },
+      {
+        path: 'submenu/:id', component: SubmenusComponent
       }
 
     ]

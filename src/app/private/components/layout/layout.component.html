@@ -5,21 +5,41 @@
     <hr class="hr">
     <div class="menu">
       
-      <div class="menu__label" *ngFor="let menu of listMenus">
-        <strong>{{menu.label | uppercase}}</strong>
-        <a
+      <!-- <div class="menu__label" *ngFor="let menu of listMenus">
+        <strong>{{menu.label | uppercase}}</strong> -->
+        <!-- <a
         class="menu__item"
         routerLinkActive="active"
         [style.width.px]="150"
         *ngFor="let submenu of filterByParent(menu.idMenu)"
         [routerLink]="menu.path + submenu.path"
-      >
+      > -->
+
+      <a
+      class="menu__item"
+      routerLinkActive="active"
+      [style.width.px]="150"
+      routerLink="home"
+    >
         <div class="d-flex justify-content-start align-items-center py-1 ps-2">
-          <!-- <i class="fas pe-3" [ngClass]="item.icon"></i> -->
-          <span> {{submenu.label}}</span>
+          <i class="fas pe-3 fa-home"></i>
+          <span> Inicio</span>
         </div>
       </a>
-      </div>
+
+      <a
+      class="menu__item"
+      routerLinkActive="active"
+      [style.width.px]="150"
+      *ngFor="let menu of listMenus"
+      [routerLink]="'submenu/' + menu.idMenu"
+    >
+        <div class="d-flex justify-content-start align-items-center py-1 ps-2">
+          <!-- <i class="fas pe-3" [ngClass]="item.icon"></i> -->
+          <span> {{menu.label}}</span>
+        </div>
+      </a>
+      <!-- </div> -->
 
     </div>
   </mat-drawer>

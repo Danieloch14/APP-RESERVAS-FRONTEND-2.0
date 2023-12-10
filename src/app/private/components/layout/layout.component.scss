@@ -18,11 +18,11 @@
   flex-direction: column;
   gap: 6px;
 
-  .menu__label{
-    color: #3a3a3a;
-    font-size: 14px;
-    margin: 10px 0;
-  }
+  // .menu__label{
+  //   color: #3a3a3a;
+  //   font-size: 14px;
+  //   margin: 10px 0;
+  // }
   .menu__item {
     display: flex;
     align-items: center;
@@ -32,7 +32,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     color: #3a3a3a;
-    font-size: 12px;
+    // font-size: 12px;
 
     &:hover {
       background: #f5f5f5;

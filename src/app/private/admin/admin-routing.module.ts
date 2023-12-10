@@ -10,6 +10,7 @@ import { MenusComponent } from './pages/menus/menus.component';
 import { RoleComponent } from './pages/role/role.component';
 import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
 import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component';
+import { SubmenusComponent } from '../components/submenus/submenus.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,9 @@ const routes: Routes = [
       },
       {
         path: 'user-rol', component: UserByRoleComponent
+      },
+      {
+        path: 'submenu/:id', component: SubmenusComponent
       }
 
     ]

@@ -77,7 +77,7 @@ export class LayoutComponent implements OnInit {
               this.menuService.getMenuById(menuRol.menuRolId.idMenu).subscribe(menu => {
                 this.listMenus.push(menu);
                 this.listMenus.sort((a, b) => a.order - b.order);
-                this.listSubmenus(menu.idMenu);
+                // this.listSubmenus(menu.idMenu);
               })
             })
           })
@@ -87,15 +87,15 @@ export class LayoutComponent implements OnInit {
 
   }
 
-  listSubmenus(idMenu: number){
+  // listSubmenus(idMenu: number){
 
-    this.menuService.getAllByMenuParent(idMenu).subscribe(submenu => {
-      this.submenus.push(...submenu);
-      this.submenus.sort((a, b) => a.order - b.order);
-    });
-  }
+  //   this.menuService.getAllByMenuParent(idMenu).subscribe(submenu => {
+  //     this.submenus.push(...submenu);
+  //     this.submenus.sort((a, b) => a.order - b.order);
+  //   });
+  // }
 
-  filterByParent(idMenu: number) : Menu[]{
-    return this.submenus.filter(submenu => submenu.parentMenu === idMenu);
-  }
+  // filterByParent(idMenu: number) : Menu[]{
+  //   return this.submenus.filter(submenu => submenu.parentMenu === idMenu);
+  // }
 }
