@@ -8,6 +8,7 @@ import { Resource } from 'src/app/models/Resource';
 import { ModalImageResourceComponent } from './modal-image-resource/modal-image-resource.component';
 import { ResourceService } from '../../services/resource.service';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-resources',
@@ -35,9 +36,6 @@ export class ResourcesComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   listResources!: Resource[];
-  successDelete: boolean = false;
-  alertType: any;
-  messageAlert!: string;
 
   constructor(
     private resourceService: ResourceService,
@@ -114,17 +112,14 @@ export class ResourcesComponent implements OnInit {
   deleteResource(row: Resource){
     this.resourceService.delete(row.idResource).subscribe((response) => {
       console.log(response);
-      this.alertType = AlertType.SUCCESS;
-      this.messageAlert = 'Se ha eliminado el recurso exitosamente'
-      this.successDelete = true;
-
+      AlertHandler.show('Se ha eliminado el recurso exitosamente', AlertType.SUCCESS)
       setTimeout(() => {
-        this.successDelete = false;
         this.ngOnInit();
       }, 2000);
     },
     (error) =>{
       console.log(error);
+      AlertHandler.show('No se pudo eliminar el recurso, inténtelo nuevamente', AlertType.ERROR)
     })
   }
 }

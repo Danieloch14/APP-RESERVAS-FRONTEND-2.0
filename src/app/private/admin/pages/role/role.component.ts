@@ -5,6 +5,7 @@ import { ModalRoleComponent } from './modal-role/modal-role.component';
 import { Rol } from 'src/app/models/Rol';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { RolService } from '../../services/rol.service';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-role',
@@ -23,9 +24,6 @@ export class RoleComponent {
   dataSource!: MatTableDataSource<Rol>;
 
   listRoles!: Rol[];
-  isSuccessDeleted: boolean = false;
-  messageAlert!: string;
-  alertType: any;
 
   constructor(
     private modalService: MdbModalService,
@@ -81,23 +79,15 @@ export class RoleComponent {
   onDelete(row: Rol){
     this.rolService.delete(row.idRol).subscribe({
       next: () => {
-        this.alertType = AlertType.SUCCESS;
-        this.messageAlert = 'Se ha eliminado el rol exitosamente'
-          this.isSuccessDeleted = true;
-
+          AlertHandler.show('Se ha eliminado el rol exitosamente', AlertType.SUCCESS)
           setTimeout(() => {
-            this.isSuccessDeleted = false;
             this.ngOnInit();
           }, 3000);
       },
       error: (error) => {
         console.log(error);
-        this.alertType = AlertType.ERROR;
-        this.messageAlert = 'No se pudo eliminar el rol, inténtelo nuevamente'
-          this.isSuccessDeleted = true;
-
+          AlertHandler.show('No se pudo eliminar el rol, inténtelo nuevamente', AlertType.ERROR)
           setTimeout(() => {
-            this.isSuccessDeleted = false;
             this.ngOnInit();
           }, 3000);
       }

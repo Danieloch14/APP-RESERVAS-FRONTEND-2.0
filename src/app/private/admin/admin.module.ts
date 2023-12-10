@@ -18,15 +18,16 @@ import { ModalTypeResourceComponent } from './pages/type-resources/modal-type-re
 import { AccessRequestComponent } from './pages/access-request/access-request.component';
 import { MenusComponent } from './pages/menus/menus.component';
 import { RoleComponent } from './pages/role/role.component';
-// import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
+import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ModalMenuComponent } from './pages/menus/modal-menu/modal-menu.component';
 import { ModalRoleComponent } from './pages/role/modal-role/modal-role.component';
-import { AlertComponent } from '../components/alert/alert.component';
-import { MatStepperModule } from '@angular/material/stepper';
+// import { AlertComponent } from '../components/alert/alert.component';\
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component';
+import { MatStepperModule } from '@angular/material/stepper';
+
 @NgModule({
   declarations: [
     ResourcesComponent,
@@ -39,7 +40,8 @@ import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component
     RoleComponent,
     ModalMenuComponent,
     ModalRoleComponent,
-    UserByRoleComponent
+    UserByRoleComponent,
+    MenuByRoleComponent
   ],
   exports: [
     ResourcesComponent
@@ -56,7 +58,7 @@ import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component
     MatSelectModule,
     MdbValidationModule,
     MdbTooltipModule,
-    AlertComponent,
+    // AlertComponent,
     MatStepperModule,
     
     MatButtonModule,

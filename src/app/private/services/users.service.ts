@@ -41,4 +41,7 @@ export class UsersService {
     return this.http.post<User>(`${ this.apiUrl }/${ this.apiVersion }/users/actualizar`, user);
   }
 
+  getAll(){
+    return this.http.get<User[]>(`${ this.apiUrl }/${ this.apiVersion }/users`);
+  }
 }

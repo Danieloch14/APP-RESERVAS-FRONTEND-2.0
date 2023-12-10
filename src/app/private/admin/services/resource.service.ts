@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Resource } from 'src/app/models/Resource';
 import { ResourceCreate } from 'src/app/models/ResourceCreate';
 import { environment } from "../../../../environments/environment";
+import { SearchResourceDto } from 'src/app/models/dto/SearchResourceDto';
 
 @Injectable({
   providedIn: 'root'

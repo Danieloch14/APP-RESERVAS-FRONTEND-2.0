@@ -8,6 +8,7 @@ import { Menu } from 'src/app/models/Menu';
 import { MenuService } from '../../services/menu.service';
 import { MenuRolService } from '../../services/menu-rol.service';
 import { MatStepper } from '@angular/material/stepper';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
@@ -33,9 +34,9 @@ export class MenuByRoleComponent {
   selectedRow: any;
   selectedRows: number[] = [];
   rolName!: string;
-  messageAlert!: string;
-  isAssigned: boolean = false;
-  alertType!: AlertType;
+  // messageAlert!: string;
+  // isAssigned: boolean = false;
+  // alertType!: AlertType;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -126,25 +127,17 @@ export class MenuByRoleComponent {
   onSave(){
     this.menuRolService.saveList(this.buildMenuRol()).subscribe({
       next: () => {
-        this.alertType = AlertType.SUCCESS;
-        this.messageAlert = 'Se ha asignado los menus al rol, correctamente'
-          this.isAssigned = true;
+
+        AlertHandler.show('Se ha asignado los menus al rol, correctamente', AlertType.SUCCESS)
 
           setTimeout(() => {
-            this.isAssigned = false;
             this.selectedRows = [];
             this.stepper.reset();
           }, 3000);
       },
       error: (error) => {
         console.log(error);
-        this.alertType = AlertType.ERROR;
-        this.messageAlert = 'No se ha podido asignar los menus, inténtelo nuevamente'
-        this.isAssigned = true;
-
-          setTimeout(() => {
-            this.isAssigned = false;
-          }, 3000);
+        AlertHandler.show('No se ha podido asignar los menus, inténtelo nuevamente', AlertType.ERROR)
       }
     });
 
@@ -159,23 +152,4 @@ export class MenuByRoleComponent {
   onBack() {
 
   }
-
-
-
-
-
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  isLinear = false;
-
-
-
-  // ...
-
-  
-
 }

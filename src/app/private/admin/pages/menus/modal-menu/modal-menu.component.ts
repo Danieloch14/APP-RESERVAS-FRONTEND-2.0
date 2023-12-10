@@ -4,6 +4,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { Menu } from 'src/app/models/Menu';
 import { MenuService } from '../../../services/menu.service';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-modal-menu',
@@ -18,10 +19,6 @@ export class ModalMenuComponent implements OnInit {
   @Input() idParentMenu!: number;
 
   menuForm: FormGroup;
-  isSuccessCreate: boolean = false;
-  isSuccessEdit: boolean = false;
-  alertType: any;
-  messageAlert!: string;
 
   constructor(
     public modalRef: MdbModalRef<ModalMenuComponent>,
@@ -88,47 +85,31 @@ export class ModalMenuComponent implements OnInit {
   onSave() {
     if (this.isEditing) {
       this.menuService.update(this.buildMenu(), this.menu.idMenu).subscribe((menu) => {
-        this.alertType = AlertType.SUCCESS;
-        this.messageAlert = 'Se ha modificado el menú exitosamente'
-          this.isSuccessEdit = true;
 
+          AlertHandler.show('Se ha modificado el menú exitosamente', AlertType.SUCCESS)
           setTimeout(() => {
-            this.isSuccessEdit = false;
             this.onClose();
           }, 3000);
       },
       (error) => {
         console.log(error);
-        this.alertType = AlertType.ERROR;
-        this.messageAlert = 'Error, no se pudo modificar el menú, inténtelo nuevamente'
-          this.isSuccessEdit = true;
-
+          AlertHandler.show('Error, no se pudo modificar el menú, inténtelo nuevamente', AlertType.ERROR)
           setTimeout(() => {
-            this.isSuccessEdit = false;
             this.onClose();
           }, 3000);
       });
 
     } else {
       this.menuService.save(this.buildMenu()).subscribe((menu) => {
-
-        this.alertType = AlertType.SUCCESS;
-        this.messageAlert = 'Se ha creado un nuevo menú exitosamente'
-          this.isSuccessCreate = true;
-
+          AlertHandler.show('Se ha creado un nuevo menú exitosamente', AlertType.SUCCESS)
           setTimeout(() => {
-            this.isSuccessCreate = false;
             this.onClose();
           }, 3000);
       },
       (error) => {
         console.log(error);
-        this.alertType = AlertType.ERROR;
-        this.messageAlert = 'Error, no se pudo crear el menu, inténtelo nuevamente'
-          this.isSuccessCreate = true;
-
+          AlertHandler.show('Error, no se pudo crear el menu, inténtelo nuevamente', AlertType.ERROR)
           setTimeout(() => {
-            this.isSuccessCreate = false;
             this.onClose();
           }, 3000);
       });
