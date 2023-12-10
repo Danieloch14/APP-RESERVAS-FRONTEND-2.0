@@ -1,7 +1,6 @@
-import { Menu } from "./Menu";
-import { Rol } from "./Rol";
+import { MenuRolId } from "./MenuRolId";
 
 export interface MenuRol{
-    id_menu: Menu[];
-    id_rol: Rol;
+    menuRolId: MenuRolId;
+    permissions: string;
 }

@@ -9,6 +9,7 @@ import { ProfileSettingsComponent } from '../components/profile-settings/profile
 import { MenusComponent } from './pages/menus/menus.component';
 import { RoleComponent } from './pages/role/role.component';
 import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component';
+import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,9 @@ const routes: Routes = [
       },
       {
         path: 'menu-role', component: MenuByRoleComponent
+      },
+      {
+        path: 'user-rol', component: UserByRoleComponent
       }
 
     ]

@@ -7,7 +7,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule} from '@angular/material/table';
 import { ModalResourceComponent } from './pages/resources/modal-resource/modal-resource.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -23,6 +23,10 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ModalMenuComponent } from './pages/menus/modal-menu/modal-menu.component';
 import { ModalRoleComponent } from './pages/role/modal-role/modal-role.component';
 import { AlertComponent } from '../components/alert/alert.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component';
 @NgModule({
   declarations: [
     ResourcesComponent,
@@ -35,7 +39,8 @@ import { AlertComponent } from '../components/alert/alert.component';
     RoleComponent,
     MenuByRoleComponent,
     ModalMenuComponent,
-    ModalRoleComponent
+    ModalRoleComponent,
+    UserByRoleComponent
   ],
   exports: [
     ResourcesComponent
@@ -52,7 +57,12 @@ import { AlertComponent } from '../components/alert/alert.component';
     MatSelectModule,
     MdbValidationModule,
     MdbTooltipModule,
-    AlertComponent
+    AlertComponent,
+    MatStepperModule,
+    
+    MatButtonModule,
+    FormsModule,
+    MatInputModule,
   ]
 })
 export class AdminModule { }
