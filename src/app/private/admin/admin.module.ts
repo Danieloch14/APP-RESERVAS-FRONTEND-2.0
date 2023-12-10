@@ -29,6 +29,8 @@ import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component
 import { MatStepperModule } from '@angular/material/stepper';
 import { CalendarAdminComponent } from './pages/calendar-admin/calendar-admin.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
+import { RegionsComponent } from './pages/regions/regions.component';
+import { ModalRegionComponent } from './pages/regions/modal-region/modal-region.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
     ModalRoleComponent,
     UserByRoleComponent,
     MenuByRoleComponent,
-    CalendarAdminComponent
+    CalendarAdminComponent,
+    RegionsComponent,
+    ModalRegionComponent
   ],
   exports: [
     ResourcesComponent

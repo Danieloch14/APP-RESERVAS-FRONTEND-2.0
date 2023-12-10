@@ -31,25 +31,25 @@
               <!-- date request -->
               <ng-container matColumnDef="dateRequest">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de solicitud </th>
-                <td mat-cell *matCellDef="let row"> {{ row.dateRequest }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row.requestDate }} </td>
               </ng-container>
 
               <!-- requester Name -->
               <ng-container matColumnDef="requesterName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
-                <td mat-cell *matCellDef="let row"> {{row.requesterName | uppercase}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.personalData.name | uppercase}} </td>
               </ng-container>
 
               <!-- requesterLastname -->
               <ng-container matColumnDef="requesterLastname">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
-                <td mat-cell *matCellDef="let row"> {{row.requesterLastname | uppercase}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.personalData.lastname | uppercase}} </td>
               </ng-container>
 
               <!-- requesterEmail -->
               <ng-container matColumnDef="requesterEmail">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo Electrónico </th>
-                <td mat-cell *matCellDef="let row"> {{row.requesterEmail }} </td>
+                <td mat-cell *matCellDef="let row"> {{row.personalData.email }} </td>
               </ng-container>
 
               <!-- requesterEmail -->

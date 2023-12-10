@@ -12,6 +12,7 @@ import { MenuByRoleComponent } from './pages/menu-by-role/menu-by-role.component
 import { UserByRoleComponent } from './pages/user-by-role/user-by-role.component';
 import { SubmenusComponent } from '../components/submenus/submenus.component';
 import { CalendarAdminComponent } from './pages/calendar-admin/calendar-admin.component';
+import { RegionsComponent } from './pages/regions/regions.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,9 @@ const routes: Routes = [
       },
       {
         path: 'calendar', component: CalendarAdminComponent
+      },
+      {
+        path: 'region', component: RegionsComponent
       }
 
     ]

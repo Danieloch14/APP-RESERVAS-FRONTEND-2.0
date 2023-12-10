@@ -27,6 +27,18 @@ export class RegionService {
   //   return this.httpClient.get<Region[]>(`${ this.baseURL }`, { headers });
   // }
 
+  save(region: Region): Observable<Region> {
+    return this.httpClient.post<Region>(`${ this.baseURL }`, region);
+  }
+
+  update(idRegion: number, region: Region): Observable<Region> {
+    return this.httpClient.put<Region>(`${ this.baseURL }/${ idRegion }`, region);
+  }
+
+  delete(idRegion: number): Observable<any> {
+    return this.httpClient.delete<any>(`${ this.baseURL }/${ idRegion }`);
+  }
+
   saveInLocalStorage(region: Region) {
     localStorage.setItem(REGION_NET_BOOKING, JSON.stringify(region));
   }
