@@ -1,7 +1,8 @@
 export interface SearchResourceDto {
   date: Date;
-  time: string;
   hours: number;
   minutes: number;
   capacity: number;
+  idRegion: number;
+  idResource?: number;
 }

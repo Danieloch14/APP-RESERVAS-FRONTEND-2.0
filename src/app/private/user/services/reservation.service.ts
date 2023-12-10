@@ -1,21 +1,40 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reservation } from 'src/app/models/Reservation';
 import { environment } from "../../../../environments/environment";
+import { ReservationCreateDto } from "../../../models/dto/ReservationCreateDto";
+import { SearchResourceDto } from "../../../models/dto/SearchResourceDto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-  private baseURL = environment.API_URL + environment.API_VERSION + "/reservations";
-  private token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBZG1pbmlzdHJhY2nDs24gZGUgbGEgcGxhdGFmb3JtYSBkZSByZXNlcnZhcyBkZSByZWN1cnNvcyIsInN1YiI6IjE3MDM3OTQ2MjYiLCJpc3MiOiJQbGF0YWZvcm1hIGRlIHJlc2VydmFzIGRlIHJlY3Vyc29zIiwicGVybWlzb3MiOltdLCJleHAiOjE3MDE0MDAzMTEsImlhdCI6MTcwMDk2ODMxMX0.TMVZlRFf0wJm8gOxFKMp-pJ11c7syk-114Giu040pve1E8uwPf2eb5hUivzjknVwYtp_Nlq81fFPQhruiyGF8w'
 
-  constructor(private httpClient: HttpClient) { }
+  private baseURL = `${ environment.API_URL }/${ environment.API_VERSION }/reservations`;
 
-  getAll(): Observable<Reservation[]> {
-    const headers: HttpHeaders = new HttpHeaders({'Authorization': `Bearer ${this.token}`});
-    return this.httpClient.get<Reservation[]>(`${this.baseURL}`, { headers});
+  searchResourceDto: SearchResourceDto | null;
+
+  constructor(private httpClient: HttpClient) {
+    this.searchResourceDto = null
   }
+
+  getAll() {
+    return this.httpClient.get<Reservation[]>(`${ this.baseURL }`,);
+  }
+
+  verifyAvailability(searchResourceDto: {
+    idResource: number;
+    startDate: Date;
+    hours: number;
+    minutes: number;
+  }) {
+    return this.httpClient.post<boolean>(`${ this.baseURL }/is-available`, searchResourceDto);
+  }
+
+  create(reservation: ReservationCreateDto) {
+    return this.httpClient.post<any>(`${ this.baseURL }`, reservation);
+  }
+
 
 }

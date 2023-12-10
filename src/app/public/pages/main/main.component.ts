@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from "../../../auth/services/auth.service";
+import { AlertHandler } from "../../../utils/AlertHandler";
+import { AlertType } from "../../../models/Enums/AlertType.enum";
 
 @Component({
   selector: 'app-main',
@@ -21,7 +23,7 @@ export class MainComponent {
   ) { }
 
   onLogin() {
-    if (this.authService.isUsuarioLoggedIn()) {
+    if (this.authService.isUserLoggedIn()) {
       this.router.navigate(['user/home']).then();
       return;
     }
@@ -32,4 +34,5 @@ export class MainComponent {
   onSendRequest() {
     this.router.navigate(['auth/registration-application']).then();
   }
+
 }

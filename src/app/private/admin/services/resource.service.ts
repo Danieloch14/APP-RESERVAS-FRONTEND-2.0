@@ -10,9 +10,13 @@ import { environment } from "../../../../environments/environment";
 })
 export class ResourceService {
 
-  private baseURL = environment.API_URL + "/" + environment.API_VERSION + "/resources";
+  private baseURL = `${environment.API_URL}/${environment.API_VERSION}/resources`;
 
-  constructor(private httpClient: HttpClient) { }
+  isSearchDone: boolean;
+
+  constructor(private httpClient: HttpClient) {
+    this.isSearchDone = false;
+  }
 
 
   getAll(): Observable<Resource[]> {
@@ -20,7 +24,7 @@ export class ResourceService {
   }
 
   getAllByRegionId(id: number): Observable<Resource[]> {
-    return this.httpClient.get<Resource[]>(`${ this.baseURL }/by-region-id/${id}`,);
+    return this.httpClient.get<Resource[]>(`${ this.baseURL }/by-region-id/${ id }`,);
   }
 
   save(resource: ResourceCreate): Observable<any> {
@@ -34,4 +38,10 @@ export class ResourceService {
   delete(idResource: number) {
     return this.httpClient.delete<any>(`${ this.baseURL }/${ idResource }`,);
   }
+
+  findAvailable(searchResourceDto: SearchResourceDto) {
+    return this.httpClient.post<any>(`${ this.baseURL }/availables`, searchResourceDto);
+  }
+
+
 }

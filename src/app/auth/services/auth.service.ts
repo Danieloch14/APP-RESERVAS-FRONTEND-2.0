@@ -66,7 +66,8 @@ export class AuthService {
     return this.http.post(`${ this.url }/users/register`, user);
   }
 
-  isUsuarioLoggedIn() {
+  isUserLoggedIn() {
     return !!this.tokenService.get();
   }
 }
+
