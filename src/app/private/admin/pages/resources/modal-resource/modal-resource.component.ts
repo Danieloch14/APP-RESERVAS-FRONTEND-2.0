@@ -12,6 +12,7 @@ import { RegionService } from '../../../services/region.service';
 import { ResourceService } from '../../../services/resource.service';
 import { Location } from 'src/app/models/Location';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-modal-resource',
@@ -30,10 +31,6 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
   listRegions: Region[] = []
   listTypeResources: ResourceType[] = []
   pathImage: any;
-  successCreate: boolean = false;
-  successEdit: boolean = false;
-  messageAlert!: string;
-  alertType: any;
 
   constructor(
     public modalRef: MdbModalRef<ModalResourceComponent>,
@@ -262,12 +259,9 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     if (this.isEditing) {
       this.resourceService.update(this.buildResource(), this.resource.idResource).subscribe((resource) => {
         console.log(resource)
-        this.alertType= AlertType.SUCCESS;
-        this.messageAlert = 'Se ha modificado el recurso exitosamente'
-        this.successEdit = true;
+        AlertHandler.show('Se ha modificado el recurso exitosamente', AlertType.SUCCESS)
 
         setTimeout(() => {
-          this.successEdit = false;
           this.close();
         }, 3000);
       })
@@ -275,12 +269,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     } else {
       this.resourceService.save(this.buildNewResource()).subscribe((resource) => {
         console.log(resource)
-        this.alertType= AlertType.SUCCESS;
-        this.messageAlert = 'Se ha creado un nuevo recurso exitosamente'
-        this.successCreate = true;
-
+        AlertHandler.show('Se ha creado un nuevo recurso exitosamente', AlertType.SUCCESS)
         setTimeout(() => {
-          this.successCreate = false;
           this.close();
         }, 3000);
       })

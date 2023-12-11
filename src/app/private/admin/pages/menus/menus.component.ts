@@ -5,6 +5,7 @@ import { ModalMenuComponent } from './modal-menu/modal-menu.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { MenuService } from '../../services/menu.service';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-menus',
@@ -36,10 +37,10 @@ export class MenusComponent implements OnInit{
 
   selectedRow: any;
   isFirstLevelSelected: boolean = false;
-  parentMenu!: Menu;alertType: any;
-  messageAlert!: string;
-  isSuccessDelete: boolean = false;
-
+  parentMenu!: Menu;
+  // alertType: any;
+  // messageAlert!: string;
+  // isSuccessDelete: boolean = false;
 
   constructor(
     private modalService: MdbModalService,
@@ -166,23 +167,17 @@ export class MenusComponent implements OnInit{
   onDelete(idMenu: number){
     this.menuService.delete(idMenu).subscribe({
       next: () => {
-        this.alertType = AlertType.SUCCESS;
-        this.messageAlert = 'Se ha eliminado el menú exitosamente'
-          this.isSuccessDelete = true;
 
+          AlertHandler.show('Se ha eliminado el menú exitosamente', AlertType.SUCCESS)
           setTimeout(() => {
-            this.isSuccessDelete = false;
             this.ngOnInit();
           }, 3000);
       },
       error: (error) => {
         console.log(error);
-        this.alertType = AlertType.ERROR;
-        this.messageAlert = 'No se ha podido eliminar el menu, inténtelo nuevamente'
-        this.isSuccessDelete = true;
 
+        AlertHandler.show('No se ha podido eliminar el menu, inténtelo nuevamente', AlertType.ERROR)
           setTimeout(() => {
-            this.isSuccessDelete = false;
             this.ngOnInit();
           }, 3000);
       }

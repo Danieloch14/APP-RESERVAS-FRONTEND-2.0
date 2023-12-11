@@ -37,8 +37,11 @@ export class UsersService {
     localStorage.removeItem(USER_NET_BOOKING);
   }
 
-  update(user: User) {
-    return this.http.post<User>(`${ this.apiUrl }/${ this.apiVersion }/users/actualizar`, user);
+  update(idUser: number, user: User) {
+    return this.http.put<User>(`${ this.apiUrl }/${ this.apiVersion }/users/${idUser}`, user);
   }
 
+  getAll(){
+    return this.http.get<User[]>(`${ this.apiUrl }/${ this.apiVersion }/users`);
+  }
 }

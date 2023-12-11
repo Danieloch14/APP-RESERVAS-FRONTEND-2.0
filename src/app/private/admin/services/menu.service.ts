@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Menu } from 'src/app/models/Menu';
 import { API_URL, API_VERSION } from 'src/constants/environment.const';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +36,9 @@ export class MenuService {
 
   delete(idMenu: number) {
     return this.http.delete<any>(`${ this.baseUrl }/${ idMenu }`,);
+  }
+
+  getMenuById(idMenu: number): Observable<Menu> {
+    return this.http.get<Menu>(`${ this.baseUrl }/${ idMenu }`);
   }
 }

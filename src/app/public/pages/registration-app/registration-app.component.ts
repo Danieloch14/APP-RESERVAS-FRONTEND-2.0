@@ -6,6 +6,10 @@ import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { MdbValidationModule } from "mdb-angular-ui-kit/validation";
+import { RegisterRequestService } from 'src/app/private/admin/services/register-request.service';
+import { RegisterRequest } from 'src/app/models/RegisterRequest';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
   selector: 'app-registration-app',
@@ -26,7 +30,8 @@ import { MdbValidationModule } from "mdb-angular-ui-kit/validation";
 export class RegistrationAppComponent {
   requestForm: FormGroup;
 
-  constructor(private builder: FormBuilder) {
+  constructor(private builder: FormBuilder,
+    private registerRequestService: RegisterRequestService) {
     this.requestForm = new FormGroup({});
     this.buildForm();
   }
@@ -36,10 +41,41 @@ export class RegistrationAppComponent {
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       mail: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]],
+            // mail: ['', [Validators.required, Validators.email]],
     });
   }
 
-  onSendRequest() {
+  buildRequest(): RegisterRequest {
+    const request: RegisterRequest = {
+      idRegisterRequest: 0,
+      personalData: {
+        idPersonalData: 0,
+        name: this.requestForm.get('name')?.value,
+        lastname: this.requestForm.get('lastname')?.value,
+        address: '',
+        cellphone: '',
+        email: this.requestForm.get('mail')?.value,
+        company: '',
+        role: ''
+      },
+      requestDate: new Date(),
+      status: 'Pendiente'
+    };
 
+    return request;
+  }
+
+  onSendRequest() {
+    console.log(this.buildRequest());
+    this.registerRequestService.save(this.buildRequest()).subscribe(
+      (response) => {
+        AlertHandler.show('Solicitud enviada con exito', AlertType.SUCCESS);
+        console.log(response);
+      },
+      (error) => {
+        AlertHandler.show('Hubo un error en la solicitud, inténtelo nuevamente', AlertType.ERROR);
+        console.log(error);
+      }
+    )
   }
 }

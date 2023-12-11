@@ -4,6 +4,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { Rol } from 'src/app/models/Rol';
 import { RolService } from '../../../services/rol.service';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-modal-role',
@@ -16,10 +17,6 @@ export class ModalRoleComponent implements OnInit {
   @Input() rol!: Rol;
 
   roleForm: FormGroup;
-  isSuccessCreate: boolean = false;
-  isSuccessEdit: boolean = false;
-  alertType: any;
-  messageAlert!: string;
 
   constructor(
     public modalRef: MdbModalRef<ModalRoleComponent>,
@@ -75,46 +72,30 @@ export class ModalRoleComponent implements OnInit {
   onSave() {
     if (this.isEditing) {
       this.rolService.update(this.buildRol()).subscribe((rol) => {
-        this.alertType= AlertType.SUCCESS;
-        this.messageAlert = 'Se ha modificado el rol exitosamente'
-          this.isSuccessEdit = true;
-
+          AlertHandler.show('Se ha modificado el rol exitosamente', AlertType.SUCCESS)
           setTimeout(() => {
-            this.isSuccessEdit = false;
             this.onClose();
           }, 3000);
       },
       (error) => {
         console.log(error);
-        this.alertType= AlertType.ERROR;
-        this.messageAlert = 'No se pudo modificar el rol, inténtelo nuevamente'
-          this.isSuccessEdit = true;
-
+          AlertHandler.show('No se pudo modificar el rol, inténtelo nuevamente', AlertType.ERROR)
           setTimeout(() => {
-            this.isSuccessEdit = false;
             this.onClose();
           }, 3000);
       });
 
     } else {
       this.rolService.save(this.buildRol()).subscribe((rol) => {
-        this.alertType= AlertType.SUCCESS;
-        this.messageAlert = 'Se ha creado un nuevo rol exitosamente'
-          this.isSuccessCreate = true;
-
+          AlertHandler.show('Se ha creado un nuevo rol exitosamente', AlertType.SUCCESS)
           setTimeout(() => {
-            this.isSuccessCreate = false;
             this.onClose();
           }, 3000);
       },
       (error) => {
         console.log(error);
-        this.alertType= AlertType.ERROR;
-        this.messageAlert = 'No se pudo crear el rol, inténtelo nuevamente'
-          this.isSuccessCreate = true;
-
+          AlertHandler.show('No se pudo crear el rol, inténtelo nuevamente', AlertType.ERROR)
           setTimeout(() => {
-            this.isSuccessCreate = false;
             this.onClose();
           }, 3000);
       });

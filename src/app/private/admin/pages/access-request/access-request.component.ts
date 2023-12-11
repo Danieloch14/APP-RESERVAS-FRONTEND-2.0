@@ -2,9 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { RequestService } from '../../services/request.service';
 import { Request } from 'src/app/models/Request';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { RegisterRequest } from 'src/app/models/RegisterRequest';
+import { RegisterRequestService } from '../../services/register-request.service';
 
 @Component({
   selector: 'app-access-request',
@@ -23,12 +24,12 @@ export class AccessRequestComponent {
     'actions'
   ];
 
-  dataSource!: MatTableDataSource<Request>;
+  dataSource!: MatTableDataSource<RegisterRequest>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  listRequest!: Request[];
+  listRequest!: RegisterRequest[];
   successAccepted: boolean = false;
   successDenied: boolean = false;
 
@@ -36,59 +37,67 @@ export class AccessRequestComponent {
   messageAlert!: string;
 
   constructor(
-    private requestService: RequestService
+    private registerRequestService: RegisterRequestService
   ) {  
     this.listRequest = [
-      {
-        dateRequest: new Date(20, 10, 10),
-        requesterName: 'Juan',
-        requesterLastname: 'Perez',
-        requesterEmail: 'juan.perez@netlife.ec',
-        status: 'Pendiente'
-      },
-      {
-        dateRequest: new Date(20, 10, 10),
-        requesterName: 'Juan',
-        requesterLastname: 'Perez',
-        requesterEmail: 'juan.perez@netlife.ec',
-        status: 'Pendiente'
-      },
-      {
-        dateRequest: new Date(),
-        requesterName: 'Juan',
-        requesterLastname: 'Perez',
-        requesterEmail: 'juan.perez@netlife.ec',
-        status: 'Aceptada'
-      },
-      {
-        dateRequest: new Date(21, 10, 10),  
-        requesterName: 'Juan',
-        requesterLastname: 'Perez',
-        requesterEmail: 'juan.perez@netlife.ec',
-        status: 'Rechazada'
-      },
-      {
-        dateRequest: new Date(22, 10, 10),
-        requesterName: 'Juan',
-        requesterLastname: 'Perez',
-        requesterEmail: 'juan.perez@netlife.ec',
-        status: 'Pendiente'
-      },
-      {
-        dateRequest: new Date(23, 10, 10),
-        requesterName: 'Juan',
-        requesterLastname: 'Perez',
-        requesterEmail: 'juan.perez@netlife.ec',
-        status: 'Pendiente'
-      }
+    //   {
+    //     dateRequest: new Date(20, 10, 10),
+    //     requesterName: 'Juan',
+    //     requesterLastname: 'Perez',
+    //     requesterEmail: 'juan.perez@netlife.ec',
+    //     status: 'Pendiente'
+    //   },
+    //   {
+    //     dateRequest: new Date(20, 10, 10),
+    //     requesterName: 'Juan',
+    //     requesterLastname: 'Perez',
+    //     requesterEmail: 'juan.perez@netlife.ec',
+    //     status: 'Pendiente'
+    //   },
+    //   {
+    //     dateRequest: new Date(),
+    //     requesterName: 'Juan',
+    //     requesterLastname: 'Perez',
+    //     requesterEmail: 'juan.perez@netlife.ec',
+    //     status: 'Aceptada'
+    //   },
+    //   {
+    //     dateRequest: new Date(21, 10, 10),  
+    //     requesterName: 'Juan',
+    //     requesterLastname: 'Perez',
+    //     requesterEmail: 'juan.perez@netlife.ec',
+    //     status: 'Rechazada'
+    //   },
+    //   {
+    //     dateRequest: new Date(22, 10, 10),
+    //     requesterName: 'Juan',
+    //     requesterLastname: 'Perez',
+    //     requesterEmail: 'juan.perez@netlife.ec',
+    //     status: 'Pendiente'
+    //   },
+    //   {
+    //     dateRequest: new Date(23, 10, 10),
+    //     requesterName: 'Juan',
+    //     requesterLastname: 'Perez',
+    //     requesterEmail: 'juan.perez@netlife.ec',
+    //     status: 'Pendiente'
+    //   }
     ];
   }
 
   ngOnInit(): void {
+    this.registerRequestService.getAll().subscribe((requests) => {
+      console.log(requests)
+      this.listRequest = requests
+      this.dataSource = new MatTableDataSource(this.listRequest);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+
+    })
     // this.requestService.getAll().subscribe((requests) => {
     //   console.log(requests)
     //   this.listRequest = requests
-      this.dataSource = new MatTableDataSource(this.listRequest);
+      // this.dataSource = new MatTableDataSource(this.listRequest);
 
     // },
     // (error) =>{
@@ -97,8 +106,7 @@ export class AccessRequestComponent {
 
   }
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
   }
 
   applyFilter(event: Event) {

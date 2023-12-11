@@ -10,6 +10,8 @@ import {
 import { ReservationService } from '../../services/reservation.service';
 import { Reservation } from 'src/app/models/Reservation';
 import { forkJoin } from 'rxjs';
+import { UsersService } from 'src/app/private/services/users.service';
+import { User } from 'src/app/models/User';
 
 export class EventDetail {
   title!: string;
@@ -27,6 +29,7 @@ export class EventDetail {
   status!: string;
   capacity!: number;
   price!: number;
+  username!: string;
 }
 @Component({
   selector: 'app-calendar',
@@ -75,17 +78,28 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   showDetails: boolean = false;
 
   showSpinner: boolean = false;
-
+  user: User | null = null;
+  
   constructor(
     private cdr: ChangeDetectorRef,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private usersService: UsersService,
   ) {}
 
   ngOnInit(): void {
     this.showSpinner = true;
     this.eventsArr = [];
+    this.usersService.user$.subscribe({
+      next: (user) => {
+        this.user = user;
+      }
+    });
     forkJoin([this.reservationService.getAll()]).subscribe(([reservations]) => {
-      reservations.forEach((reservation) => {
+      // reservations.forEach((reservation) => {
+      //   this.pushReservation(reservation);
+      // });
+      const userReservations = reservations.filter(reservation => reservation.idUser.idUser === this.user?.idUser);
+      userReservations.forEach((reservation) => {
         this.pushReservation(reservation);
       });
 

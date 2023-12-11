@@ -4,6 +4,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { ResourceType } from 'src/app/models/ResourceType';
 import { ResourceTypeService } from '../../../services/resource-type.service';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-modal-type-resource',
@@ -16,10 +17,6 @@ export class ModalTypeResourceComponent implements OnInit{
   @Input() resourceType!: ResourceType;
 
   resourceTypeForm: FormGroup;
-  successEdit: boolean = false;
-  successCreate: boolean = false;
-  alertType: any;
-  messageAlert!: string;
 
   constructor(
     public modalRef: MdbModalRef<ModalTypeResourceComponent>,
@@ -70,13 +67,8 @@ export class ModalTypeResourceComponent implements OnInit{
     if (this.isEditing) {
       this.typeResourceService.update(this.buildTypeResource(), this.resourceType.idTypeResource)
       .subscribe((typeResource) => {
-        console.log('Actualizando elemento:', typeResource);
-        this.alertType= AlertType.SUCCESS;
-        this.messageAlert = 'Se ha modificado el tipo de recurso exitosamente'
-        this.successEdit = true;
-
+        AlertHandler.show('Se ha modificado el tipo de recurso exitosamente', AlertType.SUCCESS)
         setTimeout(() => {
-          this.successEdit = false;
           this.close();
         }, 3000);
       });
@@ -84,12 +76,8 @@ export class ModalTypeResourceComponent implements OnInit{
     } else {
       this.typeResourceService.create(this.buildTypeResource()).subscribe((typeResource) => {
         console.log('Creando elemento:', typeResource);
-        this.alertType= AlertType.SUCCESS;
-        this.messageAlert = 'Se ha creado un nuevo tipo de recurso exitosamente'
-        this.successCreate = true;
-
+        AlertHandler.show('Se ha creado un nuevo tipo de recurso exitosamente', AlertType.SUCCESS)
         setTimeout(() => {
-          this.successCreate = false;
           this.close();
         }, 3000);
       });
