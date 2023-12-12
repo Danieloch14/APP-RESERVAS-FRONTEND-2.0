@@ -11,4 +11,6 @@ export interface ResourceCreate {
     price: number;
     isParking: boolean;
     pathImages: string;
+    name: string;
+    // description: string;
 }

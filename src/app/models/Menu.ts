@@ -5,4 +5,6 @@ export interface Menu{
     parentMenu: number;
     order: number;
     description: String;
+    icon: String;
+    permisos: String;
 }

@@ -68,6 +68,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       codNumber: ['', [Validators.required]],
       price: ['', [Validators.required]],
       pathImages: ['', [Validators.required]],
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
     });
   }
 
@@ -107,6 +109,14 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     return this.resourceForm.get('pathImages');
   }
 
+  get nameField() {
+    return this.resourceForm.get('name');
+  }
+
+  get descriptionField() {
+    return this.resourceForm.get('description');
+  }
+
   getTypeResource() {
     this.typeResourceService.getAll().subscribe((typeResource) => {
       this.listTypeResources = typeResource;
@@ -131,6 +141,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       codNumber: this.resource.codNumber,
       price: this.resource.price ? this.resource.price : 0,
       pathImages: this.resource.pathImages,
+      name: this.resource.name,
+      description: this.resource.description
     });
     this.selectedFile = this.resource.pathImages;
   }
@@ -224,6 +236,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       price: parseInt(this.resourceForm.value.price),
       isParking: this.findTypeResourceById(this.resourceForm.value.idTypeResource).name.toLowerCase() == 'parqueadero' ? true : false,
       pathImages: this.resourceForm.value.pathImages,
+      name: this.resourceForm.value.name,
+      // description: this.resourceForm.value.description
     };
     return resource;
   }
@@ -242,7 +256,6 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
 
   buildResource(): Resource {
     return {
-      description: "", name: "",
       idResource: this.resource.idResource,
       idLocation: this.buildLocation(),
       idTypeResource: this.findTypeResourceById(this.resourceForm.value.idTypeResource),
@@ -251,7 +264,9 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       codNumber: this.resourceForm.value.codNumber,
       price: parseInt(this.resourceForm.value.price),
       isParking: this.findTypeResourceById(this.resourceForm.value.idTypeResource).name.toLowerCase() == 'parqueadero' ? true : false,
-      pathImages: this.resourceForm.value.pathImages
+      pathImages: this.resourceForm.value.pathImages,
+      name: this.resourceForm.value.name,
+      description: this.resourceForm.value.description
     };
   }
 
@@ -267,13 +282,18 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       })
 
     } else {
+      console.log(this.buildNewResource())
       this.resourceService.save(this.buildNewResource()).subscribe((resource) => {
         console.log(resource)
         AlertHandler.show('Se ha creado un nuevo recurso exitosamente', AlertType.SUCCESS)
         setTimeout(() => {
           this.close();
         }, 3000);
-      })
+      },
+        error => {
+          console.log(error)
+          AlertHandler.show('No se ha podido crear el recurso', AlertType.ERROR)
+        })
     }
   }
 }

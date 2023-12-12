@@ -6,6 +6,7 @@ import { Request } from 'src/app/models/Request';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { RegisterRequest } from 'src/app/models/RegisterRequest';
 import { RegisterRequestService } from '../../services/register-request.service';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
 
 @Component({
   selector: 'app-access-request',
@@ -39,50 +40,7 @@ export class AccessRequestComponent {
   constructor(
     private registerRequestService: RegisterRequestService
   ) {  
-    this.listRequest = [
-    //   {
-    //     dateRequest: new Date(20, 10, 10),
-    //     requesterName: 'Juan',
-    //     requesterLastname: 'Perez',
-    //     requesterEmail: 'juan.perez@netlife.ec',
-    //     status: 'Pendiente'
-    //   },
-    //   {
-    //     dateRequest: new Date(20, 10, 10),
-    //     requesterName: 'Juan',
-    //     requesterLastname: 'Perez',
-    //     requesterEmail: 'juan.perez@netlife.ec',
-    //     status: 'Pendiente'
-    //   },
-    //   {
-    //     dateRequest: new Date(),
-    //     requesterName: 'Juan',
-    //     requesterLastname: 'Perez',
-    //     requesterEmail: 'juan.perez@netlife.ec',
-    //     status: 'Aceptada'
-    //   },
-    //   {
-    //     dateRequest: new Date(21, 10, 10),  
-    //     requesterName: 'Juan',
-    //     requesterLastname: 'Perez',
-    //     requesterEmail: 'juan.perez@netlife.ec',
-    //     status: 'Rechazada'
-    //   },
-    //   {
-    //     dateRequest: new Date(22, 10, 10),
-    //     requesterName: 'Juan',
-    //     requesterLastname: 'Perez',
-    //     requesterEmail: 'juan.perez@netlife.ec',
-    //     status: 'Pendiente'
-    //   },
-    //   {
-    //     dateRequest: new Date(23, 10, 10),
-    //     requesterName: 'Juan',
-    //     requesterLastname: 'Perez',
-    //     requesterEmail: 'juan.perez@netlife.ec',
-    //     status: 'Pendiente'
-    //   }
-    ];
+    this.listRequest = [];
   }
 
   ngOnInit(): void {
@@ -94,15 +52,6 @@ export class AccessRequestComponent {
       this.dataSource.sort = this.sort;
 
     })
-    // this.requestService.getAll().subscribe((requests) => {
-    //   console.log(requests)
-    //   this.listRequest = requests
-      // this.dataSource = new MatTableDataSource(this.listRequest);
-
-    // },
-    // (error) =>{
-    //   console.log(error);
-    // })
 
   }
   ngAfterViewInit() {
@@ -118,37 +67,31 @@ export class AccessRequestComponent {
     }
   }
 
-  onAccept(row: Request) {
-    this.alertType= AlertType.SUCCESS;
-    this.messageAlert = 'Se ha aceptado la solicitud exitosamente'
-    this.successAccepted = true;
+  onAccept(row: RegisterRequest) {
+    console.log(row);
+    this.registerRequestService.approve_reject(true, row.idRegisterRequest).subscribe((response) => {
+      console.log(response);
 
-      setTimeout(() => {
-        this.successAccepted = false;
+      AlertHandler.show('Se ha aceptado la solicitud exitosamente', AlertType.SUCCESS);
         this.ngOnInit();
-      }, 2000);
+      },
+      (error) =>{
+        console.log(error);
+        AlertHandler.show('Ha ocurrido un error al aceptar la solicitud', AlertType.ERROR);
+      })
   }
 
-  onDenied(row: Request){
-    // this.resourceService.delete(row.idResource).subscribe((response) => {
-    //   console.log(response);
-    //   this.successDelete = true;
+  onDenied(row: RegisterRequest){
+    this.registerRequestService.approve_reject(false, row.idRegisterRequest).subscribe((response) => {
+      console.log(response);
 
-    //   setTimeout(() => {
-    //     this.successDelete = false;
-    //     this.ngOnInit();
-    //   }, 2000);
-    // },
-    // (error) =>{
-    //   console.log(error);
-    // })
-    this.alertType= AlertType.SUCCESS;
-    this.messageAlert = 'Se ha rechazado la solicitud exitosamente'
-    this.successDenied = true;
-
-      setTimeout(() => {
-        this.successDenied = false;
+      AlertHandler.show('Se ha rechazado la solicitud exitosamente', AlertType.SUCCESS);
         this.ngOnInit();
-      }, 2000);
+      }
+      ,
+      (error) =>{
+        console.log(error);
+        AlertHandler.show('Ha ocurrido un error al rechazar la solicitud', AlertType.ERROR);
+      })
   }
 }
