@@ -40,6 +40,8 @@ export class LayoutComponent implements OnInit {
 
   user: User | null = null;
   listMenus: Menu[] = [];
+  isAdmin: boolean = false;
+  submenus: Menu[] = [];
 
   constructor(
     private usersService: UsersService,
@@ -58,8 +60,18 @@ export class LayoutComponent implements OnInit {
       )
       .subscribe({
         next: menus => {
+          this.isAdmin = true;
           this.listMenus = menus;
           this.listMenus.sort((a, b) => a.order - b.order);
+
+          const userMenu = this.listMenus.find(menu =>
+            menu.label.toLowerCase() === 'Menú de usuario'.toLowerCase()
+          );
+        
+          if (userMenu) {
+            this.isAdmin = false;
+            this.listSubmenus(userMenu.idMenu);
+          }
         },
         error: err => {
           console.error(err);
@@ -91,6 +103,17 @@ export class LayoutComponent implements OnInit {
     );
 
     return forkJoin(getMenuObservables);
+  }
+
+  listSubmenus(idMenu: number){
+    this.menuService.getAllByMenuParent(idMenu).subscribe(submenu => {
+      this.submenus.push(...submenu);
+      this.submenus.sort((a, b) => a.order - b.order);
+    });
+  }
+
+  filterByParent(idMenu: number) : Menu[]{
+    return this.submenus.filter(submenu => submenu.parentMenu === idMenu);
   }
 
 }
