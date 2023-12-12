@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MenuRol } from 'src/app/models/MenuRol';
-import { Rol } from 'src/app/models/Rol';
+import { Role } from 'src/app/models/Role';
 import { RolService } from '../../services/rol.service';
 import { Menu } from 'src/app/models/Menu';
 import { MenuService } from '../../services/menu.service';
@@ -19,7 +19,7 @@ import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 export class MenuByRoleComponent {
 
   @ViewChild('stepper') stepper!: MatStepper;
-  
+
   displayedColumns: string[] = [
     'assigned',
     'menu',
@@ -29,7 +29,7 @@ export class MenuByRoleComponent {
   dataSource!: MatTableDataSource<Menu>;
 
   listMenu!: Menu[];
-  listRol!: Rol[];
+  listRol!: Role[];
   menuRoleForm: FormGroup;
   selectedRow: any;
   selectedRows: number[] = [];
@@ -43,7 +43,7 @@ export class MenuByRoleComponent {
     private rolService: RolService,
     private menuService: MenuService,
     private menuRolService: MenuRolService
-  ) {  
+  ) {
     this.menuRoleForm = new FormGroup({});
   }
 

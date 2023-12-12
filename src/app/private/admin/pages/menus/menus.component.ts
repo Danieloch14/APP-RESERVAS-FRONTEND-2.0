@@ -83,7 +83,7 @@ export class MenusComponent implements OnInit{
   }
 
   onCreate(level: number) {
-    
+
     if(level === 1){
       const modalRef: MdbModalRef<ModalMenuComponent> = this.modalService.open(ModalMenuComponent, {
         data: {
@@ -93,15 +93,15 @@ export class MenusComponent implements OnInit{
         },
         modalClass: 'modal-dialog-centered',
         ignoreBackdropClick: true,
-  
+
       });
-  
+
       modalRef.onClose.subscribe((state: boolean) => {
         if(state){
           this.ngOnInit();
         }
       });
-      
+
     }else if(level === 2){
       const modalRef: MdbModalRef<ModalMenuComponent> = this.modalService.open(ModalMenuComponent, {
         data: {
@@ -112,20 +112,20 @@ export class MenusComponent implements OnInit{
         },
         modalClass: 'modal-dialog-centered',
         ignoreBackdropClick: true,
-  
+
       });
-  
+
       modalRef.onClose.subscribe((state: boolean) => {
         if(state){
           this.getChildrenMenu(this.parentMenu.idMenu);
         }
       });
     }
-   
+
   }
 
   onEdit(level: number, menu: Menu) {
-    
+
     if(level === 1){
       const modalRef: MdbModalRef<ModalMenuComponent> = this.modalService.open(ModalMenuComponent, {
         data: {
@@ -136,15 +136,15 @@ export class MenusComponent implements OnInit{
         },
         modalClass: 'modal-dialog-centered',
         ignoreBackdropClick: true,
-  
+
       });
-  
+
       modalRef.onClose.subscribe((state: boolean) => {
         if(state){
           this.ngOnInit();
         }
       });
-      
+
     }else if(level === 2){
       const modalRef: MdbModalRef<ModalMenuComponent> = this.modalService.open(ModalMenuComponent, {
         data: {
@@ -155,9 +155,9 @@ export class MenusComponent implements OnInit{
         },
         modalClass: 'modal-dialog-centered',
         ignoreBackdropClick: true,
-  
+
       });
-  
+
       modalRef.onClose.subscribe((state: boolean) => {
         if(state){
           this.getChildrenMenu(menu.parentMenu);

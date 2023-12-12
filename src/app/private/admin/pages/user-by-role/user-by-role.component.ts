@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Rol } from 'src/app/models/Rol';
+import { Role } from 'src/app/models/Role';
 import { User } from 'src/app/models/User';
 import { UsersService } from 'src/app/private/services/users.service';
 import { RolService } from '../../services/rol.service';
@@ -17,7 +17,7 @@ import { RolUser } from 'src/app/models/RolUser';
 })
 export class UserByRoleComponent {
 
-  
+
   displayedColumns: string[] = [
     'name',
     'lastname',
@@ -32,7 +32,7 @@ export class UserByRoleComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   listUsers!: User[];
-  listRoles!: Rol[]; 
+  listRoles!: Role[];
   userRolForms: { [key: number]: FormGroup } = {};
   isButtonActive: boolean = false;
   buttonActivationState: { [key: number]: boolean } = {};
@@ -49,7 +49,7 @@ export class UserByRoleComponent {
     this.listRol();
     this.listUser();
   }
-  
+
   listUser(){
     this.userService.getAll().subscribe(users => {
       this.listUsers = users;
@@ -100,7 +100,7 @@ export class UserByRoleComponent {
         idRol: [''],
       });
     }
-  
+
     return this.userRolForms[user.idUser];
   }
 
@@ -131,5 +131,5 @@ export class UserByRoleComponent {
     });
 
   }
-  
+
 }

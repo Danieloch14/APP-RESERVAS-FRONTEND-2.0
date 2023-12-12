@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { Router } from "@angular/router";
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from "../../../auth/services/auth.service";
-import { RegionService } from "../../../private/admin/services/region.service";
-import { Region } from "../../../models/Region";
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MdbFormsModule} from 'mdb-angular-ui-kit/forms';
+import {MdbValidationModule} from 'mdb-angular-ui-kit/validation';
+import {Router} from "@angular/router";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {HttpClientModule} from '@angular/common/http';
+import {AuthService} from "../../../auth/services/auth.service";
+import {RegionService} from "../../../private/admin/services/region.service";
+import {Region} from "../../../models/Region";
 
 @Component({
   selector: 'app-login',
@@ -98,6 +98,10 @@ export class LoginComponent implements OnInit {
         const region: Region = this.regionField?.value;
         this.regionService.currentRegion = region;
         this.regionService.saveInLocalStorage(region);
+        if (this.userTypeField?.value === 'admin') {
+          this.router.navigate(['admin/home']).then();
+          return;
+        }
         this.router.navigate(['user/home']).then();
       },
       error: (loginError) => {

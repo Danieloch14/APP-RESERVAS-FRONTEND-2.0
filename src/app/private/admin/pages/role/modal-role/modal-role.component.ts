@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
-import { Rol } from 'src/app/models/Rol';
+import { Role } from 'src/app/models/Role';
 import { RolService } from '../../../services/rol.service';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
 
@@ -14,7 +14,7 @@ import { AlertHandler } from 'src/app/utils/AlertHandler';
 export class ModalRoleComponent implements OnInit {
   @Input() isEditing = false;
   @Input() title!: string;
-  @Input() rol!: Rol;
+  @Input() rol!: Role;
 
   roleForm: FormGroup;
 
@@ -43,7 +43,7 @@ export class ModalRoleComponent implements OnInit {
   get rolNameField() {
     return this.roleForm.get('rol_name');
   }
-  
+
   get descriptionField() {
     return this.roleForm.get('description');
   }
@@ -60,8 +60,8 @@ export class ModalRoleComponent implements OnInit {
     this.modalRef.close(state);
   }
 
-  buildRol(): Rol {
-    const rol: Rol = {
+  buildRol(): Role {
+    const rol: Role = {
       idRol: this.isEditing ? this.rol.idRol : 0,
       nombre: this.roleForm.value.rol_name,
       description: this.roleForm.value.description

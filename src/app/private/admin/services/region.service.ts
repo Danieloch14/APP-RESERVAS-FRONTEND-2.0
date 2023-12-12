@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Region } from 'src/app/models/Region';
-import { environment } from "../../../../environments/environment";
+import { environment } from "../../../../environments/environment.dev";
 import { REGION_NET_BOOKING } from "../../../../constants/environment.const";
 
 @Injectable({
