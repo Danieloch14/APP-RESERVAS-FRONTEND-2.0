@@ -98,8 +98,8 @@ export class LayoutComponent implements OnInit {
   }
 
   private handleMenuRoles(menuRoles: MenuRol[]) {
-    const getMenuObservables = menuRoles.map(menuRol =>
-      this.menuService.getMenuById(menuRol.menuRolId.idMenu)
+    const getMenuObservables = menuRoles.map(({menuRolId}) =>
+      this.menuService.getMenuById(menuRolId.idMenu)
     );
 
     return forkJoin(getMenuObservables);

@@ -31,7 +31,7 @@
               <!-- date request -->
               <ng-container matColumnDef="dateRequest">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de solicitud </th>
-                <td mat-cell *matCellDef="let row"> {{ row.requestDate }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row.requestDate | date: 'dd-MM-yyyy' }} </td>
               </ng-container>
 
               <!-- requester Name -->
