@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ModalRoleComponent } from './modal-role/modal-role.component';
-import { Rol } from 'src/app/models/Rol';
+import { Role } from 'src/app/models/Role';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { RolService } from '../../services/rol.service';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
@@ -14,16 +14,16 @@ import { AlertHandler } from 'src/app/utils/AlertHandler';
 })
 export class RoleComponent {
 
-  
+
   displayedColumns: string[] = [
     'role',
     'description',
     'actions'
   ];
 
-  dataSource!: MatTableDataSource<Rol>;
+  dataSource!: MatTableDataSource<Role>;
 
-  listRoles!: Rol[];
+  listRoles!: Role[];
 
   constructor(
     private modalService: MdbModalService,
@@ -57,7 +57,7 @@ export class RoleComponent {
     });
   }
 
-  onEdit(row: Rol) {
+  onEdit(row: Role) {
     const modalRef: MdbModalRef<ModalRoleComponent> = this.modalService.open(ModalRoleComponent, {
       data: {
         title: 'Edición Rol',
@@ -76,7 +76,7 @@ export class RoleComponent {
     });
   }
 
-  onDelete(row: Rol){
+  onDelete(row: Role){
     this.rolService.delete(row.idRol).subscribe({
       next: () => {
           AlertHandler.show('Se ha eliminado el rol exitosamente', AlertType.SUCCESS)

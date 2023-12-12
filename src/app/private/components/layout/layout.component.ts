@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from "@angular/material/button";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatIconModule } from "@angular/material/icon";
-import { NavComponent } from "../nav/nav.component";
-import { CommonModule, UpperCasePipe } from "@angular/common";
-import { AuthService } from "../../../auth/services/auth.service";
-import { MenuRolService } from '../../admin/services/menu-rol.service';
-import { UserRolService } from '../../admin/services/user-rol.service';
-import { UsersService } from '../../services/users.service';
-import { User } from 'src/app/models/User';
-import { MenuService } from '../../admin/services/menu.service';
-import { Menu } from 'src/app/models/Menu';
-import { forkJoin } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {MatButtonModule} from "@angular/material/button";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {NavComponent} from "../nav/nav.component";
+import {CommonModule, UpperCasePipe} from "@angular/common";
+import {MenuRolService} from '../../admin/services/menu-rol.service';
+import {UserRolService} from '../../admin/services/user-rol.service';
+import {UsersService} from '../../services/users.service';
+import {User} from 'src/app/models/User';
+import {MenuService} from '../../admin/services/menu.service';
+import {Menu} from 'src/app/models/Menu';
+import {forkJoin, of, switchMap} from 'rxjs';
+import {AlertHandler} from "../../../utils/AlertHandler";
+import {AlertType} from "../../../models/Enums/AlertType.enum";
+import {MenuRol} from "../../../models/MenuRol";
+import {RolUser} from "../../../models/RolUser";
 
 @Component({
   selector: 'app-layout',
@@ -37,65 +40,57 @@ export class LayoutComponent implements OnInit {
 
   user: User | null = null;
   listMenus: Menu[] = [];
-  submenus: Menu[] = [];
-  
+
   constructor(
     private usersService: UsersService,
     private rolUserService: UserRolService,
     private menuRolService: MenuRolService,
     private menuService: MenuService
-  ){}
-
-  // items = [
-  //   {
-  //     name: 'Inicio',
-  //     icon: 'fa-home',
-  //     route: 'home'
-  //   },
-  //   {
-  //     name: 'Reservas',
-  //     icon: 'fa-book',
-  //     route: 'bookings'
-  //   },
-  //   {
-  //     name: 'Calendario',
-  //     icon: 'fa-calendar',
-  //     route: 'calendar'
-  //   }
-  // ]
-
-  ngOnInit(){
-    this.usersService.user$.subscribe({
-      next: (user) => {
-        this.user = user;
-
-        this.rolUserService.listByIdUser(this.user?.idUser!).subscribe(role => {
-          
-          this.menuRolService.getById(role[0].rolUserId.idRol).subscribe(menuRoles => {
-            this.listMenus = [];
-            menuRoles.forEach(menuRol => {
-              this.menuService.getMenuById(menuRol.menuRolId.idMenu).subscribe(menu => {
-                this.listMenus.push(menu);
-                this.listMenus.sort((a, b) => a.order - b.order);
-                // this.listSubmenus(menu.idMenu);
-              })
-            })
-          })
-        })
-      }
-    });
-
+  ) {
   }
 
-  // listSubmenus(idMenu: number){
+  ngOnInit() {
+    this.usersService.user$
+      .pipe(
+        switchMap(user => this.handleUserUpdate(user)),
+        switchMap(roles => this.handleRoles(roles)),
+        switchMap(menuRoles => this.handleMenuRoles(menuRoles))
+      )
+      .subscribe({
+        next: menus => {
+          this.listMenus = menus;
+          this.listMenus.sort((a, b) => a.order - b.order);
+        },
+        error: err => {
+          console.error(err);
+          AlertHandler.show('No se pudo cargar el menú', AlertType.ERROR);
+        }
+      })
+  }
 
-  //   this.menuService.getAllByMenuParent(idMenu).subscribe(submenu => {
-  //     this.submenus.push(...submenu);
-  //     this.submenus.sort((a, b) => a.order - b.order);
-  //   });
-  // }
+  private handleUserUpdate(user: User | null) {
+    if (!user) {
+      return of([]);
+    }
 
-  // filterByParent(idMenu: number) : Menu[]{
-  //   return this.submenus.filter(submenu => submenu.parentMenu === idMenu);
-  // }
+    return this.rolUserService.listByIdUser(user.idUser!);
+  }
+
+  private handleRoles(roles: RolUser[]) {
+    const roleId = roles[0]?.rolUserId.idRol;
+    if (!roleId) {
+      return of([]);
+    }
+
+    return this.menuRolService.getById(roleId);
+  }
+
+  private handleMenuRoles(menuRoles: MenuRol[]) {
+    const getMenuObservables = menuRoles.map(menuRol =>
+      this.menuService.getMenuById(menuRol.menuRolId.idMenu)
+    );
+
+    return forkJoin(getMenuObservables);
+  }
+
 }

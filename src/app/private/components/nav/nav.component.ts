@@ -1,14 +1,14 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatButtonModule } from "@angular/material/button";
-import { NotificationBellComponent } from "../notification-bell/notification-bell.component";
-import { AuthService } from "../../../auth/services/auth.service";
-import { User } from "../../../models/User";
-import { UsersService } from "../../services/users.service";
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
+import {NotificationBellComponent} from "../notification-bell/notification-bell.component";
+import {AuthService} from "../../../auth/services/auth.service";
+import {User} from "../../../models/User";
+import {UsersService} from "../../services/users.service";
+import {Location} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -33,19 +33,21 @@ export class NavComponent implements OnInit {
     this.user = null;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.usersService.user$.subscribe({
       next: (user) => {
-        this.user = user;
-        // console.log("user", user);
+        if (user) {
+          this.user = user;
+        }
       }
     });
+
     const currentPath = this.location.path().split('/');
 
-    if(currentPath[1] === 'user'){
+    if (currentPath[1] === 'user') {
       this.currentRol = 'user';
     }
-    if(currentPath[1] === 'admin'){
+    if (currentPath[1] === 'admin') {
       this.currentRol = 'admin';
     }
 
@@ -60,8 +62,8 @@ export class NavComponent implements OnInit {
     this.authService.performLogout();
   }
 
-  onProfile(){
-    this.router.navigate([ this.currentRol,`profile-settings` ]);
+  onProfile() {
+    this.router.navigate([this.currentRol, `profile-settings`]).then();
   }
 
 }

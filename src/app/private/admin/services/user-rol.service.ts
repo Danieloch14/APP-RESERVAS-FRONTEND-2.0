@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RolUser } from 'src/app/models/RolUser';
 import { API_URL, API_VERSION } from 'src/constants/environment.const';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class UserRolService {
   private apiUrl = environment[API_URL]
   private apiVersion = environment[API_VERSION]
   private baseUrl = `${this.apiUrl}/${this.apiVersion}/roles-users`;
-  
+
   constructor(
     private http: HttpClient
   ) { }

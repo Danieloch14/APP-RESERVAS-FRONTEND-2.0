@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RegisterRequest } from 'src/app/models/RegisterRequest';
 import { API_URL, API_VERSION } from 'src/constants/environment.const';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
