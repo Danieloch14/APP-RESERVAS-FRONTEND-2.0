@@ -80,6 +80,25 @@
                 </mdb-form-control>
                 </div>
             </div>
+            <div class="row">
+              <!--icon-->
+              <div class="col">
+              <mdb-form-control>
+                  <input
+                  mdbInput
+                  mdbValidate
+                  type="text"
+                  id="icon"
+                  class="form-control mb-4"
+                  formControlName="icon"
+                  placeholder="fa-home"
+                  />
+                  <label mdbLabel class="form-label" for="icon">
+                  Ícono <span class="text-danger">*</span>
+                  </label>
+              </mdb-form-control>
+              </div>
+          </div>
             
             <div class="action mt-3 mb-2">
               <button type="button" class="btn btn-danger btn-lg" (click)="onClose()">

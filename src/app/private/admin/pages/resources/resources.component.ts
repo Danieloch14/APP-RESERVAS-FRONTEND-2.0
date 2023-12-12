@@ -23,10 +23,12 @@ export class ResourcesComponent implements OnInit {
     'place',
     'address',
     'floor',
+    'nameResource',
     'codeNumber',
     'capacity',
     'price',
     'image',
+    'description',
     'actions'
   ];
 
@@ -58,8 +60,19 @@ export class ResourcesComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
+    const lowerCaseFilter = filterValue.trim().toLowerCase();
+  
+    // Filtrar por todos los campos que deseas, incluyendo idTypeResource e idLocation
+    this.dataSource.filterPredicate = (data: Resource, filter: string) => {
+      const textToSearch = `${data.codNumber} ${data.name} ${data.description} 
+                            ${data.idTypeResource.name} ${data.capacity} ${data.price} 
+                            ${data.idLocation.place} ${data.idLocation.address} ${data.idLocation.floor} ${data.idLocation.idRegion.name}`;
+      return textToSearch.toLowerCase().includes(filter);
+    };
+  
+    // Aplicar el filtro
+    this.dataSource.filter = lowerCaseFilter;
+  
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

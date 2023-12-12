@@ -24,9 +24,6 @@ const routes: Routes = [
       },
       {
         path: 'profile-settings', component: ProfileSettingsComponent
-      },
-      {
-        path: 'submenu/:id', component: SubmenusComponent
       }
 
     ]

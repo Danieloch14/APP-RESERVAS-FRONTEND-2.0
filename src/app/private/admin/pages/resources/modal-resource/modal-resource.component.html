@@ -5,6 +5,24 @@
     </div>
     <div class="modal-body mt-4">
       <form [formGroup]="resourceForm">
+        <!--name-->
+        <div class="row">
+          <div class="col">
+            <mdb-form-control>
+              <input
+                mdbInput
+                mdbValidate
+                type="text"
+                id="name"
+                class="form-control mb-4"
+                formControlName="name"
+              />
+              <label mdbLabel class="form-label" for="name">
+                Nombre del recurso <span class="text-danger">*</span>
+              </label>
+            </mdb-form-control>
+          </div>
+        </div>
         <div class="row">
           <!--Code Number-->
           <div class="col-sm-6">
@@ -146,6 +164,25 @@
           </div>
         </div>
 
+        <!--name-->
+        <div class="row">
+          <div class="col">
+            <mdb-form-control>
+              <input
+                mdbInput
+                mdbValidate
+                type="text"
+                id="description"
+                class="form-control mb-4"
+                formControlName="description"
+              />
+              <label mdbLabel class="form-label" for="description">
+                Descripción del recurso <span class="text-danger">*</span>
+              </label>
+            </mdb-form-control>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col">
             <div class="image-upload" *ngIf="!selectedFile">
@@ -165,137 +202,7 @@
           </div>
         </div>
       </form>
-      <!--ALERTS-->
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          idTypeResourceField?.invalid &&
-          (idTypeResourceField?.dirty || idTypeResourceField?.touched)
-        "
-      >
-        <span *ngIf="idTypeResourceField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Escoja el tipo de recurso
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          idRegionField?.invalid &&
-          (idRegionField?.dirty || idRegionField?.touched)
-        "
-      >
-        <span *ngIf="idRegionField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Escoja una ciudad
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          capacityField?.invalid &&
-          (capacityField?.dirty || capacityField?.touched)
-        "
-      >
-        <span *ngIf="capacityField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingrese la capacidad del recurso
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          codNumberField?.invalid &&
-          (codNumberField?.dirty || codNumberField?.touched)
-        "
-      >
-        <span *ngIf="codNumberField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingreso el código del recurso
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          placeField?.invalid && (placeField?.dirty || placeField?.touched)
-        "
-      >
-        <span *ngIf="placeField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingrese el sector donde se encuentra el recurso
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          addressField?.invalid &&
-          (addressField?.dirty || addressField?.touched)
-        "
-      >
-        <span *ngIf="addressField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingrese la dirección donde se encuentra el recurso
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          floorField?.invalid && (floorField?.dirty || floorField?.touched)
-        "
-      >
-        <span *ngIf="floorField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingrese el número de piso donde se encuentra el recurso
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          priceField?.invalid && (priceField?.dirty || priceField?.touched)
-        "
-      >
-        <span *ngIf="priceField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingrese el precio del recurso, si es gratuito ingrese 0
-        </span>
-      </div>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          pathImagesField?.invalid &&
-          (pathImagesField?.dirty || pathImagesField?.touched)
-        "
-      >
-        <span *ngIf="pathImagesField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Suba la imagen del recurso
-        </span>
-      </div>
-
-      <div class="alert alert-danger" role="alert" *ngIf="!validExtension">
-        <span>
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          La imagen debe ser de tipo .jpg, .jpeg, .webp o .png
-        </span>
-      </div>
-      <!--ALERTS-->
+      <span *ngIf="resourceForm.invalid" class="text-muted text-center pt-3" [style.font-size.px]="10"> Para poder continuar llene todos los campos obligatorios (*) </span>
     </div>
 
     <div class="modal-footer">

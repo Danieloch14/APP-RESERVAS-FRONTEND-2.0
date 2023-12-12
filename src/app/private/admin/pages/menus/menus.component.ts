@@ -19,6 +19,7 @@ export class MenusComponent implements OnInit{
     'label',
     'order',
     'description',
+    'icon',
     'action'
   ];
 
@@ -26,6 +27,7 @@ export class MenusComponent implements OnInit{
     'label',
     'order',
     'description',
+    'icon',
     'action'
   ];
 

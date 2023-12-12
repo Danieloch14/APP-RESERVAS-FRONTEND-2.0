@@ -40,6 +40,7 @@ export class ModalMenuComponent implements OnInit {
       label: ['', Validators.required],
       order: ['', Validators.required],
       url: [''],
+      icon: ['', Validators.required],
       description: ['', Validators.required]
     });
   }
@@ -61,6 +62,7 @@ export class ModalMenuComponent implements OnInit {
       label: this.menu.label,
       order: this.menu.order,
       url: this.menu.path,
+      icon: this.menu.icon,
       description: this.menu.description
     });
   }
@@ -77,7 +79,9 @@ export class ModalMenuComponent implements OnInit {
       parentMenu: this.isEditing ? this.menu.parentMenu : this.idParentMenu,
       order: parseInt(this.menuForm.value.order),
       path: this.menuForm.value.url,
-      description: this.menuForm.value.description
+      description: this.menuForm.value.description,
+      icon: this.menuForm.value.icon,
+      permisos: ''
     };
     return menu;
   }
