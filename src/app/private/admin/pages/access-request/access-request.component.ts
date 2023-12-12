@@ -68,7 +68,6 @@ export class AccessRequestComponent {
   }
 
   onAccept(row: RegisterRequest) {
-    console.log(row);
     this.registerRequestService.approve_reject(true, row.idRegisterRequest).subscribe((response) => {
       console.log(response);
 

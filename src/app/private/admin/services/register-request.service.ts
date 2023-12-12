@@ -34,7 +34,7 @@ export class RegisterRequestService {
   }
 
   approve_reject(approve: boolean, idRegisterRequest: number) : Observable<boolean>{
-    return this.http.put<boolean>(`${ this.baseUrl }/approved-rejected/${approve}/${idRegisterRequest}`, null);
+    return this.http.put<boolean>(`${ this.baseUrl }/approved-rejected?approve=${approve}&idRequest=${idRegisterRequest}`, null);
   }
 
   resendRegistrationToken(idRegisterRequest: number) : Observable<boolean>{
