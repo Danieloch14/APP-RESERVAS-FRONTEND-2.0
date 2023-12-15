@@ -5,6 +5,22 @@
     </div>
     <div class="modal-body mt-4">
       <form [formGroup]="resourceForm">
+        <div class="row">
+          <!--Resource Type-->
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo de recurso</mat-label>
+              <mat-select formControlName="idTypeResource">
+                <mat-option
+                  [value]="typeResrc.idTypeResource"
+                  *ngFor="let typeResrc of listTypeResources"
+                >
+                  {{ typeResrc.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
         <!--name-->
         <div class="row">
           <div class="col">
@@ -52,7 +68,7 @@
                 formControlName="capacity"
               />
               <label mdbLabel class="form-label" for="capacity">
-                Capacidad <span class="text-danger">*</span>
+                Capacidad
               </label>
             </mdb-form-control>
           </div>
@@ -71,23 +87,6 @@
                 Precio <span class="text-danger">*</span>
               </label>
             </mdb-form-control>
-          </div>
-        </div>
-
-        <div class="row">
-          <!--Resource Type-->
-          <div class="col">
-            <mat-form-field appearance="outline">
-              <mat-label>Tipo de recurso</mat-label>
-              <mat-select formControlName="idTypeResource">
-                <mat-option
-                  [value]="typeResrc.idTypeResource"
-                  *ngFor="let typeResrc of listTypeResources"
-                >
-                  {{ typeResrc.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
           </div>
         </div>
         <!--Location-->
@@ -194,7 +193,8 @@
               />
             </div>
             <div *ngIf="selectedFile" class="change_image">
-              <img [src]="pathImage" alt="Vista previa del archivo" />
+              <!-- <img [src]="pathImage" alt="Vista previa del archivo" /> -->
+              <p>{{ selectedFileName }}</p>
               <button class="btn btn-warning mb-4" (click)="clearFile()">
                 Eliminar
               </button>

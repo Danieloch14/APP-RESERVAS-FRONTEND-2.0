@@ -68,18 +68,18 @@ export class ModalTypeResourceComponent implements OnInit{
       this.typeResourceService.update(this.buildTypeResource(), this.resourceType.idTypeResource)
       .subscribe((typeResource) => {
         AlertHandler.show('Se ha modificado el tipo de recurso exitosamente', AlertType.SUCCESS)
-        setTimeout(() => {
-          this.close();
-        }, 3000);
+        this.close();
+      }, (error) => {
+        AlertHandler.show('No se ha podido modificar el tipo de recurso', AlertType.ERROR)
       });
 
     } else {
       this.typeResourceService.create(this.buildTypeResource()).subscribe((typeResource) => {
         console.log('Creando elemento:', typeResource);
         AlertHandler.show('Se ha creado un nuevo tipo de recurso exitosamente', AlertType.SUCCESS)
-        setTimeout(() => {
-          this.close();
-        }, 3000);
+        this.close();
+      }, (error) => {
+        AlertHandler.show('No se ha podido crear el tipo de recurso', AlertType.ERROR)
       });
     }
   }

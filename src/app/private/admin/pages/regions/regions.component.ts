@@ -6,6 +6,7 @@ import { RegionService } from '../../services/region.service';
 import { ModalRegionComponent } from './modal-region/modal-region.component';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-regions',
@@ -75,16 +76,31 @@ export class RegionsComponent {
   }
 
   onDelete(row: Region){
-    this.regionService.delete(row.idRegion).subscribe({
-      next: () => {
-          AlertHandler.show('Se ha eliminado la región exitosamente', AlertType.SUCCESS)
-          this.ngOnInit();
+    const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
+      data: {
+        data: {
+          title: '¿Estás seguro que deseas eliminar esta región?'
+        }
       },
-      error: (error) => {
-        console.log(error);
-          AlertHandler.show('No se pudo eliminar la región, inténtelo nuevamente', AlertType.ERROR)
-          this.ngOnInit();
+      modalClass: 'modal-dialog-centered',
+      ignoreBackdropClick: true,
+
+    });
+
+    modalRef.onClose.subscribe((state: boolean) => {
+      if(state){ //if the user confirmed
+        this.regionService.delete(row.idRegion).subscribe({
+          next: () => {
+              AlertHandler.show('Se ha eliminado la región exitosamente', AlertType.SUCCESS)
+              this.ngOnInit();
+          },
+          error: (error) => {
+            console.log(error);
+              AlertHandler.show('No se pudo eliminar la región, inténtelo nuevamente', AlertType.ERROR)
+              this.ngOnInit();
+          }
+        })
       }
-    })
+    });
   }
 }

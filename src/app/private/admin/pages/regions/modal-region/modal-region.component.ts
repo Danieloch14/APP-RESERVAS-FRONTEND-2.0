@@ -82,7 +82,7 @@ export class ModalRegionComponent implements OnInit {
       (error) => {
         console.log(error);
         this.onClose();
-        AlertHandler.show('No se pudo la región, inténtelo nuevamente', AlertType.ERROR)
+        AlertHandler.show('No se pudo crear la región, inténtelo nuevamente', AlertType.ERROR)
       });
     }
   }

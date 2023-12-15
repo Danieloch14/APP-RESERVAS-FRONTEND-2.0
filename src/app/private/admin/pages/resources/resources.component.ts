@@ -9,6 +9,7 @@ import { ModalImageResourceComponent } from './modal-image-resource/modal-image-
 import { ResourceService } from '../../services/resource.service';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-resources',
@@ -46,7 +47,7 @@ export class ResourcesComponent implements OnInit {
 
   ngOnInit(): void {
     this.resourceService.getAll().subscribe((resources) => {
-      console.log(resources)
+      // console.log(resources)
       this.listResources = resources
       this.dataSource = new MatTableDataSource(this.listResources);
       this.dataSource.paginator = this.paginator;
@@ -123,16 +124,31 @@ export class ResourcesComponent implements OnInit {
   }
 
   deleteResource(row: Resource){
-    this.resourceService.delete(row.idResource).subscribe((response) => {
-      console.log(response);
-      AlertHandler.show('Se ha eliminado el recurso exitosamente', AlertType.SUCCESS)
-      setTimeout(() => {
-        this.ngOnInit();
-      }, 2000);
-    },
-    (error) =>{
-      console.log(error);
-      AlertHandler.show('No se pudo eliminar el recurso, inténtelo nuevamente', AlertType.ERROR)
-    })
+    const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
+      data: {
+        data: {
+          title: '¿Estás seguro que deseas eliminar este recurso?'
+        }
+      },
+      modalClass: 'modal-dialog-centered',
+      ignoreBackdropClick: true,
+
+    });
+
+    modalRef.onClose.subscribe((state: boolean) => {
+      if(state){ //if the user confirmed
+        this.resourceService.delete(row.idResource).subscribe((response) => {
+          console.log(response);
+          AlertHandler.show('Se ha eliminado el recurso exitosamente', AlertType.SUCCESS)
+          setTimeout(() => {
+            this.ngOnInit();
+          }, 2000);
+        },
+        (error) =>{
+          console.log(error);
+          AlertHandler.show('No se pudo eliminar el recurso, inténtelo nuevamente', AlertType.ERROR)
+        })
+      }
+    });
   }
 }
