@@ -40,7 +40,7 @@ export class RegistrationAppComponent {
     this.requestForm = this.builder.group({
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
-      mail: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]],
+      mail: ['', [Validators.required, Validators.email]],
             // mail: ['', [Validators.required, Validators.email]],
     });
   }

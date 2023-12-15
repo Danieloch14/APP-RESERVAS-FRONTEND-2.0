@@ -47,7 +47,8 @@ export class AuthService {
   performLogin(email: string, password: string) {
     return this.http.post<User>(`${ this.url }/users/login`, {
       username: email,
-      password
+      password,
+      idRol: 0
     }, { observe: 'response' }).pipe(
       tap((res: HttpResponse<User>) => this.handleLoginResponse(res)
       )

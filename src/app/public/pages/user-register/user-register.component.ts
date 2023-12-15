@@ -49,7 +49,7 @@ export class UserRegisterComponent implements OnInit {
       lastname: ['', [Validators.required]],
       enterprise: ['Netlife', [Validators.required]],
       cellphone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      mail: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@netlife\.net\.ec$/)]],
+      mail: ['', [Validators.required, Validators.email]],
       role: ['', [Validators.required]],
       address: ['', [Validators.required]],
 
