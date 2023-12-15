@@ -6,6 +6,7 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { MenuService } from '../../services/menu.service';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-menus',
@@ -166,23 +167,61 @@ export class MenusComponent implements OnInit{
     }
   }
 
-  onDelete(idMenu: number){
-    this.menuService.delete(idMenu).subscribe({
-      next: () => {
+  onDelete(level: number, menu: Menu) {
+    if(level === 1){
+      const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
+        data: {
+          data: {
+            title: '¿Estás seguro que deseas eliminar este menú?'
+          }
+        },
+        modalClass: 'modal-dialog-centered',
+        ignoreBackdropClick: true,
+  
+      });
+  
+      modalRef.onClose.subscribe((state: boolean) => {
+        if(state){ //if the user confirmed
+          this.menuService.delete(menu.idMenu).subscribe({
+            next: () => {
+              AlertHandler.show('Se ha eliminado el menú exitosamente', AlertType.SUCCESS)
+              this.ngOnInit();
+            },
+            error: (error) => {
+              console.log(error);
+              AlertHandler.show('No se ha podido eliminar el menú, inténtelo nuevamente', AlertType.ERROR)
+            }
+          });
+        }
+      });
 
-          AlertHandler.show('Se ha eliminado el menú exitosamente', AlertType.SUCCESS)
-          setTimeout(() => {
-            this.ngOnInit();
-          }, 3000);
-      },
-      error: (error) => {
-        console.log(error);
-
-        AlertHandler.show('No se ha podido eliminar el menu, inténtelo nuevamente', AlertType.ERROR)
-          setTimeout(() => {
-            this.ngOnInit();
-          }, 3000);
-      }
-    });
+    }else if(level === 2){
+      const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
+        data: {
+          data: {
+            title: '¿Estás seguro que deseas eliminar este submenú?'
+          }
+        },
+        modalClass: 'modal-dialog-centered',
+        ignoreBackdropClick: true,
+  
+      });
+  
+      modalRef.onClose.subscribe((state: boolean) => {
+        if(state){ //if the user confirmed
+          this.menuService.delete(menu.idMenu).subscribe({
+            next: () => {
+              AlertHandler.show('Se ha eliminado el submenú exitosamente', AlertType.SUCCESS)
+              this.getChildrenMenu(menu.parentMenu);
+            },
+            error: (error) => {
+              console.log(error);
+              AlertHandler.show('No se ha podido eliminar el submenú, inténtelo nuevamente', AlertType.ERROR)
+            }
+          });
+        }
+      });
+    }
+    
   }
 }

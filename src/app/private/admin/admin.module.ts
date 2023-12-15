@@ -31,6 +31,7 @@ import { CalendarAdminComponent } from './pages/calendar-admin/calendar-admin.co
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { RegionsComponent } from './pages/regions/regions.component';
 import { ModalRegionComponent } from './pages/regions/modal-region/modal-region.component';
+import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { ModalRegionComponent } from './pages/regions/modal-region/modal-region.
     MatButtonModule,
     FormsModule,
     MatInputModule,
+    ConfirmationDialogComponent
   ]
 })
 export class AdminModule { }

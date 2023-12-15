@@ -91,31 +91,23 @@ export class ModalMenuComponent implements OnInit {
       this.menuService.update(this.buildMenu(), this.menu.idMenu).subscribe((menu) => {
 
           AlertHandler.show('Se ha modificado el menú exitosamente', AlertType.SUCCESS)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       },
       (error) => {
         console.log(error);
           AlertHandler.show('Error, no se pudo modificar el menú, inténtelo nuevamente', AlertType.ERROR)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       });
 
     } else {
       this.menuService.save(this.buildMenu()).subscribe((menu) => {
           AlertHandler.show('Se ha creado un nuevo menú exitosamente', AlertType.SUCCESS)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       },
       (error) => {
         console.log(error);
           AlertHandler.show('Error, no se pudo crear el menu, inténtelo nuevamente', AlertType.ERROR)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       });
     }
   }

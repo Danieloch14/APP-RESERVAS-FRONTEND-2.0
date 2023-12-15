@@ -6,8 +6,7 @@
       <a [routerLink]="parentMenu.path + submenu.path">
         <div class="card">
           <div class="card-body text-center">
-            <!-- <i class="my-2" [style.color]="colores[i]" [class]="submenu.icon"></i> -->
-            <!--TODO falta poner icono a los submenus-->
+            <i class="fas pe-3 my-2" [style.color]="colores[i]" style="font-size: 2rem;" [class]="submenu.icon"></i>
             <h3 class="card-title my-4">{{ submenu.label }}</h3>
             <p class="card-text">{{ submenu.description }}</p>
           </div>
