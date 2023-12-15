@@ -24,9 +24,7 @@ export class SubmenusComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private menuService: MenuService
-  ) {
-    this.generateRandomColors();
-   }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -59,6 +57,7 @@ export class SubmenusComponent implements OnInit{
     this.menuService.getAllByMenuParent(idMenu).subscribe(submenu => {
       this.submenus = submenu;
       this.submenus.sort((a, b) => a.order - b.order);
+      this.generateRandomColors();
     });
   }
 }

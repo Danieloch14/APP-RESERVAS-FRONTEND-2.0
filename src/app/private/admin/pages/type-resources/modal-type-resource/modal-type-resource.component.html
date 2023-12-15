@@ -26,21 +26,7 @@
         </div>
       </form>
 
-      <!--ALERT-->
-      <div
-        class="alert alert-danger"
-        role="alert"
-        *ngIf="
-          nameTypeResourceField?.invalid &&
-          (nameTypeResourceField?.dirty || nameTypeResourceField?.touched)
-        "
-      >
-        <span *ngIf="nameTypeResourceField?.hasError('required')">
-          <i class="fas fa-exclamation-circle mb-1"></i>
-          Ingreso el nombre del nuevo tipo de recurso
-        </span>
-      </div>
-      <!--ALERTS-->
+      <span *ngIf="resourceTypeForm.invalid" class="text-muted text-center pt-3" [style.font-size.px]="10"> Para poder continuar llene todos los campos obligatorios (*) </span>
     </div>
 
     <div class="modal-footer">

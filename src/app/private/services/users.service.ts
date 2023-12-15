@@ -44,4 +44,8 @@ export class UsersService {
   getAll(){
     return this.http.get<User[]>(`${ this.apiUrl }/${ this.apiVersion }/users`);
   }
+
+  updateNotLocked(username: string, locked: boolean) {
+    return this.http.put<User>(`${ this.apiUrl }/${ this.apiVersion }/users/actualizarNotLocked?valide=${locked}&username=${username}`, null);
+  }
 }

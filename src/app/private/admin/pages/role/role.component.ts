@@ -6,6 +6,7 @@ import { Role } from 'src/app/models/Role';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { RolService } from '../../services/rol.service';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-role',
@@ -77,20 +78,30 @@ export class RoleComponent {
   }
 
   onDelete(row: Role){
-    this.rolService.delete(row.idRol).subscribe({
-      next: () => {
-          AlertHandler.show('Se ha eliminado el rol exitosamente', AlertType.SUCCESS)
-          setTimeout(() => {
-            this.ngOnInit();
-          }, 3000);
+    const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
+      data: {
+        data: {
+          title: '¿Estás seguro que deseas eliminar este rol?'
+        }
       },
-      error: (error) => {
-        console.log(error);
-          AlertHandler.show('No se pudo eliminar el rol, inténtelo nuevamente', AlertType.ERROR)
-          setTimeout(() => {
-            this.ngOnInit();
-          }, 3000);
+      modalClass: 'modal-dialog-centered',
+      ignoreBackdropClick: true,
+
+    });
+
+    modalRef.onClose.subscribe((state: boolean) => {
+      if(state){ //if the user confirmed
+        this.rolService.delete(row.idRol).subscribe({
+          next: () => {
+              AlertHandler.show('Se ha eliminado el rol exitosamente', AlertType.SUCCESS)
+              this.ngOnInit();
+          },
+          error: (error) => {
+            console.log(error);
+              AlertHandler.show('No se pudo eliminar el rol, inténtelo nuevamente', AlertType.ERROR)
+          }
+        })
       }
-    })
+    });
   }
 }

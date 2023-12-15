@@ -8,6 +8,7 @@ import { ModalTypeResourceComponent } from './modal-type-resource/modal-type-res
 import { ResourceTypeService } from '../../services/resource-type.service';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-type-resources',
@@ -84,13 +85,27 @@ export class TypeResourcesComponent implements OnInit, AfterViewInit {
   }
 
   deleteTypeResource(row: ResourceType) {
-    this.typeResourceService
-      .delete(row.idTypeResource)
-      .subscribe((response) => {
-        AlertHandler.show('Se ha eliminado el tipo de recurso exitosamente', AlertType.SUCCESS)
-        setTimeout(() => {
+    const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
+      data: {
+        data: {
+          title: '¿Estás seguro que deseas eliminar este tipo de recurso?'
+        }
+      },
+      modalClass: 'modal-dialog-centered',
+      ignoreBackdropClick: true,
+
+    });
+
+    modalRef.onClose.subscribe((state: boolean) => {
+      if(state){ //if the user confirmed
+        this.typeResourceService.delete(row.idTypeResource).subscribe((response) => {
+          AlertHandler.show('Se ha eliminado el tipo de recurso exitosamente', AlertType.SUCCESS)
           this.ngOnInit();
-        }, 2000);
-      });
+        }, (error) => {
+          AlertHandler.show('No se ha podido eliminar el tipo de recurso', AlertType.ERROR)
+        });
+      }
+    });
+    
   }
 }

@@ -31,6 +31,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
   listRegions: Region[] = []
   listTypeResources: ResourceType[] = []
   pathImage: any;
+  selectedFileName!: string;
 
   constructor(
     public modalRef: MdbModalRef<ModalResourceComponent>,
@@ -64,7 +65,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       place: ['', [Validators.required]],
       address: ['', [Validators.required]],
       floor: ['', [Validators.required]],
-      capacity: ['', [Validators.required]],
+      capacity: [1],
       codNumber: ['', [Validators.required]],
       price: ['', [Validators.required]],
       pathImages: ['', [Validators.required]],
@@ -145,6 +146,8 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       description: this.resource.description
     });
     this.selectedFile = this.resource.pathImages;
+    this.selectedFileName = this.resource?.pathImages?.split('/').pop()!;
+
   }
 
   onFileSelected(event: any): void {
@@ -170,6 +173,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
 
       });
 
+      this.selectedFileName = file.name;
       if (this.isEditing && !this.isNewImage) {
         // if is editing and not new image
         this.selectedFile = imageUrl;
@@ -188,6 +192,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     });
     this.selectedFile = null;
     this.isNewImage = true;
+    this.selectedFileName = '';
   }
 
   getImageUrl(file: File): string {
@@ -275,10 +280,10 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       this.resourceService.update(this.buildResource(), this.resource.idResource).subscribe((resource) => {
         console.log(resource)
         AlertHandler.show('Se ha modificado el recurso exitosamente', AlertType.SUCCESS)
-
-        setTimeout(() => {
-          this.close();
-        }, 3000);
+        this.close();
+      }, error => {
+        console.log(error)
+        AlertHandler.show('No se ha podido modificar el recurso', AlertType.ERROR)
       })
 
     } else {
@@ -286,9 +291,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       this.resourceService.save(this.buildNewResource()).subscribe((resource) => {
         console.log(resource)
         AlertHandler.show('Se ha creado un nuevo recurso exitosamente', AlertType.SUCCESS)
-        setTimeout(() => {
-          this.close();
-        }, 3000);
+        this.close();
       },
         error => {
           console.log(error)

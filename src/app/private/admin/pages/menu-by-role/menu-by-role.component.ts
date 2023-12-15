@@ -34,9 +34,6 @@ export class MenuByRoleComponent {
   selectedRow: any;
   selectedRows: number[] = [];
   rolName!: string;
-  // messageAlert!: string;
-  // isAssigned: boolean = false;
-  // alertType!: AlertType;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -129,15 +126,12 @@ export class MenuByRoleComponent {
       next: () => {
 
         AlertHandler.show('Se ha asignado los menus al rol, correctamente', AlertType.SUCCESS)
-
-          setTimeout(() => {
-            this.selectedRows = [];
-            this.stepper.reset();
-          }, 3000);
+        this.selectedRows = [];
+        this.stepper.reset();
       },
       error: (error) => {
         console.log(error);
-        AlertHandler.show('No se ha podido asignar los menus, inténtelo nuevamente', AlertType.ERROR)
+        AlertHandler.show('No se ha podido asignar los menus al rol seleccionado, inténtelo nuevamente', AlertType.ERROR)
       }
     });
 
