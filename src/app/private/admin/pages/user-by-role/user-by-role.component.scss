@@ -17,23 +17,16 @@
   .mat-mdc-header-row {
     font-weight: var(--mat-table-header-headline-weight, 600);
   }
-  .search-input {
-    width: 40vw;
-    margin-bottom: 20px;
-  }
   
   table {
   
     .mat-mdc-header-cell {
       border-bottom-color: black;
       font-size: 12px;
+      text-align: center;
     }
     .mat-mdc-cell {
       text-align: center;
       font-size: 12px;
     }
-  }
-  
-  ::ng-deep .mat-sort-header-container {
-    justify-content: center;
   }

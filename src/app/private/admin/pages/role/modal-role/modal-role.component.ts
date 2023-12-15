@@ -73,31 +73,23 @@ export class ModalRoleComponent implements OnInit {
     if (this.isEditing) {
       this.rolService.update(this.buildRol()).subscribe((rol) => {
           AlertHandler.show('Se ha modificado el rol exitosamente', AlertType.SUCCESS)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       },
       (error) => {
         console.log(error);
           AlertHandler.show('No se pudo modificar el rol, inténtelo nuevamente', AlertType.ERROR)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       });
 
     } else {
       this.rolService.save(this.buildRol()).subscribe((rol) => {
           AlertHandler.show('Se ha creado un nuevo rol exitosamente', AlertType.SUCCESS)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       },
       (error) => {
         console.log(error);
           AlertHandler.show('No se pudo crear el rol, inténtelo nuevamente', AlertType.ERROR)
-          setTimeout(() => {
-            this.onClose();
-          }, 3000);
+          this.onClose();
       });
     }
   }

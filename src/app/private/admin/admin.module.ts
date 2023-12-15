@@ -32,6 +32,7 @@ import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { RegionsComponent } from './pages/regions/regions.component';
 import { ModalRegionComponent } from './pages/regions/modal-region/modal-region.component';
 import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
+import { UserManagementComponent } from './pages/user-management/user-management.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmati
     MenuByRoleComponent,
     CalendarAdminComponent,
     RegionsComponent,
-    ModalRegionComponent
+    ModalRegionComponent,
+    UserManagementComponent
   ],
   exports: [
     ResourcesComponent
