@@ -40,7 +40,6 @@ export class AccessRequestComponent {
   constructor(
     private registerRequestService: RegisterRequestService
   ) {  
-    this.listRequest = [];
   }
 
   ngOnInit(): void {

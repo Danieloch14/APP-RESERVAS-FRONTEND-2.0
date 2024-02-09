@@ -13,6 +13,7 @@ import { ResourceService } from '../../../services/resource.service';
 import { Location } from 'src/app/models/Location';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { TypeResource } from 'src/app/models/TypeResource';
 
 @Component({
   selector: 'app-modal-resource',
@@ -165,7 +166,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       }
 
       // build full picture path
-      const imageUrl = 'assets/img/' + file.name;
+      const imageUrl = 'assets/img/Resources/Salas/' + file.name;
 
       // set pathImage value to the form
       this.resourceForm.patchValue({
@@ -209,7 +210,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     this.modalRef.close(state);
   }
 
-  findRegionById(id: number): Region {
+  async findRegionById(id: number): Promise<Region> {
     return this.listRegions.find(region => region.idRegion === id)!;
   }
 
@@ -217,11 +218,14 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     return this.listTypeResources.find(typeResource => typeResource.idTypeResource === id)!;
   }
 
+  buildRegion(): Region {
+    return this.listRegions.find(region => region.idRegion === this.resourceForm.value.idRegion)!;
+  }
+
   buildNewLocation(): LocationCreate {
 
     const location: LocationCreate = {
-      idLocation: 0,
-      idRegion: this.resourceForm.value.idRegion,
+      idRegion: this.buildRegion(),
       place: this.resourceForm.value.place,
       address: this.resourceForm.value.address,
       floor: parseInt(this.resourceForm.value.floor),
@@ -233,7 +237,7 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     const resource: ResourceCreate = {
       idResource: 0,
       idLocation: this.buildNewLocation(),
-      idTypeResource: this.resourceForm.value.idTypeResource,
+      idTypeResource: this.buildTypeResource(),
       idDadResource: 0,
       capacity: parseInt(this.resourceForm.value.capacity),
       codNumber: this.resourceForm.value.codNumber,
@@ -242,16 +246,16 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
       isParking: this.findTypeResourceById(this.resourceForm.value.idTypeResource).name.toLowerCase() == 'parqueadero' ? true : false,
       pathImages: this.resourceForm.value.pathImages,
       name: this.resourceForm.value.name,
-      // description: this.resourceForm.value.description
+      description: this.resourceForm.value.description
     };
     return resource;
   }
 
-  buildLocation(): Location {
+  async buildLocation(): Promise<LocationCreate> {
 
-    const location: Location = {
+    const location: LocationCreate = {
       idLocation: this.resource.idLocation.idLocation,
-      idRegion: this.findRegionById(this.resourceForm.value.idRegion),
+      idRegion: this.buildRegion(),
       place: this.resourceForm.value.place,
       address: this.resourceForm.value.address,
       floor: parseInt(this.resourceForm.value.floor),
@@ -259,42 +263,43 @@ export class ModalResourceComponent implements OnInit, AfterViewInit {
     return location;
   };
 
-  buildResource(): Resource {
-    return {
+  buildTypeResource(): TypeResource {
+    return this.listTypeResources.find(typeResource => typeResource.idTypeResource === this.resourceForm.value.idTypeResource)!;
+  }
+
+  async buildResource(): Promise<ResourceCreate> {
+    const resource: ResourceCreate = {
       idResource: this.resource.idResource,
-      idLocation: this.buildLocation(),
-      idTypeResource: this.findTypeResourceById(this.resourceForm.value.idTypeResource),
-      parentResource: this.resource.parentResource,
+      idLocation: await this.buildLocation(),
+      idTypeResource: this.buildTypeResource(),
+      // parentResource: this.resource.parentResource,
+      idDadResource: 0,
+      content: '',
       capacity: parseInt(this.resourceForm.value.capacity),
       codNumber: this.resourceForm.value.codNumber,
       price: parseInt(this.resourceForm.value.price),
       isParking: this.findTypeResourceById(this.resourceForm.value.idTypeResource).name.toLowerCase() == 'parqueadero' ? true : false,
       pathImages: this.resourceForm.value.pathImages,
       name: this.resourceForm.value.name,
-      description: this.resourceForm.value.description
-    };
+      description: this.resourceForm.value.description};
+    return resource;
   }
 
-  save() {
+  async save() {
     if (this.isEditing) {
-      this.resourceService.update(this.buildResource(), this.resource.idResource).subscribe((resource) => {
-        console.log(resource)
+      this.resourceService.update(await this.buildResource(), this.resource.idResource).subscribe((resource) => {
         AlertHandler.show('Se ha modificado el recurso exitosamente', AlertType.SUCCESS)
         this.close();
       }, error => {
-        console.log(error)
         AlertHandler.show('No se ha podido modificar el recurso', AlertType.ERROR)
       })
 
     } else {
-      console.log(this.buildNewResource())
       this.resourceService.save(this.buildNewResource()).subscribe((resource) => {
-        console.log(resource)
         AlertHandler.show('Se ha creado un nuevo recurso exitosamente', AlertType.SUCCESS)
         this.close();
       },
         error => {
-          console.log(error)
           AlertHandler.show('No se ha podido crear el recurso', AlertType.ERROR)
         })
     }

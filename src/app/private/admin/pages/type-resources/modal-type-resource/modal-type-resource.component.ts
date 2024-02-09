@@ -35,7 +35,8 @@ export class ModalTypeResourceComponent implements OnInit{
 
   buildForm() {
     this.resourceTypeForm = this.fb.group({
-      nameTypeResource: ['', [Validators.required]]
+      nameTypeResource: ['', [Validators.required]],
+      hoursTypeResource: ['', [Validators.required]]
     });
   }
 
@@ -43,9 +44,14 @@ export class ModalTypeResourceComponent implements OnInit{
     return this.resourceTypeForm.get('nameTypeResource');
   }
 
+  get hoursTypeResourceField() {
+    return this.resourceTypeForm.get('hoursTypeResource');
+  }
+
   setForm() {
     this.resourceTypeForm.patchValue({
-      nameTypeResource: this.resourceType.name
+      nameTypeResource: this.resourceType.name,
+      hoursTypeResource: this.resourceType.timeAnticipation
     });
   }
 
@@ -58,8 +64,10 @@ export class ModalTypeResourceComponent implements OnInit{
 
     const typeResource: ResourceType = {
       idTypeResource: this.isEditing ? this.resourceType.idTypeResource : 0,
-      name: this.resourceTypeForm.value.nameTypeResource
+      name: this.resourceTypeForm.value.nameTypeResource,
+      timeAnticipation: parseInt(this.resourceTypeForm.value.hoursTypeResource)
     }
+    console.log(typeResource);
     return typeResource;
   }
 
@@ -67,6 +75,7 @@ export class ModalTypeResourceComponent implements OnInit{
     if (this.isEditing) {
       this.typeResourceService.update(this.buildTypeResource(), this.resourceType.idTypeResource)
       .subscribe((typeResource) => {
+        console.log('Modificando elemento:', typeResource);
         AlertHandler.show('Se ha modificado el tipo de recurso exitosamente', AlertType.SUCCESS)
         this.close();
       }, (error) => {

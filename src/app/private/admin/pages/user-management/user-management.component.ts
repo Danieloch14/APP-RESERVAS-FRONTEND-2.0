@@ -69,7 +69,8 @@ export class UserManagementComponent {
     const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
       data: {
         data: {
-          title: '¿Estás seguro que deseas habilitar al usuario?'
+          title: '¿Estás seguro que deseas habilitar al usuario?',
+          isFormVisible: false
         }
       },
       modalClass: 'modal-dialog-centered',
@@ -97,7 +98,8 @@ export class UserManagementComponent {
     const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
       data: {
         data: {
-          title: '¿Estás seguro que deseas deshabilitar al usuario?'
+          title: '¿Estás seguro que deseas deshabilitar al usuario?',
+          isFormVisible: true
         }
       },
       modalClass: 'modal-dialog-centered',

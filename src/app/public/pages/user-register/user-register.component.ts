@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MdbModalRef, MdbModalService } from "mdb-angular-ui-kit/modal";
 import {
   ModalTermsAndReferenceComponent
@@ -11,6 +11,8 @@ import {
 import { UserRegisterDto } from "../../../models/dto/UserRegisterDto";
 import { AuthService } from "../../../auth/services/auth.service";
 import { NetbookingValidator } from "../../../validators/NetbookingValidator";
+import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
   selector: 'app-user-register',
@@ -28,12 +30,16 @@ export class UserRegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
   modalRef: MdbModalRef<ModalTermsAndReferenceComponent> | null
+  exp: number = 0;
+  now: number = 0;
+  idSolicitud: number = 0;
 
   constructor(
     private builder: FormBuilder,
     private route: Router,
     private modalService: MdbModalService,
-    private authService: AuthService
+    private authService: AuthService,
+    private routeActivate: ActivatedRoute
   ) {
     this.registrationForm = new FormGroup({});
     this.modalRef = null;
@@ -41,6 +47,25 @@ export class UserRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadParams();
+    this.detectExp();
+  }
+
+  loadParams() {
+    this.routeActivate.queryParams.subscribe(params => {
+      this.idSolicitud = params['id_solicitud'];
+      this.exp = params['exp'];
+    });
+  }
+
+  detectExp(){
+    this.now = new Date().getTime();
+    const diference = this.exp - this.now;
+    console.log(diference);
+    if(diference <= 0 ){
+      AlertHandler.show('El tiempo de solicitud ha expirado.', AlertType.ERROR);
+      this.route.navigate(['/']).then();
+    }
   }
 
   private buildForm() {
@@ -79,10 +104,11 @@ export class UserRegisterComponent implements OnInit {
 
     this.authService.performRegister(user).subscribe({
       next: () => {
-        console.log('User registered successfully');
+        AlertHandler.show('Usuario registrado con éxito', AlertType.SUCCESS);
       },
       error: (error) => {
         console.log(error);
+        AlertHandler.show('Hubo un error en el registro, inténtelo nuevamente', AlertType.ERROR);
       }
     });
 

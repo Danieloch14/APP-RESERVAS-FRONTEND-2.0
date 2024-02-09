@@ -10,6 +10,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from "../../../auth/services/auth.service";
 import {RegionService} from "../../../private/admin/services/region.service";
 import {Region} from "../../../models/Region";
+import { AlertComponent } from 'src/app/utils/components/alert/alert.component';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 @Component({
   selector: 'app-login',
@@ -91,21 +94,23 @@ export class LoginComponent implements OnInit {
 
 
   onLogin() {
+    
     if (this.userForm.invalid) return
 
-    this.authService.performLogin(this.mailField?.value, this.passwordField?.value).subscribe({
+    this.authService.performLogin(this.mailField?.value, this.passwordField?.value, this.userTypeField?.value.toUpperCase()).subscribe({
       next: () => {
         const region: Region = this.regionField?.value;
         this.regionService.currentRegion = region;
         this.regionService.saveInLocalStorage(region);
-        if (this.userTypeField?.value === 'admin') {
+        if (this.userTypeField?.value === 'Administrador') {
           this.router.navigate(['admin/home']).then();
           return;
         }
         this.router.navigate(['user/home']).then();
       },
       error: (loginError) => {
-        console.error('Error during login:', loginError);
+        AlertHandler.show('Su tipo de usuario, correo electrónico o constraseña son incorrectos.', AlertType.ERROR);
+        AlertHandler.show('Verifique su información e inténtelo de nuevo.', AlertType.INFO);
       }
     });
 
@@ -131,6 +136,7 @@ export class LoginComponent implements OnInit {
 
   recoverPassword() {
     this.recover = true;
+    console.log('recover', this.recover);
   }
 
   closeRecoverPassword() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { API_URL, API_VERSION, USER_NET_BOOKING } from "../../../constants/environment.const";
 import { User } from "../../models/User";
 import { BehaviorSubject } from "rxjs";
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.dev';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -46,6 +46,6 @@ export class UsersService {
   }
 
   updateNotLocked(username: string, locked: boolean) {
-    return this.http.put<User>(`${ this.apiUrl }/${ this.apiVersion }/users/actualizarNotLocked?valide=${locked}&username=${username}`, null);
+    return this.http.put<User>(`${ this.apiUrl }/${ this.apiVersion }/users/active?valide=${locked}&username=${username}`, null);
   }
 }

@@ -1,9 +1,11 @@
+import { Type } from "@angular/core";
 import { LocationCreate } from "./LocationCreate";
+import { TypeResource } from "./TypeResource";
 
 export interface ResourceCreate {
     idResource: number;
     idLocation: LocationCreate;
-    idTypeResource: number;
+    idTypeResource: TypeResource;
     idDadResource: number;
     capacity: number;
     codNumber: string;
@@ -12,5 +14,5 @@ export interface ResourceCreate {
     isParking: boolean;
     pathImages: string;
     name: string;
-    // description: string;
+    description: string;
 }

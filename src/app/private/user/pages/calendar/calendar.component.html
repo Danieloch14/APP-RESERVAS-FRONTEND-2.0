@@ -143,9 +143,9 @@
                 <div class="event-floor"> {{ event.floor }} </div>
               </div>
             </div>
-            <div class="acciones">
-              <button class="btn btn-warning">Editar Reserva</button>
-              <button class="btn btn-danger">Cancelar Reserva</button>
+            <div *ngIf="event.isEditable"class="acciones">
+              <button class="btn btn-warning" (click)="onOpenModalReserveResource(event.resource, event.idReservation)">Editar Reserva</button>
+              <button class="btn btn-danger" (click)="onCancelReservation(event.reservation)">Cancelar Reserva</button>
             </div>
           </ng-template>
         </mdb-accordion-item>

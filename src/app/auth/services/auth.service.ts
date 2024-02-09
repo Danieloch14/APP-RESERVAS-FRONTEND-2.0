@@ -44,12 +44,13 @@ export class AuthService {
     this.usersService.saveInLocalStorage(res.body);
   }
 
-  performLogin(email: string, password: string) {
+  performLogin(email: string, password: string, rol: string) {
     return this.http.post<User>(`${ this.url }/users/login`, {
       username: email,
       password,
-      idRol: 0
-    }, { observe: 'response' }).pipe(
+      rol
+    }
+    , { observe: 'response' }).pipe(
       tap((res: HttpResponse<User>) => this.handleLoginResponse(res)
       )
     );

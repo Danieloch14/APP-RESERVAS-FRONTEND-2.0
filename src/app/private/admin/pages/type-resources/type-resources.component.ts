@@ -102,7 +102,10 @@ export class TypeResourcesComponent implements OnInit, AfterViewInit {
           AlertHandler.show('Se ha eliminado el tipo de recurso exitosamente', AlertType.SUCCESS)
           this.ngOnInit();
         }, (error) => {
-          AlertHandler.show('No se ha podido eliminar el tipo de recurso', AlertType.ERROR)
+          AlertHandler.show('No se ha podido eliminar el tipo de recurso.', AlertType.ERROR);
+          AlertHandler.show('Hay recursos asociados que dependen de este tipo.', AlertType.INFO);
+          AlertHandler.show('Por favor, elimine o actualice dichos recursos antes de intentar eliminar este tipo de recurso.', AlertType.INFO);
+
         });
       }
     });

@@ -18,7 +18,7 @@ export class RegisterRequestService {
   ) { }
 
   getAll(): Observable<RegisterRequest[]> {
-    return this.http.get<RegisterRequest[]>(`${ this.baseUrl }`);
+    return this.http.get<RegisterRequest[]>(`${ this.baseUrl }`,);
   }
 
   getById(idRegisterRequest: number): Observable<RegisterRequest> {

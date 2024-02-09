@@ -10,6 +10,7 @@ import { RegisterRequestService } from 'src/app/private/admin/services/register-
 import { RegisterRequest } from 'src/app/models/RegisterRequest';
 import { AlertHandler } from 'src/app/utils/AlertHandler';
 import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-app',
@@ -31,7 +32,7 @@ export class RegistrationAppComponent {
   requestForm: FormGroup;
 
   constructor(private builder: FormBuilder,
-    private registerRequestService: RegisterRequestService) {
+    private registerRequestService: RegisterRequestService,private router: Router) {
     this.requestForm = new FormGroup({});
     this.buildForm();
   }
@@ -71,6 +72,7 @@ export class RegistrationAppComponent {
       (response) => {
         AlertHandler.show('Solicitud enviada con exito', AlertType.SUCCESS);
         console.log(response);
+        this.router.navigate(['/']);
       },
       (error) => {
         AlertHandler.show('Hubo un error en la solicitud, inténtelo nuevamente', AlertType.ERROR);

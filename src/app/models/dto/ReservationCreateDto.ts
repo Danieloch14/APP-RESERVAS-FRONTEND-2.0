@@ -1,4 +1,5 @@
 export interface ReservationCreateDto {
+  idReservation?: number;
   idResource: number;
   idUser: number;
   startDate: Date;

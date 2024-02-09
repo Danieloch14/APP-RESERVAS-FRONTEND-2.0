@@ -23,6 +23,27 @@
               </label>
             </mdb-form-control>
           </div>
+          <!-- Horas de anticipación para el tipo de recurso -->
+          <div class="col">
+            <mdb-form-control>
+              <select
+                mdbInput
+                mdbValidate
+                id="hoursTypeResource"
+                formControlName="hoursTypeResource"
+                class="form-control mb-4">
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="36">36</option>
+                <option value="48">48</option>
+                <option value="72">72</option>
+              </select>
+              <label mdbLabel class="form-label" for="hoursTypeResource">
+                No. de Horas de anticipación
+                <span class="text-danger">*</span>
+              </label>
+            </mdb-form-control>
+          </div>
         </div>
       </form>
 

@@ -47,7 +47,6 @@ export class ResourcesComponent implements OnInit {
 
   ngOnInit(): void {
     this.resourceService.getAll().subscribe((resources) => {
-      // console.log(resources)
       this.listResources = resources
       this.dataSource = new MatTableDataSource(this.listResources);
       this.dataSource.paginator = this.paginator;

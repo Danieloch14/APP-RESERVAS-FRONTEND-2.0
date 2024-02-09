@@ -10,7 +10,10 @@ import { ReservationCreateDto } from "../../../../models/dto/ReservationCreateDt
 import { UsersService } from "../../../services/users.service";
 import { User } from "../../../../models/User";
 import { SearchResourceDto } from "../../../../models/dto/SearchResourceDto";
-
+import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-modal-reserve-resource',
   templateUrl: './modal-reserve-resource.component.html',
@@ -24,6 +27,8 @@ export class ModalReserveResourceComponent implements OnInit {
   reservationForm: FormGroup;
   isSearchDone: boolean = false;
   isAvailable: boolean = false;
+  isEditing: boolean = false;
+  idReservation: number | null = null;
   previousSearch: SearchResourceDto | null = null;
 
   constructor(
@@ -43,6 +48,12 @@ export class ModalReserveResourceComponent implements OnInit {
     if (this.isSearchDone) {
       this.previousSearch = this.reservationService.searchResourceDto;
       this.matchFormWithPreviousSearch();
+    }
+
+    if (this.resourceService.isEditing) {
+      this.isEditing = true;
+      this.idReservation = this.reservationService.idReservation;
+
     }
   }
 
@@ -73,7 +84,7 @@ export class ModalReserveResourceComponent implements OnInit {
   private formatTime(date: Date): string {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${ hours }:${ minutes }`;
+    return `${hours}:${minutes}`;
   }
 
   private buildForm() {
@@ -91,6 +102,7 @@ export class ModalReserveResourceComponent implements OnInit {
     hours: number;
     minutes: number;
   } {
+    const actualDate = new Date();
     const rawDate = this.reservationForm.get('date')?.value;
     const date = rawDate ? new Date(rawDate) : new Date();
     const time = this.reservationForm.get('time')?.value;
@@ -113,9 +125,14 @@ export class ModalReserveResourceComponent implements OnInit {
     this.reservationService.verifyAvailability(searchResourceDto).subscribe({
       next: (isAvailable) => {
         this.isAvailable = isAvailable;
+
+      },
+      error: (error) => {
+        AlertHandler.show('El recurso no se encuentra disponible.', AlertType.ERROR);
       }
     });
   }
+
 
   onReserve() {
     if (this.reservationForm.invalid) return;
@@ -124,12 +141,20 @@ export class ModalReserveResourceComponent implements OnInit {
       ...this.buildSearchResourceDto(),
       idUser: this.user?.idUser ?? 0,
       status: 'ACTIVO',
+      idReservation: this.idReservation ?? 0,
     }
     console.log('reservation', reservation);
     this.reservationService.create(reservation).subscribe({
       next: () => {
-        console.log('Reserva creada');
         this.modalRef.close();
+        AlertHandler.show('Reserva guardada con éxito', AlertType.SUCCESS);
+        
+      },
+      error: (error) => {
+        this.modalRef.close();
+        AlertHandler.show('No se pudo crear la reserva', AlertType.ERROR);
+        AlertHandler.show('Por favor verifique el horario de reserva', AlertType.INFO);
+
       }
     });
   }

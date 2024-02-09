@@ -12,6 +12,13 @@ import { Reservation } from 'src/app/models/Reservation';
 import { forkJoin } from 'rxjs';
 import { UsersService } from 'src/app/private/services/users.service';
 import { User } from 'src/app/models/User';
+import { MdbModalRef, MdbModalService } from "mdb-angular-ui-kit/modal";
+import { ModalReserveResourceComponent } from "../../../user/components/modal-reserve-resource/modal-reserve-resource.component";
+import { Resource } from "../../../../models/Resource";
+import { ResourceService } from 'src/app/private/admin/services/resource.service';
+import { ConfirmationDialogComponent } from 'src/app/utils/components/confirmation-dialog/confirmation-dialog.component';
+import { AlertHandler } from 'src/app/utils/AlertHandler';
+import { AlertType } from 'src/app/models/Enums/AlertType.enum';
 
 export class EventDetail {
   title!: string;
@@ -30,6 +37,10 @@ export class EventDetail {
   capacity!: number;
   price!: number;
   username!: string;
+  resource!: Resource;
+  reservation!: Reservation;
+  idReservation!: number;
+  isEditable: boolean = false;
 }
 @Component({
   selector: 'app-calendar',
@@ -38,6 +49,8 @@ export class EventDetail {
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('daysContainer') daysContainer!: ElementRef;
+  modalRef: MdbModalRef<ModalReserveResourceComponent> | null
+
 
   today = new Date();
   month = this.today.getMonth();
@@ -79,12 +92,24 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   showSpinner: boolean = false;
   user: User | null = null;
-  
+  resource: Resource
+
   constructor(
     private cdr: ChangeDetectorRef,
     private reservationService: ReservationService,
     private usersService: UsersService,
-  ) {}
+    private modalService: MdbModalService,
+    private resourceService: ResourceService,
+
+  ) {
+    this.resource = {} as Resource;
+
+    this.modalRef = null;
+
+  }
+  ngOnDestroy(): void {
+    this.eventsArr = [];
+  }
 
   ngOnInit(): void {
     this.showSpinner = true;
@@ -98,8 +123,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       // reservations.forEach((reservation) => {
       //   this.pushReservation(reservation);
       // });
-      const userReservations = reservations.filter(reservation => reservation.idUser.idUser === this.user?.idUser);
-      userReservations.forEach((reservation) => {
+      this.eventsArr = [];
+      // const userReservations = reservations.filter(reservation => reservation.idUser.idUser === this.user?.idUser);
+      // userReservations.forEach((reservation) => {
+      reservations.forEach((reservation) => {
+
         this.pushReservation(reservation);
       });
 
@@ -110,11 +138,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.setActiveDay(null, new Date().getDate());
       });
-      console.log(this.eventsArr)
+      console.log("eventArray", this.eventsArr)
     });
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   pushReservation(reservation: Reservation) {
     const startDate = new Date(reservation.startDate);
@@ -123,8 +151,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     const ampmEnd = endDate.getHours() >= 12 ? 'PM' : 'AM';
 
     const event: EventDetail = new EventDetail();
-    event.title =
-      reservation.idResource.codNumber + ' ' + reservation.status.toUpperCase();
+    event.title = reservation.idResource.name + ' ' + reservation.status.toUpperCase();
     event.day = startDate.getDate();
     event.month = startDate.getMonth() + 1;
     event.year = startDate.getFullYear();
@@ -140,7 +167,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       endDate.getMinutes() +
       ' ' +
       ampmEnd;
-    event.nameResource = reservation.idResource.codNumber;
+    event.nameResource = reservation.idResource.name;
     event.typeResource = reservation.idResource.idTypeResource.name;
     event.city = reservation.idResource.idLocation.idRegion.name;
     event.address = reservation.idResource.idLocation.address;
@@ -149,7 +176,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     event.status = reservation.status.toUpperCase();
     event.capacity = reservation.idResource.capacity;
     event.price = reservation.idResource.price;
-
+    event.resource = reservation.idResource;
+    event.reservation = reservation;
+    event.idReservation = reservation.idReservation;
+    if(reservation.status.toUpperCase() === 'ACTIVO'){
+      event.isEditable = true;
+    }
     this.eventsArr.push(event);
   }
 
@@ -409,8 +441,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     }
   }
 
-  //function to remove events on click
-  cancelReservation() {}
+
 
   clearVariables() {
     this.invalidDate = false;
@@ -421,5 +452,59 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.isEvent = false;
     this.event_days = [];
     this.eventDetails = [];
+  }
+
+  onOpenModalReserveResource(resource: Resource, idReservation: number) {
+
+    this.resourceService.isEditing = true;
+    this.resource = resource;
+    const modalRef = this.modalService.open(ModalReserveResourceComponent,
+      {
+        modalClass: 'modal-dialog-centered',
+        ignoreBackdropClick: true,
+        data: {
+          resource: this.resource,
+          idReservation: idReservation
+        }
+      });
+    modalRef.onClose.subscribe(() => {
+      window.location.reload();
+    });
+
+
+
+
+  }
+  refreshComponent(): void {
+    this.cdr.detectChanges();
+  }
+
+  onCancelReservation(reservation: Reservation) {
+    const modalRef: MdbModalRef<ConfirmationDialogComponent> = this.modalService.open(ConfirmationDialogComponent, {
+      data: {
+        data: {
+          title: '¿Estás seguro que deseas cancelar la reservación?',
+          isFormVisible: false
+        }
+      },
+      modalClass: 'modal-dialog-centered',
+      ignoreBackdropClick: true,
+
+    });
+
+    modalRef.onClose.subscribe((state: boolean) => {
+      if (state) { //if the user confirmed
+        this.reservationService.delete(reservation.idReservation).subscribe({
+          next: () => {
+            AlertHandler.show('Se ha cancelado la reservación exitosamente', AlertType.SUCCESS);
+            window.location.reload();
+          },
+          error: (error) => {
+            console.log(error);
+            AlertHandler.show('No se ha podido cancelar la reservación, inténtelo nuevamente', AlertType.ERROR)
+          }
+        });
+      }
+    });
   }
 }

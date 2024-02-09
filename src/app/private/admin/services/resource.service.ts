@@ -14,9 +14,11 @@ export class ResourceService {
   private baseURL = `${environment.API_URL}/${environment.API_VERSION}/resources`;
 
   isSearchDone: boolean;
+  isEditing: boolean;
 
   constructor(private httpClient: HttpClient) {
     this.isSearchDone = false;
+    this.isEditing = false;
   }
 
 
@@ -32,8 +34,8 @@ export class ResourceService {
     return this.httpClient.post<any>(`${ this.baseURL }`, resource,);
   }
 
-  update(resource: Resource, idResource: number) {
-    return this.httpClient.post<any>(`${ this.baseURL }/${ idResource }`, resource,);
+  update(resource: ResourceCreate, idResource: number) {
+    return this.httpClient.put<any>(`${ this.baseURL }/${ idResource }`, resource,);
   }
 
   delete(idResource: number) {
@@ -43,6 +45,11 @@ export class ResourceService {
   findAvailable(searchResourceDto: SearchResourceDto) {
     return this.httpClient.post<any>(`${ this.baseURL }/availables`, searchResourceDto);
   }
+
+  findById(idResource: number) {
+    return this.httpClient.get<any>(`${ this.baseURL }/${ idResource }`);
+  }
+
 
 
 }

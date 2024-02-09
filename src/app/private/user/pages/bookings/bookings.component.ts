@@ -121,7 +121,6 @@ export class BookingsComponent implements OnInit {
 
   onSearchResource() {
     if (this.searchForm.invalid) return;
-
     const searchResourceDto = this.buildSearchResourceDto();
     console.log(searchResourceDto);
     this.resourceService.findAvailable(searchResourceDto).subscribe({
@@ -132,7 +131,10 @@ export class BookingsComponent implements OnInit {
         this.reservationService.searchResourceDto = searchResourceDto;
         this.filterResources(this.filteredResourceTypes, resources);
       },
-      error: () => AlertHandler.show('No se pudieron cargar los recursos', AlertType.ERROR)
+      error: () => {
+        AlertHandler.show('No se pudieron cargar los recursos', AlertType.ERROR);
+        AlertHandler.show('Por favor verifique el horario de reserva', AlertType.INFO);
+      }
     });
   }
 

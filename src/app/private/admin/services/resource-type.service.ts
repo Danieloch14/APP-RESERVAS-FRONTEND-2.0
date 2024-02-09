@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResourceType } from 'src/app/models/ResourceType';
-import { environment } from "../../../../environments/environment";
+import { environment } from "../../../../environments/environment.dev";
 import { SearchResourceDto } from "../../../models/dto/SearchResourceDto";
 
 @Injectable({
@@ -20,10 +20,12 @@ export class ResourceTypeService {
   }
 
   create(typeResource: ResourceType): Observable<any> {
+    console.log(typeResource);
     return this.httpClient.post<any>(`${ this.baseURL }`, typeResource);
   }
 
   update(typeResource: ResourceType, idTypeResource: number) {
+    console.log(typeResource);
     return this.httpClient.put<any>(`${ this.baseURL }/${ idTypeResource }`, typeResource);
   }
 

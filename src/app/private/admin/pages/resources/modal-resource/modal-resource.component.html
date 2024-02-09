@@ -193,7 +193,7 @@
               />
             </div>
             <div *ngIf="selectedFile" class="change_image">
-              <!-- <img [src]="pathImage" alt="Vista previa del archivo" /> -->
+              <img [src]="pathImage" alt="Vista previa del archivo" />
               <p>{{ selectedFileName }}</p>
               <button class="btn btn-warning mb-4" (click)="clearFile()">
                 Eliminar

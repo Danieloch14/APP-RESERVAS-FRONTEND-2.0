@@ -96,7 +96,8 @@ export class RegionsComponent {
           },
           error: (error) => {
             console.log(error);
-              AlertHandler.show('No se pudo eliminar la región, inténtelo nuevamente', AlertType.ERROR)
+              AlertHandler.show('No se pudo eliminar la región', AlertType.ERROR)
+              AlertHandler.show('Existen recursos relacionados con la región', AlertType.INFO)
               this.ngOnInit();
           }
         })
